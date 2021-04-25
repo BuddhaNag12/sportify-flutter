@@ -16,13 +16,13 @@ void main() {
           headline1: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 28,
-            color: Colors.black87,
+            color: Colors.black,
             fontWeight: FontWeight.w700,
           ),
           headline2: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 20,
-            color: Colors.black,
+            color: Colors.black54,
             fontWeight: FontWeight.normal,
           ),
           caption: TextStyle(

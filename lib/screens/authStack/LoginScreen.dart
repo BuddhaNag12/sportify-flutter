@@ -4,14 +4,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
+import 'package:sportify/widgets/localWidgets.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final double width = context.mediaQuery.size.width;
+    final double height = context.mediaQuery.size.height;
+
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: MyAppBar(
         isTransparent: false,
       ),
@@ -20,8 +23,8 @@ class LoginScreen extends StatelessWidget {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
         child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: width,
+          height: height,
           color: Colors.tealAccent.shade700,
           child: Container(
             decoration: BoxDecoration(
@@ -80,8 +83,8 @@ class LoginScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                    width: width,
+                    height: height,
                     color: Theme.of(context).primaryColor,
                     child: SingleChildScrollView(
                       child: Form(
@@ -89,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width - 40,
+                              width: width - 40,
                               height: 230,
                               // color: Colors.grey,
                               child: Column(
@@ -113,14 +116,12 @@ class LoginScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(
-                                "Don't Have an account?",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
+                            spacer(5.0),
+                            Text(
+                              "Don't Have an account?",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
                               ),
                             ),
                             TextButton(
@@ -144,7 +145,8 @@ class LoginScreen extends StatelessWidget {
                                 Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: ElevatedButton.icon(
-                                        onPressed: () => Get.changeTheme(ThemeData.dark()),
+                                        onPressed: () =>
+                                            Get.changeTheme(ThemeData.dark()),
                                         icon: Icon(FlutterIcons.facebook_ent),
                                         label: Text("Facebook Sign in"))),
                               ],
