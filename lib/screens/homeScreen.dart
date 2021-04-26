@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () => Get.toNamed('/view'),
+                          onPressed: () => Get.toNamed('/view_events'),
                           child: Text("View Events"),
                           style: ElevatedButton.styleFrom(
                             elevation: 2,

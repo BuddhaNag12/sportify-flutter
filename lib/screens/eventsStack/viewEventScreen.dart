@@ -1,121 +1,222 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:sportify/global_widgets/appbar.dart';
-import 'package:get/get.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 
-class ViewEventScreen extends StatelessWidget {
-  final List categories = <String>[
-    'Cricket',
-    'Foodball',
-    'Basketball',
-    'Tennis'
-  ];
-  //   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  //  void _openDrawer() {
-  //     _scaffoldKey.currentState!.openDrawer();
-  //   }
+class ViewEventScreen extends StatefulWidget {
+  @override
+  _ViewEventScreenState createState() => _ViewEventScreenState();
+}
 
-  //   void _closeDrawer() {
-  //     Navigator.of(context).pop();
-  //   }
+class _ViewEventScreenState extends State<ViewEventScreen>
+    with TickerProviderStateMixin {
+  TabController tabController;
+
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    tabController = TabController(
+      initialIndex: selectedIndex,
+      length: 2,
+      vsync: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final double width = context.mediaQuery.size.width;
-
-    // final double height = context.mediaQuery.size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: MyAppBar(isTransparent: false),
-      backgroundColor: Colors.grey.shade50,
-      endDrawer: MyDrawer(),
+      appBar: MyAppBar(
+        isTransparent: false,
+      ),
+      backgroundColor: Colors.tealAccent.shade700,
       body: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        width: width,
+        height: height,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            spacer(40.0),
-            SizedBox(
-              width: width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  FittedBox(
-                      child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    width: 100,
-                    height: 38,
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 1,
-                            color: Colors.grey,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
-                        color: Colors.teal,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: DropdownButton(
-                        hint: Text(
-                          "Category",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        value: null,
-                        isExpanded: true,
-                        icon: const Icon(Icons.sports_baseball_rounded,
-                            color: Colors.white),
-                        elevation: 16,
-                        dropdownColor: Colors.tealAccent.shade700,
-                        underline: SizedBox(),
-                        onChanged: (newValue) {
-                          print(newValue);
-                        },
-                        items: categories.map((val) {
-                          return DropdownMenuItem(
-                            value: val,
-                            child: Text(
-                              val,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          );
-                        }).toList()),
+            Center(
+              child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.0),
+                  margin: EdgeInsets.only(top: 5),
+                  child: ClipOval(
+                    child: Image.asset('assets/map.png'),
                   )),
-                  SizedBox(
-                    width: 50,
+            ),
+            spacer(5),
+            headerCard(width, context),
+            Container(
+              padding: EdgeInsets.all(10.0),
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: TabBar(
+                controller: tabController,
+                tabs: [
+                  Tab(
+                    child: Text("Details".toUpperCase()),
                   ),
-                  ElevatedButton.icon(
-                      onPressed: () => {},
-                      icon: Icon(Icons.gps_fixed_rounded),
-                      label: Text("Locations"))
+                  Tab(child: Text("Teams".toUpperCase())),
                 ],
+                onTap: (int index) {
+                  setState(() {
+                    selectedIndex = index;
+                    tabController.animateTo(index);
+                  });
+                },
               ),
             ),
-            spacer(30.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                "All Events nearby you",
-                style: Theme.of(context).textTheme.headline1,
+            Container(
+              padding: EdgeInsets.all(5.0),
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              child: IndexedStack(
+                children: <Widget>[
+                  Visibility(
+                    child: Container(
+                      height: 120,
+                      child: Text(
+                        'about the tournament it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
+                        style: Theme.of(context).textTheme.headline6,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 6,
+                      ),
+                    ),
+                    maintainState: true,
+                    visible: selectedIndex == 0,
+                  ),
+                  Visibility(
+                    child: Container(
+                      height: 120,
+                      child: Text(
+                        'about the Team it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
+                        style: Theme.of(context).textTheme.headline6,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 6,
+                      ),
+                    ),
+                    maintainState: true,
+                    visible: selectedIndex == 1,
+                  ),
+                ],
+                index: selectedIndex,
               ),
             ),
             SizedBox(
-              width: width / 2 + 30,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                child: Divider(
-                  height: 2,
-                  thickness: 2,
-                  color: Colors.tealAccent.shade700,
-                ),
-              ),
-            ),
-            spacer(10.0),
-            Expanded(
-              child: buildListView(context),
-            )
+                width: width - 100,
+                child: ElevatedButton(
+                  onPressed: () => {},
+                  child: Text(
+                    "Join Tournament",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                  style: ButtonStyle(),
+                ))
           ],
         ),
       ),
     );
   }
+}
+
+Widget headerCard(double width, context) {
+  var boxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+    color: Colors.white30,
+  );
+  return Container(
+    width: width,
+    height: 160,
+    decoration: BoxDecoration(
+        // borderRadius: BorderRadius.all(Radius.circular(8)),
+        color: Colors.teal.shade300,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            spreadRadius: 0.8,
+            offset: Offset(0, 1),
+            color: Colors.grey,
+          )
+        ]),
+    padding: EdgeInsets.all(10.0),
+    margin: EdgeInsets.symmetric(horizontal: 15),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Jiri Youth open tournament long long long long longlonglonglonglong",
+          maxLines: 2,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.bold,
+          ),
+          overflow: TextOverflow.ellipsis,
+          softWrap: true,
+        ),
+        spacer(10.0),
+        Container(
+            width: width,
+            padding: EdgeInsets.all(5.0),
+            decoration: boxDecoration,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      width: 80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [Icon(Icons.flag_outlined), Text("Cricket")],
+                      )),
+                  Container(
+                      width: 90,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [Icon(Icons.timelapse), Text("12-12-2021")],
+                      ))
+                ])),
+        spacer(10.0),
+        Container(
+          padding: EdgeInsets.all(5.0),
+          width: width,
+          decoration: boxDecoration,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  width: 80,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.location_on_rounded),
+                      Text("Location")
+                    ],
+                  )),
+              Container(
+                  width: 80,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Icon(FlutterIcons.activity_fea), Text("Active")],
+                  ))
+            ],
+          ),
+        )
+      ],
+    ),
+  );
 }

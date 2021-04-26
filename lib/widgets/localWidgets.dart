@@ -19,93 +19,126 @@ Widget spacer(double height) {
 */
 
 Widget buildListView(BuildContext context) {
-  final List listItems = new List(20);
+  final List listItems = List.filled(10, 'hello');
 
   return ListView.builder(
       itemCount: listItems.length,
       itemBuilder: (_, int index) {
         return Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.grey.shade50, Colors.tealAccent.shade700])),
+            boxShadow: [
+              BoxShadow(blurRadius: 2, color: Colors.grey, offset: Offset(0, 1))
+            ],
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                tileMode: TileMode.clamp,
+                colors: [Colors.grey.shade200, Colors.teal.shade300]),
+          ),
           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           padding: EdgeInsets.symmetric(horizontal: 10),
           height: 90,
           width: context.mediaQuery.size.width,
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey.shade200,
-                child: Icon(
-                  FlutterIcons.event_mdi,
-                  size: 40,
+          child: InkWell(
+            onTap: () => Get.toNamed('/view_event'),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white54,
+                  child: Icon(
+                    FlutterIcons.event_mdi,
+                    size: 40,
+                    color: Colors.teal,
+                  ),
                 ),
-              ),
-              SizedBox(width: 20),
-              Container(
-                padding: EdgeInsets.only(top: 5),
-                child: Column(
+                SizedBox(width: 20),
+                Expanded(
+                    child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "jiri youth tournament".toUpperCase(),
-                      style: Theme.of(context).textTheme.headline2,
+                    Flexible(
+                      child: new Container(
+                        margin: new EdgeInsets.only(top: 5.0),
+                        child: new Text(
+                          'JIRI sports academy',
+                          overflow: TextOverflow.ellipsis,
+                          style: new TextStyle(
+                            fontSize: 22.0,
+                            color: new Color(0xFF212121),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     ),
-                    spacer(5),
                     Container(
-                      child: Row(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.flag_outlined, color: Colors.teal),
-                              Text("Cricket"),
-                            ],
+                          spacer(5),
+                          Container(
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.flag_outlined,
+                                        color: Colors.teal),
+                                    Text("Cricket"),
+                                  ],
+                                ),
+                                SizedBox(width: 20),
+                                Row(
+                                  children: [
+                                    Icon(Icons.location_on_outlined,
+                                        color: Colors.teal),
+                                    Text("Jirighat"),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(width: 20),
-                          Row(
-                            children: [
-                              Icon(Icons.location_on_outlined,
-                                  color: Colors.teal),
-                              Text("Jirighat"),
-                            ],
-                          ),
+                          spacer(5),
+                          Container(
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(FlutterIcons.activity_fea,
+                                        color: Colors.teal),
+                                    Text("Active"),
+                                  ],
+                                ),
+                                SizedBox(width: 25),
+                                Row(
+                                  children: [
+                                    Icon(Icons.timelapse,
+                                        size: 20, color: Colors.teal),
+                                    Text("20-20-2021"),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-                    spacer(5),
-                    Container(
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(FlutterIcons.activity_fea,
-                                  color: Colors.teal),
-                              Text("Active"),
-                            ],
-                          ),
-                          SizedBox(width: 25),
-                          Row(
-                            children: [
-                              Icon(Icons.timelapse,
-                                  size: 20, color: Colors.teal),
-                              Text("20-20-2021"),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
                   ],
-                ),
-              ),
-            ],
+                )),
+              ],
+            ),
           ),
         );
       });
 }
 
-class MyDrawer extends StatelessWidget{
+/*
+
+
+  Drawer widget for sidebar placed in home screen
+  To customized we separated the widget to localwidgets
+
+*/
+class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -142,16 +175,26 @@ class MyDrawer extends StatelessWidget{
           ),
         ),
         ListTile(
-          leading: Icon(Icons.message),
-          title: Text('Messages'),
-        ),
-        ListTile(
           leading: Icon(Icons.account_circle),
           title: Text('Profile'),
+          onTap: () => Get.toNamed('/profile'),
+        ),
+        ListTile(
+          leading: Icon(Icons.today_outlined),
+          title: Text('Manage Events'),
+          onTap: () => Get.toNamed('/profile'),
+        ),
+        ListTile(
+          leading: Icon(Icons.notification_important),
+          title: Text('Notifications'),
         ),
         ListTile(
           leading: Icon(Icons.settings),
           title: Text('Settings'),
+        ),
+        ListTile(
+          leading: Icon(Icons.info),
+          title: Text('About'),
         ),
       ],
     ));
