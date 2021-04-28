@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "233699656174",
+    "project_id": "sportify-flutter",
+    "storage_bucket": "sportify-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233699656174:android:b69d6afd2028fc47f90eff",
+        "android_client_info": {
+          "package_name": "com.example.sportify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233699656174-mqsm8kgjtmk26q2r5vk3voovpd517dc7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sportify",
+            "certificate_hash": "80f51874eef76b7c21a4a1836a2c1ea06f1a4814"
+          }
+        },
+        {
+          "client_id": "233699656174-iv9oei6hlti0vg7rqdi63gqdh3k7evu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlV-LC9-kCSvxU_aV1gEGCeaclhjrOvCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233699656174-iv9oei6hlti0vg7rqdi63gqdh3k7evu1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

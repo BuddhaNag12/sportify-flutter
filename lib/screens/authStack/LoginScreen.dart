@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sportify/controllers/global_Controller.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final GlobalController eventStore = Get.put(GlobalController());
   @override
   Widget build(BuildContext context) {
     final double width = context.mediaQuery.size.width;
@@ -107,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                                     child: ElevatedButton(
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
-                                          // Process data.
+                                          eventStore.signInWithEmail();
                                         }
                                       },
                                       child: const Text('Log in'),

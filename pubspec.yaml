@@ -26,6 +26,12 @@ dependencies:
   
   flutter_svg: ^0.21.0+1
   flutter_icons: ^1.1.0
+  google_maps_flutter: ^2.0.3
+
+  firebase_core: ^1.1.0
+  firebase_analytics: ^8.0.2
+  firebase_auth: ^1.1.2
+  cloud_firestore: ^1.0.7
   # transparent_image: ^1.0.0
   
   

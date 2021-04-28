@@ -13,6 +13,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarDividerColor: Colors.transparent),
+    );
 
     final double width = context.mediaQuery.size.width;
     final double height = context.mediaQuery.size.height;

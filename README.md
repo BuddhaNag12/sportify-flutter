@@ -1,13 +1,15 @@
 # sportify
 
-##It's an app that can help you manage sports events.
+## It's an app that can help you manage sports events.
 
--[x] getx
--[ ] location
--[ ] location-picker
--[ ] firebase-firestore
--[ ] svg-flutter
--[ ] Setup routes
+- [x] getx
+- [ ] location
+- [ ] location-picker
+- [ ] firebase-firestore
+- [x] svg-flutter
+- [x] Setup routes
+- [ ] setup dependancy binding
+- [ ] setup email pass login auth
 
 
 

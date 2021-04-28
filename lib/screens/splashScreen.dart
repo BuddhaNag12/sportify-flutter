@@ -23,8 +23,6 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: PageView(
-        /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-        /// Use [Axis.vertical] to scroll vertically.
         scrollDirection: Axis.horizontal,
         controller: controller,
         children: [
@@ -48,7 +46,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 spacer(10.0),
                 Text(
-                  "Here You can fin latest Sports event around you",
+                  "Here You can find latest Sports event around you",
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 spacer(10.0),

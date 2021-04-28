@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:async';
 
 class ViewEventScreen extends StatefulWidget {
   @override
@@ -10,18 +11,41 @@ class ViewEventScreen extends StatefulWidget {
 
 class _ViewEventScreenState extends State<ViewEventScreen>
     with TickerProviderStateMixin {
+  final Completer<GoogleMapController> _controller = Completer();
+  Marker marker;
+  BitmapDescriptor pinLocationIcon;
   TabController tabController;
-
   int selectedIndex = 0;
+
+  LatLng latlng = LatLng(24.805426, 93.103355);
+
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(24.805426, 93.103355),
+    zoom: 11,
+  );
 
   @override
   void initState() {
     super.initState();
+    initializeTabController();
+  }
 
+  void initializeTabController() {
     tabController = TabController(
       initialIndex: selectedIndex,
       length: 2,
       vsync: this,
+    );
+  }
+
+  void addMarker() {
+    marker = Marker(
+      markerId: MarkerId("home"),
+      position: latlng,
+      draggable: false,
+      zIndex: 2,
+      flat: true,
+      anchor: Offset(0.5, 0.5),
     );
   }
 
@@ -49,11 +73,32 @@ class _ViewEventScreenState extends State<ViewEventScreen>
           children: [
             Center(
               child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0),
-                  margin: EdgeInsets.only(top: 5),
-                  child: ClipOval(
-                    child: Image.asset('assets/map.png'),
-                  )),
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+                margin: EdgeInsets.only(top: 5),
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3,
+                    spreadRadius: .5,
+                    offset: Offset(0, 1),
+                    color: Colors.grey.shade500,
+                  )
+                ]),
+                child: ClipOval(
+                  child: GoogleMap(
+                    mapType: MapType.hybrid,
+                    initialCameraPosition: _kGooglePlex,
+                    markers: Set.of((marker != null) ? [marker] : []),
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                      this.setState(() {
+                        addMarker();
+                      });
+                    },
+                  ),
+                ),
+              ),
             ),
             spacer(5),
             headerCard(width, context),
@@ -66,7 +111,7 @@ class _ViewEventScreenState extends State<ViewEventScreen>
                   Tab(
                     child: Text("Details".toUpperCase()),
                   ),
-                  Tab(child: Text("Teams".toUpperCase())),
+                  Tab(child: Text("More info".toUpperCase())),
                 ],
                 onTap: (int index) {
                   setState(() {
@@ -112,111 +157,23 @@ class _ViewEventScreenState extends State<ViewEventScreen>
               ),
             ),
             SizedBox(
-                width: width - 100,
-                child: ElevatedButton(
-                  onPressed: () => {},
-                  child: Text(
-                    "Join Tournament",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: "Roboto",
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.8,
-                    ),
+              width: width - 100,
+              child: ElevatedButton(
+                onPressed: () => {},
+                child: Text(
+                  "Join Tournament",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: "Roboto",
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.8,
                   ),
-                  style: ButtonStyle(),
-                ))
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
-}
-
-Widget headerCard(double width, context) {
-  var boxDecoration = BoxDecoration(
-    borderRadius: BorderRadius.all(Radius.circular(8)),
-    color: Colors.white30,
-  );
-  return Container(
-    width: width,
-    height: 160,
-    decoration: BoxDecoration(
-        // borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: Colors.teal.shade300,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 2,
-            spreadRadius: 0.8,
-            offset: Offset(0, 1),
-            color: Colors.grey,
-          )
-        ]),
-    padding: EdgeInsets.all(10.0),
-    margin: EdgeInsets.symmetric(horizontal: 15),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Jiri Youth open tournament long long long long longlonglonglonglong",
-          maxLines: 2,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.bold,
-          ),
-          overflow: TextOverflow.ellipsis,
-          softWrap: true,
-        ),
-        spacer(10.0),
-        Container(
-            width: width,
-            padding: EdgeInsets.all(5.0),
-            decoration: boxDecoration,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                      width: 80,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Icon(Icons.flag_outlined), Text("Cricket")],
-                      )),
-                  Container(
-                      width: 90,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Icon(Icons.timelapse), Text("12-12-2021")],
-                      ))
-                ])),
-        spacer(10.0),
-        Container(
-          padding: EdgeInsets.all(5.0),
-          width: width,
-          decoration: boxDecoration,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  width: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.location_on_rounded),
-                      Text("Location")
-                    ],
-                  )),
-              Container(
-                  width: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Icon(FlutterIcons.activity_fea), Text("Active")],
-                  ))
-            ],
-          ),
-        )
-      ],
-    ),
-  );
 }

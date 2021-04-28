@@ -1,15 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/routes/app_pages.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     GetMaterialApp(
       // locale: Get.deviceLocale,
       defaultTransition: Transition.native,
       debugShowCheckedModeBanner: false,
       title: "Sportify",
-      initialRoute: AppPages.INITIAL,
+      initialRoute: Routes.HOME,
       getPages: AppPages.routes,
       theme: ThemeData(
         textTheme: TextTheme(

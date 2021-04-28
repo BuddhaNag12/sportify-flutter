@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sportify/controllers/global_Controller.dart';
 
 class InputField extends StatelessWidget {
   final bool isUserName;
-
-  InputField({@required this.isUserName});
+  final GlobalController controller = Get.find();
+  InputField({Key key, @required this.isUserName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +14,15 @@ class InputField extends StatelessWidget {
       shadowColor: Colors.black45,
       borderRadius: BorderRadius.circular(8),
       child: TextFormField(
+        controller: this.isUserName
+            ? controller.emailController
+            : controller.passWordController,
         obscureText: this.isUserName ? false : true,
         validator: (String value) {
           if (value == null || value.isEmpty) {
             return 'Please enter valid characters';
+          } else {
+            print(value);
           }
           return null;
         },

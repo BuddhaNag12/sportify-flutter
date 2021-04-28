@@ -200,3 +200,96 @@ class MyDrawer extends StatelessWidget {
     ));
   }
 }
+
+/*
+  headerCard for view event screen
+
+*/
+
+Widget headerCard(double width, context) {
+  var boxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+    color: Colors.white30,
+  );
+  return Container(
+    width: width,
+    height: 160,
+    decoration: BoxDecoration(
+        // borderRadius: BorderRadius.all(Radius.circular(8)),
+        color: Colors.teal.shade300,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 1,
+            spreadRadius: 0.8,
+            offset: Offset(0, 1),
+            color: Colors.grey,
+          )
+        ]),
+    padding: EdgeInsets.all(10.0),
+    margin: EdgeInsets.symmetric(horizontal: 15),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Jiri Youth open tournament long long long long longlonglonglonglong",
+          maxLines: 2,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 25,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.bold,
+          ),
+          overflow: TextOverflow.ellipsis,
+          softWrap: true,
+        ),
+        spacer(10.0),
+        Container(
+            width: width,
+            padding: EdgeInsets.all(5.0),
+            decoration: boxDecoration,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      width: 80,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [Icon(Icons.flag_outlined), Text("Cricket")],
+                      )),
+                  Container(
+                      width: 90,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [Icon(Icons.timelapse), Text("12-12-2021")],
+                      ))
+                ])),
+        spacer(10.0),
+        Container(
+          padding: EdgeInsets.all(5.0),
+          width: width,
+          decoration: boxDecoration,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  width: 80,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(Icons.location_on_rounded),
+                      Text("Location")
+                    ],
+                  )),
+              Container(
+                  width: 80,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [Icon(FlutterIcons.activity_fea), Text("Active")],
+                  ))
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}

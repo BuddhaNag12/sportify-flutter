@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sportify/controllers/global_Controller.dart';
 // import 'package:flutter_icons/flutter_icons.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
@@ -8,6 +9,7 @@ import 'package:sportify/widgets/localWidgets.dart';
 
 class SignUpScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalController eventStore = Get.put(GlobalController());
 
   @override
   Widget build(BuildContext context) {
@@ -101,15 +103,21 @@ class SignUpScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  new InputField(isUserName: true),
-                                  new InputField(isUserName: false),
+                                  new InputField(
+                                    isUserName: true,
+                                  ),
+                                  new InputField(
+                                    isUserName: false,
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: ElevatedButton(
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
                                           // Process data.
+
                                         }
+                                        eventStore.signUpWithEmail();
                                       },
                                       child: const Text('Sign Up'),
                                     ),

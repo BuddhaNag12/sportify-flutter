@@ -12,6 +12,7 @@ part 'app_routes.dart';
 
 class AppPages {
   static const INITIAL = Routes.SPLASH;
+  // static const PROFILE = Routes.PROFILE;
 
   static final routes = [
     GetPage(
