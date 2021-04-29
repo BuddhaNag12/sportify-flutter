@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sportify/controllers/authController.dart';
+// import 'package:sportify/controllers/global_Controller.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends GetView<AuthController> {
+  final AuthController con = Get.put(AuthController());
+  
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -88,16 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("Not Logged In?"),
-                  TextButton(
-                    onPressed: () => Get.toNamed('/signin'),
-                    child: Text(
-                      "Log in",
-                      style: TextStyle(
-                        fontSize: 18,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+                  Obx(
+                    () => con.stateUser.length > 0
+                        ? loggedInWidget(con.stateUser[0].email, con)
+                        : notLoggedInWidget(),
                   )
                 ],
               ),
@@ -107,4 +100,37 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Widget loggedInWidget(user, con) {
+  return Column(children: [
+    Text('welcome $user'),
+    TextButton(
+      onPressed: () => con.logOut(),
+      child: Text(
+        "Log out",
+        style: TextStyle(
+          fontSize: 18,
+        ),
+      ),
+    )
+  ]);
+}
+
+Widget notLoggedInWidget() {
+  return Column(
+    children: [
+      Text("Not Logged In?"),
+      TextButton(
+        onPressed: () => Get.toNamed('/signin'),
+        child: Text(
+          "Log in",
+          style: TextStyle(
+            fontSize: 18,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      )
+    ],
+  );
 }

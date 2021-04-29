@@ -12,7 +12,7 @@ void main() async {
       defaultTransition: Transition.native,
       debugShowCheckedModeBanner: false,
       title: "Sportify",
-      initialRoute: Routes.HOME,
+      initialRoute: Routes.SPLASH,
       getPages: AppPages.routes,
       theme: ThemeData(
         textTheme: TextTheme(

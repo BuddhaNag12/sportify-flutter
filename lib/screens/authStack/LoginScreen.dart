@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sportify/controllers/global_Controller.dart';
+import 'package:sportify/controllers/authController.dart';
+// import 'package:sportify/controllers/global_Controller.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 
 class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final GlobalController eventStore = Get.put(GlobalController());
+  final AuthController eventStore = Get.find();
+
   @override
   Widget build(BuildContext context) {
     final double width = context.mediaQuery.size.width;
@@ -95,25 +97,30 @@ class LoginScreen extends StatelessWidget {
                             Container(
                               width: width - 40,
                               height: 230,
-                              // color: Colors.grey,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  new InputField(isUserName: true),
-                                  new InputField(isUserName: false),
-                                  Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        if (_formKey.currentState.validate()) {
-                                          eventStore.signInWithEmail();
-                                        }
-                                      },
-                                      child: const Text('Log in'),
+                                  new EmailInputField(),
+                                  new PasswordInputField(),
+                                  Obx(
+                                    () => Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: eventStore.isLoading.value == true
+                                          ? CircularProgressIndicator()
+                                          : ElevatedButton(
+                                              onPressed: () {
+                                                if (_formKey.currentState
+                                                    .validate()) {
+                                                  eventStore.signInWithEmail();
+                                                  eventStore.reset();
+                                                }
+                                              },
+                                              child: const Text('Log in'),
+                                            ),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -138,18 +145,22 @@ class LoginScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ElevatedButton.icon(
-                                        onPressed: () => {},
-                                        icon: Icon(FlutterIcons.google_ant),
-                                        label: Text("Google sign in"))),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton.icon(
+                                    onPressed: () => {},
+                                    icon: Icon(FlutterIcons.google_ant),
+                                    label: Text("Google sign in"),
+                                  ),
+                                ),
                                 Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ElevatedButton.icon(
-                                        onPressed: () =>
-                                            Get.changeTheme(ThemeData.dark()),
-                                        icon: Icon(FlutterIcons.facebook_ent),
-                                        label: Text("Facebook Sign in"))),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton.icon(
+                                    onPressed: () =>
+                                        Get.changeTheme(ThemeData.dark()),
+                                    icon: Icon(FlutterIcons.facebook_ent),
+                                    label: Text("Facebook Sign in"),
+                                  ),
+                                ),
                               ],
                             )
                           ],

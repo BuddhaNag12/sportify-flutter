@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'package:sportify/screens/authStack/SignUpScreen.dart';
 import 'package:sportify/screens/eventsStack/JoinEventsScreen.dart';
 import 'package:sportify/screens/eventsStack/createEventScreen.dart';
@@ -8,29 +9,36 @@ import 'package:sportify/screens/homeScreen.dart';
 import 'package:sportify/screens/authStack/LoginScreen.dart';
 import 'package:sportify/screens/profileStack/profileScreen.dart';
 import 'package:sportify/screens/splashScreen.dart';
+
+// bindings
+import 'package:sportify/bindings/auth_binding.dart';
+import 'package:sportify/bindings/viewEvent_binding.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.SPLASH;
-  // static const PROFILE = Routes.PROFILE;
+  // static const INITIAL = Routes.SPLASH;
+  // // static const PROFILE = Routes.PROFILE;
 
   static final routes = [
     GetPage(
       name: Routes.HOME,
       page: () => HomeScreen(),
-      // binding: HomeBinding(),
+      binding: AuthBindings(),
     ),
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginScreen(),
+      binding: AuthBindings(),
     ),
     GetPage(
       name: Routes.SIGNUP,
       page: () => SignUpScreen(),
+      binding: AuthBindings(),
     ),
     GetPage(
       name: Routes.VIEW_EVENTS,
       page: () => ViewEventsScreen(),
+      binding:ViewEventBindings(),
     ),
     GetPage(
       name: Routes.CREATE_EVENTS,
@@ -45,7 +53,7 @@ class AppPages {
       page: () => JoinEventsScreen(),
     ),
     GetPage(
-      name: INITIAL,
+      name: Routes.SPLASH,
       page: () => SplashScreen(),
     ),
     GetPage(

@@ -3,15 +3,26 @@
 ## It's an app that can help you manage sports events.
 
 - [x] getx
+- [x] Google-maps
+- [x] svg-flutter
+- [x] Setup routes
+- [x] setup dependancy binding
+- [x] setup email pass login auth
 - [ ] location
 - [ ] location-picker
 - [ ] firebase-firestore
-- [x] svg-flutter
-- [x] Setup routes
-- [ ] setup dependancy binding
-- [ ] setup email pass login auth
+- [ ] List all the events 
+- [ ] filter events acording to category and location
+- [ ] setup user profile
+- [ ] setup event manage page with proper request and response
 
 
+# next
+- [ ] work on store event and retrieve events
+- [ ] work on logo
+
+
+> Documentations and privacy policy will be added later on
 
 ## Getting Started
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sportify/controllers/global_Controller.dart';
+import 'package:sportify/controllers/viewEventController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:get/get.dart';
 import 'package:sportify/widgets/localWidgets.dart';
@@ -11,13 +11,11 @@ class ViewEventsScreen extends StatelessWidget {
     'Basketball',
     'Tennis'
   ];
-  final GlobalController eventStore = Get.put(GlobalController());
+  final ViewEventController viewCon = Get.find();
 
   @override
   Widget build(BuildContext context) {
     final double width = context.mediaQuery.size.width;
-
-    // String dropdownValue = controller.categoryValue.value;
     return Scaffold(
       appBar: MyAppBar(
         isTransparent: false,
@@ -62,8 +60,8 @@ class ViewEventsScreen extends StatelessWidget {
                               "Category",
                               style: TextStyle(color: Colors.white),
                             ),
-                            value: eventStore.category.value.isNotEmpty
-                                ? eventStore.category.value
+                            value: viewCon.category.value.isNotEmpty
+                                ? viewCon.category.value
                                 : null,
                             icon: const Icon(Icons.sports_baseball_rounded,
                                 color: Colors.white),
@@ -71,7 +69,7 @@ class ViewEventsScreen extends StatelessWidget {
                             dropdownColor: Colors.tealAccent.shade700,
                             underline: SizedBox(),
                             onChanged: (newValue) {
-                              eventStore.changeCategoryValue(newValue);
+                              viewCon.changeCategoryValue(newValue);
                             },
                             items: categories.map((val) {
                               return DropdownMenuItem(
@@ -89,9 +87,10 @@ class ViewEventsScreen extends StatelessWidget {
                     width: 50,
                   ),
                   ElevatedButton.icon(
-                      onPressed: () => {},
-                      icon: Icon(Icons.gps_fixed_rounded),
-                      label: Text("Locations"))
+                    onPressed: () => {},
+                    icon: Icon(Icons.gps_fixed_rounded),
+                    label: Text("Locations"),
+                  )
                 ],
               ),
             ),

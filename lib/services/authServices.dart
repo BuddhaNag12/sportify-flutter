@@ -1,39 +1,50 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sportify/services/errorService.dart';
 
-import 'package:sportify/models/authUser.dart';
+class FirebaseAuthentication {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  var error;
 
-Future<AuthUser> signUpWithEmailPassword(
-    String username, String password) async {
-  // Trigger the authentication flow
-  try {
-    UserCredential cred = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: username, password: password);
-
-    return AuthUser(email: cred.user.email, uid: cred.user.uid);
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
-    } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
-    }
-  } catch (e) {
-    print(e);
-    return null;
-  }
-  return null;
-}
-
-Future<AuthUser> signInWithEmailService(String username, String password) async {
-  try {
-    UserCredential cred = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: username, password: password);
-    return AuthUser(email: cred.user.email, uid: cred.user.uid);
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+  Future<User> signUpWithEmailPassword(String username, String password) async {
+    try {
+      UserCredential cred = await _auth.createUserWithEmailAndPassword(
+          email: username.trim(), password: password.trim());
+      return cred.user;
+    } on FirebaseAuthException catch (e) {
+      this.error = e.code;
+      print(e.code);
+      if (e.code == 'weak-password') {
+        throw new WeakPassword();
+      } else if (e.code == 'email-already-in-use') {
+        throw new EmailExist();
+      } else if (e.code == 'invalid-email') {
+        throw new InvalidEmail();
+      }
+      return null;
+    } catch (err) {
+      print(err);
+      return null;
     }
   }
-  return null;
+
+  Future<User> signInWithEmailService(String username, String password) async {
+    try {
+      UserCredential cred = await _auth.signInWithEmailAndPassword(
+          email: username.trim(), password: password.trim());
+      return cred.user;
+    } on FirebaseAuthException catch (e) {
+      this.error = e.code;
+      if (e.code == 'user-not-found') {
+        throw new UserNotFound();
+      } else if (e.code == 'wrong-password') {
+        throw new WrongPassword();
+      } else if (e.code == 'invalid-email') {
+        throw new InvalidEmail();
+      }
+      return null;
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
 }

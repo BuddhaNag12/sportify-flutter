@@ -1,87 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportify/controllers/global_Controller.dart';
+import 'package:sportify/controllers/authController.dart';
 
-class InputField extends StatelessWidget {
-  final bool isUserName;
-  final GlobalController controller = Get.find();
-  InputField({Key key, @required this.isUserName}) : super(key: key);
+class EmailInputField extends StatelessWidget {
+  final AuthController controller = Get.find();
+  EmailInputField({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var inputDecoration = InputDecoration(
+      hintText: 'Enter your username',
+      fillColor: Colors.white70,
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(
+          width: 2,
+          color: Colors.white,
+        ),
+      ),
+       isDense: true,
+      prefixIcon: Icon(Icons.email),
+    );
     return Material(
       elevation: 5.0,
       shadowColor: Colors.black45,
       borderRadius: BorderRadius.circular(8),
       child: TextFormField(
-        controller: this.isUserName
-            ? controller.emailController
-            : controller.passWordController,
-        obscureText: this.isUserName ? false : true,
+        controller: controller.emailController,
         validator: (String value) {
-          if (value == null || value.isEmpty) {
+          if (!GetUtils.isEmail(value)) {
+            return 'Enter valid email';
+          } else if (value == null || value.isEmpty) {
             return 'Please enter valid characters';
           } else {
             print(value);
+            return null;
           }
-          return null;
         },
-        decoration: InputDecoration(
-          hintText:
-              this.isUserName ? 'Enter your username' : 'Enter your password',
-          fillColor: Colors.white,
-          filled: true,
-          prefixIcon:
-              Icon(this.isUserName ? Icons.email : Icons.security_rounded),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                width: 3,
-                color: Colors.white10,
-              )),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(
-              width: 3,
-              color: Colors.white10,
-            ),
-          ),
-        ),
+        decoration: inputDecoration,
       ),
     );
   }
 }
 
-Widget textInputField(context, {String inputTitle}) {
-  return Material(
-    elevation: 5.0,
-    shadowColor: Colors.black45,
-    borderRadius: BorderRadius.circular(8),
-    child: TextFormField(
-      validator: (String value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter valid characters';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        hintText: 'Enter your $inputTitle',
-        fillColor: Colors.white,
-        filled: true,
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(
-              width: 3,
-              color: Colors.white10,
-            )),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          borderSide: BorderSide(
-            width: 3,
-            color: Colors.white10,
-          ),
+class PasswordInputField extends StatelessWidget {
+  final AuthController controller = Get.find();
+  PasswordInputField({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var inputDecoration = InputDecoration(
+      hintText: 'Enter your Password',
+      fillColor: Colors.white70,
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide(
+          width: 2,
+          color: Colors.white,
         ),
       ),
-    ),
-  );
+      isDense: true,
+      prefixIcon: Icon(Icons.security_rounded),
+    );
+    return Material(
+      elevation: 5.0,
+      shadowColor: Colors.black45,
+      borderRadius: BorderRadius.circular(8),
+      child: TextFormField(
+        controller: controller.passWordController,
+        obscureText: true,
+        validator: (String value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter valid characters';
+          } else {
+            print(value);
+            return null;
+          }
+        },
+        decoration: inputDecoration,
+      ),
+    );
+  }
 }
+
