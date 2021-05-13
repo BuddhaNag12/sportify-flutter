@@ -1,53 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:async';
+import 'package:sportify/controllers/eventController.dart';
 
-class ViewEventScreen extends StatefulWidget {
-  @override
-  _ViewEventScreenState createState() => _ViewEventScreenState();
-}
-
-class _ViewEventScreenState extends State<ViewEventScreen>
-    with TickerProviderStateMixin {
-  final Completer<GoogleMapController> _controller = Completer();
-  Marker marker;
-  BitmapDescriptor pinLocationIcon;
-  TabController tabController;
-  int selectedIndex = 0;
-
-  LatLng latlng = LatLng(24.805426, 93.103355);
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(24.805426, 93.103355),
-    zoom: 11,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-    initializeTabController();
-  }
-
-  void initializeTabController() {
-    tabController = TabController(
-      initialIndex: selectedIndex,
-      length: 2,
-      vsync: this,
-    );
-  }
-
-  void addMarker() {
-    marker = Marker(
-      markerId: MarkerId("home"),
-      position: latlng,
-      draggable: false,
-      zIndex: 2,
-      flat: true,
-      anchor: Offset(0.5, 0.5),
-    );
-  }
+class ViewEventScreen extends GetView<EventController> {
+  final EventController _con = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -85,19 +44,21 @@ class _ViewEventScreenState extends State<ViewEventScreen>
                     color: Colors.grey.shade500,
                   )
                 ]),
-                child: ClipOval(
-                  child: GoogleMap(
-                    mapType: MapType.hybrid,
-                    initialCameraPosition: _kGooglePlex,
-                    markers: Set.of((marker != null) ? [marker] : []),
-                    onMapCreated: (GoogleMapController controller) {
-                      _controller.complete(controller);
-                      this.setState(() {
-                        addMarker();
-                      });
-                    },
-                  ),
-                ),
+                child: ClipOval(child: GetBuilder<EventController>(
+                  builder: (eController) {
+                    return GoogleMap(
+                      mapType: MapType.hybrid,
+                      initialCameraPosition: eController.kGooglePlex,
+                      markers: Set.of((eController.marker != null)
+                          ? [eController.marker]
+                          : []),
+                      onMapCreated: (GoogleMapController controller) {
+                        eController.gmapController.complete(controller);
+                        eController.addMarker();
+                      },
+                    );
+                  },
+                )),
               ),
             ),
             spacer(5),
@@ -106,7 +67,7 @@ class _ViewEventScreenState extends State<ViewEventScreen>
               padding: EdgeInsets.all(10.0),
               margin: EdgeInsets.symmetric(horizontal: 15),
               child: TabBar(
-                controller: tabController,
+                controller: _con.tabController,
                 tabs: [
                   Tab(
                     child: Text("Details".toUpperCase()),
@@ -114,48 +75,47 @@ class _ViewEventScreenState extends State<ViewEventScreen>
                   Tab(child: Text("More info".toUpperCase())),
                 ],
                 onTap: (int index) {
-                  setState(() {
-                    selectedIndex = index;
-                    tabController.animateTo(index);
-                  });
+                  _con.selectedIndex.value = index;
+                  _con.tabController.animateTo(index);
                 },
               ),
             ),
             Container(
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              child: IndexedStack(
-                children: <Widget>[
-                  Visibility(
-                    child: Container(
-                      height: 120,
-                      child: Text(
-                        'about the tournament it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
-                        style: Theme.of(context).textTheme.headline6,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 6,
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: Obx(
+                  () => IndexedStack(
+                    children: <Widget>[
+                      Visibility(
+                        child: Container(
+                          height: 120,
+                          child: Text(
+                            'about the tournament it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
+                            style: Theme.of(context).textTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 6,
+                          ),
+                        ),
+                        maintainState: true,
+                        visible: _con.selectedIndex.value == 0,
                       ),
-                    ),
-                    maintainState: true,
-                    visible: selectedIndex == 0,
-                  ),
-                  Visibility(
-                    child: Container(
-                      height: 120,
-                      child: Text(
-                        'about the Team it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
-                        style: Theme.of(context).textTheme.headline6,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 6,
+                      Visibility(
+                        child: Container(
+                          height: 120,
+                          child: Text(
+                            'about the Team it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
+                            style: Theme.of(context).textTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 6,
+                          ),
+                        ),
+                        maintainState: true,
+                        visible: _con.selectedIndex.value == 1,
                       ),
-                    ),
-                    maintainState: true,
-                    visible: selectedIndex == 1,
+                    ],
+                    index: _con.selectedIndex.value,
                   ),
-                ],
-                index: selectedIndex,
-              ),
-            ),
+                )),
             SizedBox(
               width: width - 100,
               child: ElevatedButton(

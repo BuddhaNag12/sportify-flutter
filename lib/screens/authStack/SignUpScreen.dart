@@ -5,18 +5,14 @@ import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
+import 'package:sportify/constants/responsiveConst.dart';
 
-class SignUpScreen extends GetView<AuthController>{
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class SignUpScreen extends GetView<AuthController> {
   final AuthController eventStore = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    final double width = context.mediaQuery.size.width;
-    final double height = context.mediaQuery.size.height;
-
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: MyAppBar(
         isTransparent: false,
       ),
@@ -91,7 +87,7 @@ class SignUpScreen extends GetView<AuthController>{
                     color: Theme.of(context).primaryColor,
                     child: SingleChildScrollView(
                       child: Form(
-                        key: _formKey,
+                        key: eventStore.signUpFormKey,
                         child: Column(
                           children: [
                             Container(
@@ -113,7 +109,8 @@ class SignUpScreen extends GetView<AuthController>{
                                             )
                                           : ElevatedButton(
                                               onPressed: () {
-                                                if (_formKey.currentState
+                                                if (eventStore
+                                                    .signUpFormKey.currentState
                                                     .validate()) {
                                                   eventStore
                                                       .signUpWithEmail()

@@ -3,20 +3,17 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sportify/controllers/authController.dart';
-// import 'package:sportify/controllers/global_Controller.dart';
+
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
+import 'package:sportify/constants/responsiveConst.dart';
 
-class LoginScreen extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class LoginScreen extends GetView<AuthController> {
   final AuthController eventStore = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final double width = context.mediaQuery.size.width;
-    final double height = context.mediaQuery.size.height;
-
     return Scaffold(
       appBar: MyAppBar(
         isTransparent: false,
@@ -91,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     child: SingleChildScrollView(
                       child: Form(
-                        key: _formKey,
+                        key: eventStore.loginFormKey,
                         child: Column(
                           children: [
                             Container(
@@ -111,7 +108,8 @@ class LoginScreen extends StatelessWidget {
                                           ? CircularProgressIndicator()
                                           : ElevatedButton(
                                               onPressed: () {
-                                                if (_formKey.currentState
+                                                if (eventStore
+                                                    .loginFormKey.currentState
                                                     .validate()) {
                                                   eventStore.signInWithEmail();
                                                   eventStore.reset();
@@ -125,44 +123,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ),
                             spacer(5.0),
-                            Text(
-                              "Don't Have an account?",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () => Get.toNamed('/signup'),
-                              child: Text(
-                                "Sign Up",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton.icon(
-                                    onPressed: () => {},
-                                    icon: Icon(FlutterIcons.google_ant),
-                                    label: Text("Google sign in"),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ElevatedButton.icon(
-                                    onPressed: () =>
-                                        Get.changeTheme(ThemeData.dark()),
-                                    icon: Icon(FlutterIcons.facebook_ent),
-                                    label: Text("Facebook Sign in"),
-                                  ),
-                                ),
-                              ],
-                            )
+                            actionWidget(),
                           ],
                         ),
                       ),
@@ -176,4 +137,46 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget actionWidget() {
+  return Column(children: [
+    spacer(5.0),
+    Text(
+      "Don't Have an account?",
+      style: TextStyle(
+        fontSize: 18,
+        color: Colors.white,
+      ),
+    ),
+    TextButton(
+      onPressed: () => Get.toNamed('/signup'),
+      child: Text(
+        "Sign Up",
+        style: TextStyle(
+            color: Colors.white, decoration: TextDecoration.underline),
+      ),
+    ),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton.icon(
+            onPressed: () => {},
+            icon: Icon(FlutterIcons.google_ant),
+            label: Text("Google sign in"),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton.icon(
+            onPressed: () => Get.changeTheme(ThemeData.dark()),
+            icon: Icon(FlutterIcons.facebook_ent),
+            label: Text("Facebook Sign in"),
+          ),
+        ),
+      ],
+    )
+  ]);
 }

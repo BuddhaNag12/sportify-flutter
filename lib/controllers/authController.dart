@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sportify/services/authServices.dart';
 import 'package:flutter/material.dart';
+import 'package:sportify/constants/firebaseConstants.dart';
 
 class AuthController extends GetxController {
   /* Auth State variables */
@@ -10,14 +11,17 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var err = ''.obs;
   var category = ''.obs;
-  List<dynamic> stateUser = [].obs;
+  List<dynamic> stateUser=[].obs;
   /* ------------------------------- */
-
+ 
+ 
   /* Auth State Controllers */
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passWordController = TextEditingController();
-  final authClass = new FirebaseAuthentication();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuthentication _authService = new FirebaseAuthentication();
+    final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+
   /* ------------------------------- */
 
   // Utility Methods
@@ -27,19 +31,26 @@ class AuthController extends GetxController {
       '$msg',
       colorText: Colors.white,
       barBlur: 1.5,
-      icon: Icon(Icons.info_rounded,color: Colors.white,),
+      icon: Icon(
+        Icons.info_rounded,
+        color: Colors.white,
+      ),
       isDismissible: true,
       leftBarIndicatorColor: Colors.red,
+      shouldIconPulse: true,
+      borderRadius: 8,
+      overlayBlur: 2.0,
+      snackStyle: SnackStyle.FLOATING,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.teal,
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 4),
     );
   }
 
   void reset() {
     this.err.value = '';
     this.isLoggedIn.value = false;
-    this.stateUser.length = 0;
+    this.stateUser.length=0;
     emailController.text = '';
     passWordController.text = '';
   }
@@ -50,13 +61,19 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+  // @override
+  // void onReady(){
+  //   print("ready");
+  // }
+
+
   Future<void> signUpWithEmail() async {
     this.isLoading.value = true;
     try {
       final userEmail = emailController.text;
       final password = passWordController.text;
       final response =
-          await authClass.signUpWithEmailPassword(userEmail, password);
+          await _authService.signUpWithEmailPassword(userEmail, password);
       if (response != null) {
         isLoading.value = false;
         Get.toNamed('/signin');
@@ -77,7 +94,7 @@ class AuthController extends GetxController {
       final userEmail = emailController.text;
       final password = passWordController.text;
       final response =
-          await authClass.signInWithEmailService(userEmail, password);
+          await _authService.signInWithEmailService(userEmail, password);
       if (response != null) {
         this.isLoggedIn.value = true;
         this.isLoading.value = false;
@@ -92,7 +109,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> checkIsLoggedIn() async {
-    _auth.authStateChanges().listen((User user) {
+    auth.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
         this.showDialog('User is currently signed out!');
@@ -105,7 +122,7 @@ class AuthController extends GetxController {
   }
 
   void logOut() {
-    _auth.signOut().then((s) {
+    auth.signOut().then((s) {
       reset();
     });
   }

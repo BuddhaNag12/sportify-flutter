@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sportify/controllers/authController.dart';
-// import 'package:sportify/controllers/global_Controller.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
+import 'package:sportify/constants/responsiveConst.dart';
 
 class HomeScreen extends GetView<AuthController> {
-  final AuthController con = Get.put(AuthController());
-  
+  final AuthController con = Get.find();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          systemNavigationBarDividerColor: Colors.transparent),
+        statusBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
     );
-
-    final double width = context.mediaQuery.size.width;
-    final double height = context.mediaQuery.size.height;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -37,12 +35,15 @@ class HomeScreen extends GetView<AuthController> {
             Stack(
               children: [
                 SizedBox(
-                    width: width,
-                    child: Image.asset('assets/bg.png', fit: BoxFit.fitWidth)),
+                  width: width,
+                  child: Image.asset('assets/bg.png', fit: BoxFit.fitWidth),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: SizedBox(
-                      width: width, child: Image.asset('assets/sport.png')),
+                    width: width,
+                    child: Image.asset('assets/sport.png'),
+                  ),
                 ),
               ],
             ),
@@ -61,12 +62,28 @@ class HomeScreen extends GetView<AuthController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        OutlinedButton(
-                          onPressed: () => Get.toNamed('/create'),
-                          child: Text("Create Events"),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 2, color: Colors.grey),
-                          ),
+                        Obx(
+                          () => con.stateUser.length > 0
+                              ? OutlinedButton(
+                                  onPressed: () => Get.toNamed('/create'),
+                                  child: Text("Create Events"),
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(
+                                      width: 2,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                )
+                              : OutlinedButton(
+                                  onPressed: () => Get.toNamed('/signin'),
+                                  child: Text("Create Events"),
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(
+                                      width: 2,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
                         ),
                         ElevatedButton(
                           onPressed: () => Get.toNamed('/view_events'),
@@ -74,7 +91,6 @@ class HomeScreen extends GetView<AuthController> {
                           style: ElevatedButton.styleFrom(
                             elevation: 2,
                           ),
-                          // style: raisedButtonStyle,
                         )
                       ],
                     ),

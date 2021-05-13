@@ -10,8 +10,9 @@ class EmailInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     var inputDecoration = InputDecoration(
       hintText: 'Enter your username',
+
       fillColor: Colors.white70,
-      filled: true,
+      // filled: true,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
         borderSide: BorderSide(
@@ -19,7 +20,7 @@ class EmailInputField extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-       isDense: true,
+      isDense: true,
       prefixIcon: Icon(Icons.email),
     );
     return Material(
@@ -27,6 +28,8 @@ class EmailInputField extends StatelessWidget {
       shadowColor: Colors.black45,
       borderRadius: BorderRadius.circular(8),
       child: TextFormField(
+        style: TextStyle(color: Colors.black54),
+        keyboardType: TextInputType.emailAddress,
         controller: controller.emailController,
         validator: (String value) {
           if (!GetUtils.isEmail(value)) {
@@ -53,7 +56,7 @@ class PasswordInputField extends StatelessWidget {
     var inputDecoration = InputDecoration(
       hintText: 'Enter your Password',
       fillColor: Colors.white70,
-      filled: true,
+      // filled: true,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8)),
         borderSide: BorderSide(
@@ -69,6 +72,7 @@ class PasswordInputField extends StatelessWidget {
       shadowColor: Colors.black45,
       borderRadius: BorderRadius.circular(8),
       child: TextFormField(
+        style: TextStyle(color: Colors.black54),
         controller: controller.passWordController,
         obscureText: true,
         validator: (String value) {
@@ -84,4 +88,3 @@ class PasswordInputField extends StatelessWidget {
     );
   }
 }
-

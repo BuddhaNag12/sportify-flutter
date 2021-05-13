@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sportify/controllers/viewEventController.dart';
+import 'package:sportify/constants/catConstat.dart';
+import 'package:sportify/controllers/eventController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:get/get.dart';
 import 'package:sportify/widgets/localWidgets.dart';
+import 'package:sportify/constants/responsiveConst.dart';
 
-class ViewEventsScreen extends StatelessWidget {
-  final List categories = <String>[
-    'Cricket',
-    'Foodball',
-    'Basketball',
-    'Tennis'
-  ];
-  final ViewEventController viewCon = Get.find();
+
+class ViewEventsScreen extends GetView<EventController> {
+  final EventController viewCon = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final double width = context.mediaQuery.size.width;
+
     return Scaffold(
       appBar: MyAppBar(
         isTransparent: false,
@@ -43,7 +40,7 @@ class ViewEventsScreen extends StatelessWidget {
                   FittedBox(
                     child: Container(
                       padding: EdgeInsets.all(5.0),
-                      width: 100,
+                      width: 110,
                       height: 38,
                       decoration: BoxDecoration(
                           boxShadow: [

@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sportify/services/errorService.dart';
+import 'package:sportify/constants/firebaseConstants.dart';
 
 class FirebaseAuthentication {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   var error;
 
   Future<User> signUpWithEmailPassword(String username, String password) async {
     try {
-      UserCredential cred = await _auth.createUserWithEmailAndPassword(
+      UserCredential cred = await auth.createUserWithEmailAndPassword(
           email: username.trim(), password: password.trim());
       return cred.user;
     } on FirebaseAuthException catch (e) {
@@ -29,7 +29,7 @@ class FirebaseAuthentication {
 
   Future<User> signInWithEmailService(String username, String password) async {
     try {
-      UserCredential cred = await _auth.signInWithEmailAndPassword(
+      UserCredential cred = await auth.signInWithEmailAndPassword(
           email: username.trim(), password: password.trim());
       return cred.user;
     } on FirebaseAuthException catch (e) {

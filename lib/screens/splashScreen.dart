@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sportify/widgets/localWidgets.dart';
-// import 'package:transparent_image/transparent_image.dart';
+import 'package:sportify/constants/responsiveConst.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-
-    final double width = context.mediaQuerySize.width;
-    final double height = context.mediaQuerySize.height;
-
     final PageController controller = PageController(initialPage: 0);
+
+    
 
     _nextPage(int index) {
       print("clicked");

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-// import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
+import 'package:sportify/widgets/localWidgets.dart';
 
 class JoinEventsScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -43,42 +42,7 @@ class JoinEventsScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1),
                   ),
                 ),
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Positioned(
-                      top: -80,
-                      left: 135,
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).primaryColor,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade800,
-                                  blurRadius: 3.0,
-                                  spreadRadius: 1.0,
-                                  offset: Offset(1.0, 5.0)),
-                            ]),
-                        alignment: Alignment.center,
-                        child: SvgPicture.asset(
-                          'assets/join-evt.svg',
-                          height: 90,
-                          width: 100,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                cirCularIcon(imgPath: 'assets/join-evt.svg'),
                 Expanded(
                   child: Container(
                     // padding: EdgeInsets.all(20),

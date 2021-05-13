@@ -12,13 +12,10 @@ import 'package:sportify/screens/splashScreen.dart';
 
 // bindings
 import 'package:sportify/bindings/auth_binding.dart';
-import 'package:sportify/bindings/viewEvent_binding.dart';
+import 'package:sportify/bindings/event_binding.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  // static const INITIAL = Routes.SPLASH;
-  // // static const PROFILE = Routes.PROFILE;
-
   static final routes = [
     GetPage(
       name: Routes.HOME,
@@ -38,19 +35,34 @@ class AppPages {
     GetPage(
       name: Routes.VIEW_EVENTS,
       page: () => ViewEventsScreen(),
-      binding:ViewEventBindings(),
+      bindings: [
+        EventBinding(),
+        AuthBindings(),
+      ],
     ),
     GetPage(
       name: Routes.CREATE_EVENTS,
       page: () => CreateEventsScreen(),
+      bindings: [
+        EventBinding(),
+        AuthBindings(),
+      ],
     ),
     GetPage(
       name: Routes.VIEW_EVENT,
       page: () => ViewEventScreen(),
+      bindings: [
+        EventBinding(),
+        AuthBindings(),
+      ],
     ),
     GetPage(
       name: Routes.JOIN_EVENTS,
       page: () => JoinEventsScreen(),
+      bindings: [
+        EventBinding(),
+        AuthBindings(),
+      ],
     ),
     GetPage(
       name: Routes.SPLASH,
@@ -59,6 +71,9 @@ class AppPages {
     GetPage(
       name: Routes.PROFILE,
       page: () => ProfileScreen(),
+      bindings: [
+        AuthBindings(),
+      ],
     ),
   ];
 }
