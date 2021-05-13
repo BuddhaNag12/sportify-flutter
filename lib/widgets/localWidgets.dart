@@ -21,7 +21,6 @@ Widget spacer(double height) {
   Events cards view
 
 */
-
 Widget buildListView(BuildContext context) {
   return FutureBuilder<QuerySnapshot>(
     future: events.get(), // async work
@@ -58,7 +57,7 @@ Widget buildListView(BuildContext context) {
                     height: 90,
                     width: context.mediaQuery.size.width,
                     child: InkWell(
-                      onTap: () => Get.toNamed('/view_event'),
+                      onTap: () => Get.toNamed('/view_event/${data[i].id}'),
                       child: Row(
                         children: [
                           CircleAvatar(
@@ -99,8 +98,10 @@ Widget buildListView(BuildContext context) {
                                         children: [
                                           Row(
                                             children: [
-                                              Icon(Icons.flag_outlined,
-                                                  color: Colors.teal),
+                                              Icon(
+                                                Icons.flag_outlined,
+                                                color: Colors.teal,
+                                              ),
                                               Text(
                                                 data[i]['category'],
                                               ),
@@ -109,15 +110,17 @@ Widget buildListView(BuildContext context) {
                                           SizedBox(width: 20),
                                           Row(
                                             children: [
-                                              Icon(Icons.location_on_outlined,
-                                                  color: Colors.teal),
+                                              Icon(
+                                                Icons.location_on_outlined,
+                                                color: Colors.teal,
+                                              ),
                                               Text("Jirighat"),
                                             ],
                                           ),
                                         ],
                                       ),
                                     ),
-                                    spacer(5),
+                                    spacer(3),
                                     Container(
                                       child: Row(
                                         children: [
@@ -125,7 +128,11 @@ Widget buildListView(BuildContext context) {
                                             children: [
                                               Icon(FlutterIcons.activity_fea,
                                                   color: Colors.teal),
-                                              Text("Active"),
+                                              Text(
+                                                data[i]['active']
+                                                    ? 'Active'
+                                                    : 'Not Active',
+                                              ),
                                             ],
                                           ),
                                           SizedBox(width: 25),

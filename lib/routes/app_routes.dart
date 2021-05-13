@@ -7,7 +7,7 @@ abstract class Routes{
   static const CREATE_EVENTS = '/create';
   static const JOIN_EVENTS = '/join';
   static const VIEW_EVENTS = '/view_events';
-  static const VIEW_EVENT = '/view_event';
+  static const VIEW_EVENT = '/view_event/:id';
   static const PROFILE = '/profile';
   
 }

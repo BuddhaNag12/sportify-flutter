@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 // import 'package:sportify/controllers/global_Controller.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/colorConst.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isTransparent;
   final bool isAvatar;
   MyAppBar({this.isTransparent, this.isAvatar = false});
   Widget build(BuildContext context) {
-    // final GlobalController con = Get.put(GlobalController());
-
     return AppBar(
-      // leading: isAvatar
-      //     ? IconButton(
-      //         icon: Icon(FlutterIcons.user_circle_faw), onPressed: () => con.isLoggedIn.value?Get.toNamed('/profile'):Get.toNamed('/signin'))
-      //     :
       leading: !isTransparent
           ? IconButton(
               alignment: Alignment.center,
@@ -35,7 +30,42 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: Theme.of(context).textTheme.headline3,
       ),
       centerTitle: true,
-      actions: [],
+      actions: [
+        // IconButton(
+        //   icon: Icon(Icons.menu),
+        //   onPressed: () => Get.bottomSheet(
+        //     Container(
+        //       color: primaryColorDark,
+        //       child: Wrap(
+        //         children: [
+        //           ListTile(
+        //             leading: Icon(Icons.account_circle,color: Colors.white,),
+        //             title: Text('Profile'),
+        //             onTap: () => Get.toNamed('/profile'),
+        //           ),
+        //           ListTile(
+        //             leading: Icon(Icons.today_outlined,color: Colors.white,),
+        //             title: Text('Manage Events'),
+        //             onTap: () => Get.toNamed('/profile'),
+        //           ),
+        //           ListTile(
+        //             leading: Icon(Icons.notification_important,color: Colors.white,),
+        //             title: Text('Notifications'),
+        //           ),
+        //           ListTile(
+        //             leading: Icon(Icons.settings,color: Colors.white,),
+        //             title: Text('Settings'),
+        //           ),
+        //           ListTile(
+        //             leading: Icon(Icons.info,color: Colors.white,),
+        //             title: Text('About'),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // )
+      ],
     );
   }
 

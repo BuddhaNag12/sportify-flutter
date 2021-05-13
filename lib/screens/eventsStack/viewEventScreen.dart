@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,9 +11,8 @@ class ViewEventScreen extends GetView<EventController> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
-
+    print(Get.parameters['id']);
+    
     return Scaffold(
       appBar: MyAppBar(
         isTransparent: false,
