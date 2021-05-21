@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
@@ -11,8 +12,9 @@ class ViewEventScreen extends GetView<EventController> {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.parameters['id']);
-    
+    var id = Get.parameters['id'];
+    _con.viewEvent(id);
+
     return Scaffold(
       appBar: MyAppBar(
         isTransparent: false,
@@ -62,7 +64,9 @@ class ViewEventScreen extends GetView<EventController> {
               ),
             ),
             spacer(5),
-            headerCard(width, context),
+            Obx(
+              () => headerCard(width, context),
+            ),
             Container(
               padding: EdgeInsets.all(10.0),
               margin: EdgeInsets.symmetric(horizontal: 15),
@@ -89,11 +93,13 @@ class ViewEventScreen extends GetView<EventController> {
                       Visibility(
                         child: Container(
                           height: 120,
-                          child: Text(
-                            'about the tournament it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
-                            style: Theme.of(context).textTheme.headline6,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 6,
+                          child: Obx(
+                            () => Text(
+                              '${_con.evtDetails.description}',
+                              style: Theme.of(context).textTheme.headline6,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 6,
+                            ),
                           ),
                         ),
                         maintainState: true,

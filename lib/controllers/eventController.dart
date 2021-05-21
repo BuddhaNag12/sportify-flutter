@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:j_location_picker/j_location_picker.dart';
+import 'package:sportify/models/eventDetailModel.dart';
 import 'package:sportify/services/firestoreService.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
-// import 'package:sportify/models/eventModel.dart';
 
 class EventController extends GetxController with SingleGetTickerProviderMixin {
   /* Auth State variables */
@@ -19,9 +19,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var category = ''.obs;
   var prizeCat = ''.obs;
 
-  // Map<String,dynamic> eventList;
+  Rx<EventDetailModel> eventDetails = EventDetailModel().obs;
+  EventDetailModel get evtDetails => eventDetails.value;
+  set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
+
 
   // utility
+
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   DateFormat timeFormat = DateFormat("HH:mm");
 
@@ -91,6 +95,16 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
+  void viewEvent(id) async {
+    try {
+      final res = await fs.viewEvent(id);
+      // print("${res.id},${res.name}");
+      eventDetails.value = res;
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void createEvent() async {
     if (category.value.isBlank) {
       _showDialog('Please select a Category');
@@ -103,12 +117,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     } else {
       try {
         final res = await fs.addEvent(
-            eventName: eventNameController.text,
-            date: pickedDate.value,
-            cat: category.value,
-            location: pickedLatlng,
-            size: eventSizeController.text,
-            desc: eventDescriptionController.text);
+          eventName: eventNameController.text,
+          date: pickedDate.value,
+          cat: category.value,
+          location: pickedLatlng,
+          size: eventSizeController.text,
+          desc: eventDescriptionController.text,
+        );
         if (res.isNotEmpty) {
           Get.snackbar(
             'success',

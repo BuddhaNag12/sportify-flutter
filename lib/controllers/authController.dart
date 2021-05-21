@@ -39,7 +39,7 @@ class AuthController extends GetxController {
       leftBarIndicatorColor: Colors.red,
       shouldIconPulse: true,
       borderRadius: 8,
-      overlayBlur: 2.0,
+      // overlayBlur: 2.0,
       snackStyle: SnackStyle.FLOATING,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.teal,

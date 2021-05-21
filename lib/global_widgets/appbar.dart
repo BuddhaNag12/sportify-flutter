@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 // import 'package:sportify/controllers/global_Controller.dart';
 import 'package:get/get.dart';
-import 'package:sportify/constants/colorConst.dart';
+// import 'package:sportify/constants/colorConst.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isTransparent;

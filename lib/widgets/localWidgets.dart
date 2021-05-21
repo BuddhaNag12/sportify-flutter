@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
+import 'package:sportify/constants/responsiveConst.dart';
+import 'package:sportify/controllers/eventController.dart';
 
 /* 
 
@@ -55,7 +57,7 @@ Widget buildListView(BuildContext context) {
                     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     height: 90,
-                    width: context.mediaQuery.size.width,
+                    width: width,
                     child: InkWell(
                       onTap: () => Get.toNamed('/view_event/${data[i].id}'),
                       child: Row(
@@ -68,20 +70,20 @@ Widget buildListView(BuildContext context) {
                               color: Colors.teal,
                             ),
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(width: 30),
                           Expanded(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Flexible(
-                                child: new Container(
-                                  margin: new EdgeInsets.only(top: 5.0),
-                                  child: new Text(
-                                    data[i]['name'],
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 5.0),
+                                  child: Text(
+                                    data[i]['name'].toUpperCase(),
                                     overflow: TextOverflow.ellipsis,
-                                    style: new TextStyle(
+                                    style: TextStyle(
                                       fontSize: 22.0,
-                                      color: new Color(0xFF212121),
+                                      color: Color(0xFF212121),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -89,6 +91,7 @@ Widget buildListView(BuildContext context) {
                               ),
                               Container(
                                 padding: EdgeInsets.only(top: 5),
+                                width: width,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -96,52 +99,66 @@ Widget buildListView(BuildContext context) {
                                     Container(
                                       child: Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.flag_outlined,
-                                                color: Colors.teal,
-                                              ),
-                                              Text(
-                                                data[i]['category'],
-                                              ),
-                                            ],
+                                          SizedBox(
+                                            width: 70,
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.flag_outlined,
+                                                    color: Colors.teal,
+                                                    size: 18),
+                                                Text(
+                                                  data[i]['category'],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           SizedBox(width: 20),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.location_on_outlined,
-                                                color: Colors.teal,
-                                              ),
-                                              Text("Jirighat"),
-                                            ],
+                                          SizedBox(
+                                            width: 70,
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.location_on_outlined,
+                                                    color: Colors.teal,
+                                                    size: 18),
+                                                Text("Jirighat"),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    spacer(3),
+                                    spacer(5),
                                     Container(
                                       child: Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Icon(FlutterIcons.activity_fea,
-                                                  color: Colors.teal),
-                                              Text(
-                                                data[i]['active']
-                                                    ? 'Active'
-                                                    : 'Not Active',
-                                              ),
-                                            ],
+                                          SizedBox(
+                                            width: 50,
+                                            child: Row(
+                                              children: [
+                                                Icon(FlutterIcons.activity_fea,
+                                                    color: Colors.teal,
+                                                    size: 18),
+                                                Text(
+                                                  data[i]['active']
+                                                      ? 'Active'
+                                                      : 'Not Active',
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          SizedBox(width: 25),
-                                          Row(
-                                            children: [
-                                              Icon(Icons.timelapse,
-                                                  size: 20, color: Colors.teal),
-                                              Text(data[i]['date']),
-                                            ],
+                                          SizedBox(width: 40),
+                                          SizedBox(
+                                            width: 80,
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.timelapse,
+                                                    color: Colors.teal,
+                                                    size: 18),
+                                                Text(
+                                                  data[i]['date'],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -238,6 +255,7 @@ class MyDrawer extends StatelessWidget {
 */
 
 Widget headerCard(double width, context) {
+  final EventController _con = Get.find();
   var boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(8)),
     color: Colors.white30,
@@ -262,7 +280,7 @@ Widget headerCard(double width, context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Jiri Youth open tournament long long long long longlonglonglonglong",
+          _con.evtDetails.name,
           maxLines: 2,
           style: TextStyle(
             color: Colors.white,
@@ -275,25 +293,35 @@ Widget headerCard(double width, context) {
         ),
         spacer(10.0),
         Container(
-            width: width,
-            padding: EdgeInsets.all(5.0),
-            decoration: boxDecoration,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                      width: 80,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Icon(Icons.flag_outlined), Text("Cricket")],
-                      )),
-                  Container(
-                      width: 90,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Icon(Icons.timelapse), Text("12-12-2021")],
-                      ))
-                ])),
+          width: width,
+          padding: EdgeInsets.all(5.0),
+          decoration: boxDecoration,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.flag_outlined),
+                    Text(_con.evtDetails.category)
+                  ],
+                ),
+              ),
+              Container(
+                width: 90,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.timelapse),
+                    Text(_con.evtDetails.date),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
         spacer(10.0),
         Container(
           padding: EdgeInsets.all(5.0),
@@ -303,7 +331,7 @@ Widget headerCard(double width, context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  width: 80,
+                  width: 90,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -312,11 +340,16 @@ Widget headerCard(double width, context) {
                     ],
                   )),
               Container(
-                  width: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [Icon(FlutterIcons.activity_fea), Text("Active")],
-                  ))
+                width: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(FlutterIcons.activity_fea),
+                    SizedBox(width:20),
+                    Text(_con.evtDetails.active ? "Active" : "Not Active"),
+                  ],
+                ),
+              )
             ],
           ),
         )
