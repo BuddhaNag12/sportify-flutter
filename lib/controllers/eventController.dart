@@ -9,38 +9,29 @@ import 'package:sportify/services/firestoreService.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
 
 class EventController extends GetxController with SingleGetTickerProviderMixin {
-  /* Auth State variables */
-  final Completer<GoogleMapController> gmapController = Completer();
-  LatLng latlng = LatLng(24.8333, 92.7789);
-
+  // for add event form
   LatLng pickedLatlng;
   DateTime selectedDate = DateTime.now();
   var pickedDate = ''.obs;
   var category = ''.obs;
   var prizeCat = ''.obs;
+  var isLoading = false.obs;
+//-----------------------
 
   Rx<EventDetailModel> eventDetails = EventDetailModel().obs;
   EventDetailModel get evtDetails => eventDetails.value;
   set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
 
-
   // utility
-
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   DateFormat timeFormat = DateFormat("HH:mm");
 
-  CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(24.8333, 92.7789),
-    zoom: 11,
-  );
-
-  Marker marker;
+  // form
   TabController tabController;
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
 
   /* ------------------------------- */
-
   final TextEditingController eventNameController = TextEditingController();
   final TextEditingController eventSizeController = TextEditingController();
   final TextEditingController eventDescriptionController =
@@ -49,13 +40,12 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   @override
   void onReady() {
-    initializeTabController();
-    fake(24.8170, 93.9368);
+    _initializeTabController();
     _getEventsFromFirestore();
     super.onReady();
   }
 
-  void reset() {
+  void _reset() {
     eventNameController.clear();
     eventSizeController.clear();
     eventDescriptionController.clear();
@@ -87,7 +77,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       events.get().then((querySnapshot) {
         querySnapshot.docs.forEach((result) {
           print(result.data());
-          // eventList.addAll(result.data());
         });
       });
     } catch (err) {
@@ -97,11 +86,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   void viewEvent(id) async {
     try {
+      this.isLoading.value = true;
       final res = await fs.viewEvent(id);
-      // print("${res.id},${res.name}");
       eventDetails.value = res;
+      this.isLoading.value = false;
     } catch (e) {
       print(e);
+      this.isLoading.value = false;
     }
   }
 
@@ -131,7 +122,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
             colorText: Colors.white,
           );
 
-          reset();
+          _reset();
         }
       } catch (e) {
         Get.snackbar('Failure', "Failed to add Event");
@@ -139,35 +130,12 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void fake(double lat, double lng) {
-    Future.delayed(Duration(milliseconds: 500), () {
-      latlng = LatLng(lat, lng);
-      kGooglePlex = CameraPosition(
-        target: LatLng(lat, lng),
-        zoom: 11,
-      );
-    });
-    update();
-  }
-
-  void initializeTabController() {
+  void _initializeTabController() {
     tabController = TabController(
       initialIndex: selectedIndex.value,
       length: 2,
       vsync: this,
     );
-  }
-
-  void addMarker() {
-    marker = Marker(
-      markerId: MarkerId("home"),
-      position: latlng,
-      draggable: false,
-      zIndex: 2,
-      flat: true,
-      anchor: Offset(0.5, 0.5),
-    );
-    update();
   }
 
   Future<void> selectDateTime(BuildContext context) async {

@@ -57,20 +57,10 @@ class EventInputField extends StatelessWidget {
                       msg = null;
                     }
                     return msg;
+                  } else if (value == null || value.isEmpty) {
+                    return 'Please enter valid characters';
                   } else {
-                    if (!GetUtils.isBlank(value)) {
-                      var msg;
-                      if (!GetUtils.isAlphabetOnly(value)) {
-                        msg = 'Enter valid $fieldName';
-                      } else {
-                        msg = null;
-                      }
-                      return msg;
-                    } else if (value == null || value.isEmpty) {
-                      return 'Please enter valid characters';
-                    } else {
-                      return null;
-                    }
+                    return null;
                   }
                 },
                 decoration: InputDecoration(

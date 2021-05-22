@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:sportify/constants/responsiveConst.dart';
@@ -100,7 +101,7 @@ Widget buildListView(BuildContext context) {
                                       child: Row(
                                         children: [
                                           SizedBox(
-                                            width: 70,
+                                            width: 90,
                                             child: Row(
                                               children: [
                                                 Icon(Icons.flag_outlined,
@@ -132,7 +133,7 @@ Widget buildListView(BuildContext context) {
                                       child: Row(
                                         children: [
                                           SizedBox(
-                                            width: 50,
+                                          width: 71,
                                             child: Row(
                                               children: [
                                                 Icon(FlutterIcons.activity_fea,
@@ -345,7 +346,7 @@ Widget headerCard(double width, context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(FlutterIcons.activity_fea),
-                    SizedBox(width:20),
+                    SizedBox(width: 20),
                     Text(_con.evtDetails.active ? "Active" : "Not Active"),
                   ],
                 ),
@@ -396,5 +397,109 @@ Widget cirCularIcon({String imgPath}) {
         ),
       ),
     ],
+  );
+}
+
+// Shimmer Loader
+
+Widget shimmeringloading() {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.grey.shade200,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+    ),
+    width: width,
+    height: height,
+    child: Column(
+      children: [
+        Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 5.0),
+            margin: EdgeInsets.only(top: 5),
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+              BoxShadow(
+                blurRadius: 3,
+                spreadRadius: .5,
+                offset: Offset(0, 1),
+                color: Colors.grey.shade500,
+              )
+            ]),
+            child: ClipOval(
+              child: SizedBox(
+                width: 250.0,
+                height: 250.0,
+                child: Shimmer.fromColors(
+                  baseColor: Colors.teal,
+                  highlightColor: Colors.tealAccent,
+                  child: Container(
+                    color: Colors.grey,
+                    width: 200,
+                    height: 100,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        spacer(5),
+        Shimmer.fromColors(
+          baseColor: Colors.teal,
+          highlightColor: Colors.tealAccent,
+          child: Container(
+            width: width,
+            height: 160,
+            decoration: BoxDecoration(color: Colors.teal.shade300, boxShadow: [
+              BoxShadow(
+                blurRadius: 1,
+                spreadRadius: 0.8,
+                offset: Offset(0, 1),
+                color: Colors.grey,
+              )
+            ]),
+            padding: EdgeInsets.all(10.0),
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: SizedBox(),
+          ),
+        ),
+        spacer(10),
+        Shimmer.fromColors(
+          baseColor: Colors.white60,
+          highlightColor: Colors.grey,
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            width: width,
+            height: 150,
+            color: Colors.grey,
+            child: SizedBox(),
+          ),
+        ),
+        spacer(20),
+        Shimmer.fromColors(
+          baseColor: Colors.teal,
+          highlightColor: Colors.tealAccent,
+          child: SizedBox(
+            width: width - 100,
+            child: ElevatedButton(
+              onPressed: () => {},
+              child: Text(
+                "Join Tournament",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontFamily: "Roboto",
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.8,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }

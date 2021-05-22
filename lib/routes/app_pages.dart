@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sportify/bindings/gMap_Binding.dart';
 
 import 'package:sportify/screens/authStack/SignUpScreen.dart';
 import 'package:sportify/screens/eventsStack/JoinEventsScreen.dart';
@@ -53,6 +54,7 @@ class AppPages {
       page: () => ViewEventScreen(),
       bindings: [
         EventBinding(),
+        ViewEventBinding(),
         AuthBindings(),
       ],
     ),
