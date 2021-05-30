@@ -141,9 +141,9 @@ class ViewEventScreen extends GetView<EventController> {
                     SizedBox(
                       width: width - 100,
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () => Get.toNamed('/join'),
                         child: Text(
-                          "Join Tournament",
+                          "Join Event",
                           style: TextStyle(
                             fontSize: 22,
                             fontFamily: "Roboto",

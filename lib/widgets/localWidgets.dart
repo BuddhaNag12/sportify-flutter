@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
+import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
 
@@ -108,11 +109,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                     children: [
                                       Icon(Icons.location_on_outlined,
                                           color: Colors.teal, size: 18),
-                                      Text(
-                                        eventLists[i].place.isBlank
-                                            ? 'Location'
-                                            : eventLists[i].place
-                                      ),
+                                      Text(eventLists[i].place.isBlank
+                                          ? 'Location'
+                                          : eventLists[i].place),
                                     ],
                                   ),
                                 ),
@@ -173,6 +172,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
 
 */
 class MyDrawer extends StatelessWidget {
+  final AuthController _auth = Get.find();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -229,6 +229,15 @@ class MyDrawer extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.info),
           title: Text('About'),
+        ),
+        Obx(
+          () => _auth.isLoggedIn.isTrue
+              ? ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text('Log Out'),
+                  onTap: () => _auth.logOut(),
+                )
+              : SizedBox(),
         ),
       ],
     ));

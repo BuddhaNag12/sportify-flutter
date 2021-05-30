@@ -19,8 +19,8 @@ class AuthController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passWordController = TextEditingController();
   final FirebaseAuthentication _authService = new FirebaseAuthentication();
-    final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-    final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
   /* ------------------------------- */
 
@@ -36,14 +36,12 @@ class AuthController extends GetxController {
         color: Colors.white,
       ),
       isDismissible: true,
-      leftBarIndicatorColor: Colors.red,
       shouldIconPulse: true,
       borderRadius: 8,
-      // overlayBlur: 2.0,
       snackStyle: SnackStyle.FLOATING,
       snackPosition: SnackPosition.BOTTOM,
       backgroundColor: Colors.teal,
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 3),
     );
   }
 

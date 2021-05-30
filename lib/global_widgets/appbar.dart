@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-// import 'package:sportify/controllers/global_Controller.dart';
 import 'package:get/get.dart';
-// import 'package:sportify/constants/colorConst.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final con;
   final bool isTransparent;
   final bool isAvatar;
-  MyAppBar({this.isTransparent, this.isAvatar = false});
+  final bool isMenuEnabled;
+  MyAppBar({
+    this.isTransparent,
+    this.isAvatar = false,
+    this.isMenuEnabled = false,
+    this.con,
+  });
   Widget build(BuildContext context) {
     return AppBar(
       leading: !isTransparent
@@ -16,6 +22,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               icon: Icon(
                 FlutterIcons.arrow_left_sli,
                 color: Colors.white,
+                size: 20,
               ),
               onPressed: () => Get.back())
           : SizedBox(),
@@ -31,40 +38,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       actions: [
-        // IconButton(
-        //   icon: Icon(Icons.menu),
-        //   onPressed: () => Get.bottomSheet(
-        //     Container(
-        //       color: primaryColorDark,
-        //       child: Wrap(
-        //         children: [
-        //           ListTile(
-        //             leading: Icon(Icons.account_circle,color: Colors.white,),
-        //             title: Text('Profile'),
-        //             onTap: () => Get.toNamed('/profile'),
-        //           ),
-        //           ListTile(
-        //             leading: Icon(Icons.today_outlined,color: Colors.white,),
-        //             title: Text('Manage Events'),
-        //             onTap: () => Get.toNamed('/profile'),
-        //           ),
-        //           ListTile(
-        //             leading: Icon(Icons.notification_important,color: Colors.white,),
-        //             title: Text('Notifications'),
-        //           ),
-        //           ListTile(
-        //             leading: Icon(Icons.settings,color: Colors.white,),
-        //             title: Text('Settings'),
-        //           ),
-        //           ListTile(
-        //             leading: Icon(Icons.info,color: Colors.white,),
-        //             title: Text('About'),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // )
+        isMenuEnabled
+            ? IconButton(
+                icon: SvgPicture.asset(
+                  'assets/menu-right.svg',
+                  width: 25,
+                  height: 25,
+                  color: Colors.white,
+                ),
+                onPressed: () => con.openDrawerkey.currentState.openEndDrawer())
+            : SizedBox()
       ],
     );
   }

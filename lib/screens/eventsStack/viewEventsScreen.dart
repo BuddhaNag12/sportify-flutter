@@ -14,9 +14,12 @@ class ViewEventsScreen extends GetView<EventController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: viewCon.openDrawerkey,
       appBar: MyAppBar(
         isTransparent: false,
         isAvatar: true,
+        isMenuEnabled: true,
+        con: viewCon,
       ),
       backgroundColor: Colors.tealAccent.shade700,
       endDrawer: MyDrawer(),

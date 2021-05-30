@@ -29,6 +29,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   TabController tabController;
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
+  // key for open drawer
+  final GlobalKey<ScaffoldState> openDrawerkey = GlobalKey();
 
   /* ------------------------------- */
   final TextEditingController eventNameController = TextEditingController();
@@ -235,10 +237,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     } finally {
       this.isLoading.value = false;
     }
-  }
-
-  void queryByLocation(context) async {
-    print(context);
   }
 
   void setPrizeCat(String newVal) {

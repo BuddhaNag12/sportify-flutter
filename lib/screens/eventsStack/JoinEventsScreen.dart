@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/global_widgets/appbar.dart';
-import 'package:sportify/widgets/localWidgets.dart';
+import 'package:sportify/widgets/eventInputField.dart';
+import 'package:sportify/controllers/joinEventController.dart';
+
 
 class JoinEventsScreen extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+final JoinEventController con = Get.put(JoinEventController());
+  //TODO: implement join event screen
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,93 +44,82 @@ class JoinEventsScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline1),
                   ),
                 ),
-                cirCularIcon(imgPath: 'assets/join-evt.svg'),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                      ),
+                    ),
+                    Positioned(
+                      top: -80,
+                      left: 135,
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade800,
+                              blurRadius: 4.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(1.0, 5.0),
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        child: SvgPicture.asset(
+                          'assets/join-evt.svg',
+                          height: 85,
+                          width: 85,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Expanded(
                   child: Container(
-                    // padding: EdgeInsets.all(20),
                     width: width,
                     height: height,
                     color: Theme.of(context).primaryColor,
                     child: SingleChildScrollView(
                       child: Form(
-                        key: _formKey,
+                        key: con.jformKey,
                         child: Column(
                           children: [
                             Container(
                               width: width - 40,
                               height: 230,
-                              // color: Colors.grey,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Material(
-                                    elevation: 5.0,
-                                    shadowColor: Colors.black45,
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
-                                        labelText: 'Enter Your name',
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                      ),
-                                    ),
+                                  EventInputField(
+                                    controller: con.cJeventName,
+                                    fieldName: 'Enter Your Name',
+                                    isDescription: false,
+                                    isNum: false,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        if (_formKey.currentState.validate()) {
+                                        if (con.jformKey.currentState.validate()) {
                                           // Process data.
                                         }
                                       },
-                                      child: const Text('Log in'),
+                                      child: const Text('Confirm'),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(
-                                "Don't Have an account?",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () => Get.toNamed('/signup'),
-                              child: Text(
-                                "Sign Up",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ElevatedButton.icon(
-                                        onPressed: () => {},
-                                        icon: Icon(FlutterIcons.google_ant),
-                                        label: Text("Google sign in"))),
-                                Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ElevatedButton.icon(
-                                        onPressed: () =>
-                                            Get.changeTheme(ThemeData.dark()),
-                                        icon: Icon(FlutterIcons.facebook_ent),
-                                        label: Text("Facebook Sign in"))),
-                              ],
-                            )
                           ],
                         ),
                       ),
