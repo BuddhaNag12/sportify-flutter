@@ -61,12 +61,6 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  // @override
-  // void onReady(){
-  //   print("ready");
-  // }
-
-
   Future<void> signUpWithEmail() async {
     this.isLoading.value = true;
     try {

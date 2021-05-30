@@ -6,7 +6,7 @@ class EventBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<EventController>(
       () => EventController(),
-      // fenix: true,
+      fenix: true,
     );
   }
 }

@@ -1,69 +1,53 @@
-// To parse this JSON data, do
-//
-//     final eventsList = eventsListFromJson(jsonString);
-
-import 'dart:convert';
-
-EventsList eventsListFromJson(String str) => EventsList.fromJson(json.decode(str));
-
-String eventsListToJson(EventsList data) => json.encode(data.toJson());
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventsList {
-    EventsList({
-        this.name,
-        this.date,
-        this.category,
-        this.description,
-        this.prizes,
-        this.teamSize,
-        this.location,
-    });
+  EventsList(
+      {this.name,
+      this.date,
+      this.category,
+      this.description,
+      this.prizes,
+      this.teamSize,
+      this.location,
+      this.active,
+      this.id,
+      this.place});
 
-    String name;
-    DateTime date;
-    String category;
-    String description;
-    String prizes;
-    int teamSize;
-    Location location;
+  String name;
+  String date;
+  String category;
+  String description;
+  String prizes;
+  String teamSize;
+  GeoPoint location;
+  bool active;
+  String id;
+  String place;
 
-    factory EventsList.fromJson(Map<String, dynamic> json) => EventsList(
-        name: json["name"],
-        date: DateTime.parse(json["date"]),
-        category: json["category"],
-        description: json["description"],
-        prizes: json["prizes"],
-        teamSize: json["team_size"],
-        location: Location.fromJson(json["location"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "name": name,
-        "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-        "category": category,
-        "description": description,
-        "prizes": prizes,
-        "team_size": teamSize,
-        "location": location.toJson(),
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'size': teamSize,
+      'date': date,
+      'category': category,
+      'description': description,
+      'active': active,
+      'location': location,
+      'prizes': prizes,
+      'place': place,
     };
-}
+  }
 
-class Location {
-    Location({
-        this.lattitude,
-        this.longitude,
-    });
-
-    int lattitude;
-    int longitude;
-
-    factory Location.fromJson(Map<String, dynamic> json) => Location(
-        lattitude: json["lattitude"],
-        longitude: json["longitude"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "lattitude": lattitude,
-        "longitude": longitude,
-    };
+  EventsList.fromFirestore(Map<String, dynamic> firestore)
+      : id = firestore['id'],
+        name = firestore['name'],
+        teamSize = firestore['size'],
+        date = firestore['date'],
+        category = firestore['category'],
+        description = firestore['description'],
+        active = firestore['active'],
+        location = firestore['location'],
+        prizes = firestore['prizes'],
+        place = firestore['place'];
 }

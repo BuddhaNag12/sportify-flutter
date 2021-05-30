@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportify/constants/responsiveConst.dart';
-import 'package:sportify/controllers/gMapController.dart';
+import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sportify/controllers/eventController.dart';
 
 class ViewEventScreen extends GetView<EventController> {
-  final EventController _con = Get.find();
+  final EventDetailsController _controllerForEvent = Get.find();
+  final EventController _controllerForTab = Get.find();
 
   @override
   Widget build(BuildContext context) {
     var id = Get.parameters['id'];
-    _con.viewEvent(id);
+    _controllerForEvent.viewEvent(id);
 
     return Obx(
       () => Scaffold(
@@ -21,7 +22,7 @@ class ViewEventScreen extends GetView<EventController> {
           isTransparent: false,
         ),
         backgroundColor: Colors.tealAccent.shade700,
-        body: _con.isLoading.value == true
+        body: _controllerForEvent.isLoading.value == true
             ? shimmeringloading()
             : Container(
                 decoration: BoxDecoration(
@@ -51,7 +52,7 @@ class ViewEventScreen extends GetView<EventController> {
                           )
                         ]),
                         child: ClipOval(
-                            child: GetBuilder<GmapControllerForViewEvent>(
+                            child: GetBuilder<EventDetailsController>(
                           builder: (eController) {
                             return GoogleMap(
                               mapType: MapType.hybrid,
@@ -63,8 +64,10 @@ class ViewEventScreen extends GetView<EventController> {
                               onMapCreated: (GoogleMapController controller) {
                                 eController.gmapController.complete(controller);
                                 eController.addMarker(
-                                  _con.evtDetails.location.latitude,
-                                  _con.evtDetails.location.longitude,
+                                  _controllerForEvent
+                                      .evtDetails.location.latitude,
+                                  _controllerForEvent
+                                      .evtDetails.location.longitude,
                                 );
                               },
                             );
@@ -80,7 +83,7 @@ class ViewEventScreen extends GetView<EventController> {
                       padding: EdgeInsets.all(10.0),
                       margin: EdgeInsets.symmetric(horizontal: 15),
                       child: TabBar(
-                        controller: _con.tabController,
+                        controller: _controllerForTab.tabController,
                         tabs: [
                           Tab(
                             child: Text("Details".toUpperCase()),
@@ -88,8 +91,8 @@ class ViewEventScreen extends GetView<EventController> {
                           Tab(child: Text("More info".toUpperCase())),
                         ],
                         onTap: (int index) {
-                          _con.selectedIndex.value = index;
-                          _con.tabController.animateTo(index);
+                          _controllerForTab.selectedIndex.value = index;
+                          _controllerForTab.tabController.animateTo(index);
                         },
                       ),
                     ),
@@ -104,7 +107,7 @@ class ViewEventScreen extends GetView<EventController> {
                                   height: 120,
                                   child: Obx(
                                     () => Text(
-                                      '${_con.evtDetails.description}',
+                                      '${_controllerForEvent.evtDetails.description}',
                                       style:
                                           Theme.of(context).textTheme.headline6,
                                       overflow: TextOverflow.ellipsis,
@@ -113,7 +116,8 @@ class ViewEventScreen extends GetView<EventController> {
                                   ),
                                 ),
                                 maintainState: true,
-                                visible: _con.selectedIndex.value == 0,
+                                visible:
+                                    _controllerForTab.selectedIndex.value == 0,
                               ),
                               Visibility(
                                 child: Container(
@@ -127,10 +131,11 @@ class ViewEventScreen extends GetView<EventController> {
                                   ),
                                 ),
                                 maintainState: true,
-                                visible: _con.selectedIndex.value == 1,
+                                visible:
+                                    _controllerForTab.selectedIndex.value == 1,
                               ),
                             ],
-                            index: _con.selectedIndex.value,
+                            index: _controllerForTab.selectedIndex.value,
                           ),
                         )),
                     SizedBox(

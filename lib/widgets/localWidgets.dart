@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sportify/constants/colorConst.dart';
-import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:sportify/constants/responsiveConst.dart';
-import 'package:sportify/controllers/eventController.dart';
+import 'package:sportify/controllers/eventDetailsController.dart';
+import 'package:sportify/models/eventModel.dart';
 
 /* 
 
@@ -24,160 +23,146 @@ Widget spacer(double height) {
   Events cards view
 
 */
-Widget buildListView(BuildContext context) {
-  return FutureBuilder<QuerySnapshot>(
-    future: events.get(), // async work
-    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      switch (snapshot.connectionState) {
-        case ConnectionState.waiting:
-          return SizedBox(child: Center(child: CircularProgressIndicator()));
-        default:
-          if (snapshot.hasError)
-            return Text('Error: ${snapshot.error}');
-          else {
-            var data = snapshot.data.docs;
-            return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (_, i) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 2,
-                          color: Colors.grey,
-                          offset: Offset(0, 1),
-                        )
-                      ],
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        tileMode: TileMode.clamp,
-                        colors: [Colors.grey.shade200, Colors.teal.shade300],
+Widget buildListView(BuildContext context, List<EventsList> eventLists) {
+  return ListView.builder(
+      shrinkWrap: true,
+      itemCount: eventLists.length,
+      itemBuilder: (_, i) {
+        return Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 1,
+                color: Colors.grey,
+                offset: Offset(0, 1),
+              )
+            ],
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              tileMode: TileMode.clamp,
+              colors: [Colors.grey.shade200, Colors.teal.shade300],
+            ),
+          ),
+          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          height: 90,
+          width: width,
+          child: InkWell(
+            onTap: () => Get.toNamed('/view_event/${eventLists[i].id}'),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white54,
+                  child: Icon(
+                    FlutterIcons.event_mdi,
+                    size: 40,
+                    color: Colors.teal,
+                  ),
+                ),
+                SizedBox(width: 30),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          eventLists[i].name.toUpperCase(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            color: Color(0xFF212121),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    height: 90,
-                    width: width,
-                    child: InkWell(
-                      onTap: () => Get.toNamed('/view_event/${data[i].id}'),
-                      child: Row(
+                    Container(
+                      padding: EdgeInsets.only(top: 5),
+                      width: width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white54,
-                            child: Icon(
-                              FlutterIcons.event_mdi,
-                              size: 40,
-                              color: Colors.teal,
-                            ),
-                          ),
-                          SizedBox(width: 30),
-                          Expanded(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    data[i]['name'].toUpperCase(),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 22.0,
-                                      color: Color(0xFF212121),
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          spacer(5),
+                          Container(
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 90,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.flag_outlined,
+                                          color: Colors.teal, size: 18),
+                                      Text(
+                                        eventLists[i].category,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(top: 5),
-                                width: width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    spacer(5),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 90,
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.flag_outlined,
-                                                    color: Colors.teal,
-                                                    size: 18),
-                                                Text(
-                                                  data[i]['category'],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(width: 20),
-                                          SizedBox(
-                                            width: 70,
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.location_on_outlined,
-                                                    color: Colors.teal,
-                                                    size: 18),
-                                                Text("Jirighat"),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                                SizedBox(width: 20),
+                                SizedBox(
+                                  width: 70,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.location_on_outlined,
+                                          color: Colors.teal, size: 18),
+                                      Text(
+                                        eventLists[i].place.isBlank
+                                            ? 'Location'
+                                            : eventLists[i].place
                                       ),
-                                    ),
-                                    spacer(5),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                          width: 71,
-                                            child: Row(
-                                              children: [
-                                                Icon(FlutterIcons.activity_fea,
-                                                    color: Colors.teal,
-                                                    size: 18),
-                                                Text(
-                                                  data[i]['active']
-                                                      ? 'Active'
-                                                      : 'Not Active',
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(width: 40),
-                                          SizedBox(
-                                            width: 80,
-                                            child: Row(
-                                              children: [
-                                                Icon(Icons.timelapse,
-                                                    color: Colors.teal,
-                                                    size: 18),
-                                                Text(
-                                                  data[i]['date'],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )),
+                              ],
+                            ),
+                          ),
+                          spacer(5),
+                          Container(
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 71,
+                                  child: Row(
+                                    children: [
+                                      Icon(FlutterIcons.activity_fea,
+                                          color: Colors.teal, size: 18),
+                                      Text(
+                                        eventLists[i].active
+                                            ? 'Active'
+                                            : 'Not Active',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 40),
+                                SizedBox(
+                                  width: 80,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.timelapse,
+                                          color: Colors.teal, size: 18),
+                                      Text(
+                                        eventLists[i].date,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
-                  );
-                });
-          }
-      }
-    },
-  );
+                  ],
+                )),
+              ],
+            ),
+          ),
+        );
+      });
 }
 
 /*
@@ -256,7 +241,7 @@ class MyDrawer extends StatelessWidget {
 */
 
 Widget headerCard(double width, context) {
-  final EventController _con = Get.find();
+  final EventDetailsController _con = Get.find();
   var boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(8)),
     color: Colors.white30,
@@ -264,17 +249,14 @@ Widget headerCard(double width, context) {
   return Container(
     width: width,
     height: 160,
-    decoration: BoxDecoration(
-        // borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: Colors.teal.shade300,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 1,
-            spreadRadius: 0.8,
-            offset: Offset(0, 1),
-            color: Colors.grey,
-          )
-        ]),
+    decoration: BoxDecoration(color: Colors.teal.shade300, boxShadow: [
+      BoxShadow(
+        blurRadius: 1,
+        spreadRadius: 0.8,
+        offset: Offset(0, 1),
+        color: Colors.grey,
+      )
+    ]),
     padding: EdgeInsets.all(10.0),
     margin: EdgeInsets.symmetric(horizontal: 15),
     child: Column(
@@ -401,6 +383,42 @@ Widget cirCularIcon({String imgPath}) {
 }
 
 // Shimmer Loader
+
+Widget listShimmerLoading() {
+  return Container(
+    height: 400,
+    width: width,
+    child: Column(
+      children: List.filled(4, 1)
+          .map((e) => Shimmer.fromColors(
+                baseColor: Colors.teal,
+                highlightColor: Colors.tealAccent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 2,
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                      )
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      tileMode: TileMode.clamp,
+                      colors: [Colors.grey.shade200, Colors.teal.shade300],
+                    ),
+                  ),
+                  height: 90,
+                  width: width,
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+              ))
+          .toList(),
+    ),
+  );
+}
 
 Widget shimmeringloading() {
   return Container(

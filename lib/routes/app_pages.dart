@@ -10,7 +10,6 @@ import 'package:sportify/screens/homeScreen.dart';
 import 'package:sportify/screens/authStack/LoginScreen.dart';
 import 'package:sportify/screens/profileStack/profileScreen.dart';
 import 'package:sportify/screens/splashScreen.dart';
-
 // bindings
 import 'package:sportify/bindings/auth_binding.dart';
 import 'package:sportify/bindings/event_binding.dart';
@@ -77,5 +76,6 @@ class AppPages {
         AuthBindings(),
       ],
     ),
+
   ];
 }

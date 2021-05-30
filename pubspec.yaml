@@ -34,9 +34,9 @@ dependencies:
   cupertino_icons: ^1.0.0
   get:
   intl: ^0.17.0
-  place_picker: ^0.9.18
   shimmer: ^2.0.0
   j_location_picker: ^1.2.0
+  # geolocator:
 
 # dependency_overrides:
 #   geolocator: ^5.3.1

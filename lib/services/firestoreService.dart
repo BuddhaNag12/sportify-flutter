@@ -2,22 +2,23 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sportify/models/eventDetailModel.dart';
-// import 'package:sportify/models/eventModel.dart';
 
 class DataToFirestore {
   Future<String> addEvent(
-      {eventName, date, LatLng location, cat, size, desc}) async {
+      {eventName, date, LatLng location, cat, size, desc, place}) async {
     try {
-      final res = await events.add({
+      final res = await events.add({});
+      res.set({
         'name': eventName,
         'date': date,
         'location': GeoPoint(location.latitude, location.longitude),
         'category': cat,
         'size': size,
         'description': desc,
-        'active': true
+        'active': true,
+        'id': res.id,
+        'place': place
       });
-
       return res.id;
     } catch (e) {
       print(e);

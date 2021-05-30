@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:j_location_picker/j_location_picker.dart';
-import 'package:sportify/models/eventDetailModel.dart';
+import 'package:sportify/models/eventModel.dart';
 import 'package:sportify/services/firestoreService.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
 
@@ -16,11 +17,9 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var category = ''.obs;
   var prizeCat = ''.obs;
   var isLoading = false.obs;
-//-----------------------
 
-  Rx<EventDetailModel> eventDetails = EventDetailModel().obs;
-  EventDetailModel get evtDetails => eventDetails.value;
-  set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
+  //-----------------------
+  List<EventsList> eventLists = <EventsList>[].obs;
 
   // utility
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
@@ -34,6 +33,9 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   /* ------------------------------- */
   final TextEditingController eventNameController = TextEditingController();
   final TextEditingController eventSizeController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
+  final TextEditingController eventPlaceNameController =
+      TextEditingController();
   final TextEditingController eventDescriptionController =
       TextEditingController();
   final DataToFirestore fs = DataToFirestore();
@@ -72,27 +74,17 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     );
   }
 
-  void _getEventsFromFirestore() async {
+  Future<void> _getEventsFromFirestore() async {
+    this.isLoading.value = true;
     try {
-      events.get().then((querySnapshot) {
-        querySnapshot.docs.forEach((result) {
-          print(result.data());
-        });
+      final res = await events.limit(20).get();
+      res.docs.forEach((QueryDocumentSnapshot element) {
+        eventLists.add(EventsList.fromFirestore(element.data()));
       });
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  void viewEvent(id) async {
-    try {
-      this.isLoading.value = true;
-      final res = await fs.viewEvent(id);
-      eventDetails.value = res;
       this.isLoading.value = false;
     } catch (e) {
-      print(e);
       this.isLoading.value = false;
+      return e;
     }
   }
 
@@ -108,20 +100,19 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     } else {
       try {
         final res = await fs.addEvent(
-          eventName: eventNameController.text,
-          date: pickedDate.value,
-          cat: category.value,
-          location: pickedLatlng,
-          size: eventSizeController.text,
-          desc: eventDescriptionController.text,
-        );
+            eventName: eventNameController.text,
+            date: pickedDate.value,
+            cat: category.value,
+            location: pickedLatlng,
+            size: eventSizeController.text,
+            desc: eventDescriptionController.text,
+            place: eventPlaceNameController.text);
         if (res.isNotEmpty) {
           Get.snackbar(
             'success',
             "Event successfully  added ",
             colorText: Colors.white,
           );
-
           _reset();
         }
       } catch (e) {
@@ -188,8 +179,66 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void changeCategoryValue(String newVal) {
+  void changeCategoryValue(String newVal) async {
     this.category.value = newVal;
+    eventLists.clear();
+    this.isLoading.value = true;
+    if (this.category.value == "All") {
+      _getEventsFromFirestore();
+    }
+    try {
+      final res =
+          await events.where('category', isEqualTo: this.category.value).get();
+      res.docs.forEach((QueryDocumentSnapshot element) {
+        eventLists.add(EventsList.fromFirestore(element.data()));
+      });
+      this.isLoading.value = false;
+    } catch (e) {
+      this.isLoading.value = false;
+      return e;
+    }
+  }
+
+  void searchEvents() async {
+    this.isLoading.value = true;
+    eventLists.clear();
+    try {
+      if (searchController.text.isBlank) {
+        _getEventsFromFirestore();
+      }
+      final query = await events
+          .where(
+            'place',
+            isEqualTo: searchController.text.toLowerCase().trim(),
+          )
+          .get();
+      final query2 = await events
+          .where(
+            'category',
+            isEqualTo: this.category.isNotEmpty
+                ? this.category.value
+                : searchController.text.capitalize.trim(),
+          )
+          .get();
+
+      query.docs.forEach((element) {
+        eventLists.add(EventsList.fromFirestore(element.data()));
+      });
+      query2.docs.forEach((element) {
+        eventLists.add(EventsList.fromFirestore(element.data()));
+      });
+      // print(futures);
+      this.isLoading.value = false;
+    } catch (e) {
+      this.isLoading.value = false;
+      return e;
+    } finally {
+      this.isLoading.value = false;
+    }
+  }
+
+  void queryByLocation(context) async {
+    print(context);
   }
 
   void setPrizeCat(String newVal) {

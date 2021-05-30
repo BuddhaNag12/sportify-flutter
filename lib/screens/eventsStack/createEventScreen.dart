@@ -59,7 +59,7 @@ class CreateEventsScreen extends GetView<EventController> {
                         children: [
                           Container(
                             width: width - 40,
-                            height: 600,
+                            height: 700,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,6 +329,12 @@ class CreateEventsScreen extends GetView<EventController> {
                                       ),
                                     ],
                                   ),
+                                ),
+                                EventInputField(
+                                  fieldName: "Location name",
+                                  isDescription: false,
+                                  isNum: false,
+                                  controller: con.eventPlaceNameController,
                                 ),
                                 EventInputField(
                                   fieldName: "Event Description",

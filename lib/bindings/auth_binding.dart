@@ -5,9 +5,9 @@ part 'binding_tags.dart';
 class AuthBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AuthController>(
-      () => AuthController(),
-      fenix: true,
+    Get.put<AuthController>(
+      AuthController(),
+      permanent: true,
     );
   }
 }
