@@ -189,7 +189,8 @@ class ViewEventsScreen extends GetView<EventController> {
                                     ),
                                   ),
                                 ),
-                                Text("No data found")
+                                Text(
+                                    "No data found 😓 Try Searching for place name or Category eg: Cricket")
                               ],
                             ),
                           )

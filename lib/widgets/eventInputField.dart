@@ -51,7 +51,7 @@ class EventInputField extends StatelessWidget {
                     return msg;
                   } else if (isDescription) {
                     var msg;
-                    if (!GetUtils.isLengthBetween(value, 0, 150)) {
+                    if (!GetUtils.isLengthBetween(value, 1, 150)) {
                       msg = 'Enter valid $fieldName';
                     } else {
                       msg = null;

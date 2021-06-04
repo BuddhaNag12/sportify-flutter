@@ -39,5 +39,6 @@ class JoinEventController extends GetxController {
   //   );
   // }
 
-  void createEvent() async {}
+  
+
 }

@@ -34,4 +34,24 @@ class DataToFirestore {
       return e;
     }
   }
+
+  Future<String> joinEvent() async {
+    final res = await joinedEvt.add({
+      'evt_id': '',
+      'user_id': '',
+      'confirmed': false,
+      'userDetails': {
+        'name': '',
+        'phone': '',
+        'description': '',
+      }
+    });
+    return 's';
+  }
+
+  // Future<bool> checkJoined(docId) async {
+  //   final res = await events.doc().get();
+
+  //   // return res;
+  // }
 }

@@ -20,6 +20,9 @@ class EventDetailsController extends GetxController {
   EventDetailModel get evtDetails => eventDetails.value;
   set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
   final DataToFirestore fs = DataToFirestore();
+  GoogleMapController controller;
+
+
 
   void updateCameraPos(lat, lng) {
     _updatedCamPos = CameraPosition(
@@ -30,7 +33,7 @@ class EventDetailsController extends GetxController {
   }
 
   void addMarker(lat, lng) async {
-    final GoogleMapController controller = await gmapController.future;
+    controller = await gmapController.future;
     updateCameraPos(lat, lng);
     marker = Marker(
       markerId: MarkerId("home"),
@@ -55,11 +58,21 @@ class EventDetailsController extends GetxController {
       this.isLoading.value = false;
     }
   }
+  // checkIsJoined()async{
+  //   // final res = await fs.checkJoined();
+  // }
 
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   this.checkIsJoined();
+  //   super.onInit();
+  // }
   @override
   void onClose() {
     marker = null;
     gmapController = Completer();
+    controller.dispose();
     eventDetails.value = null;
     super.onClose();
   }

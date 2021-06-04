@@ -11,14 +11,17 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var err = ''.obs;
   var category = ''.obs;
-  List<dynamic> stateUser=[].obs;
+  Rxn<User> stateUser = Rxn<User>();
   /* ------------------------------- */
- 
- 
+
   /* Auth State Controllers */
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passWordController = TextEditingController();
+
+  // Service class
   final FirebaseAuthentication _authService = new FirebaseAuthentication();
+
+  // Keys
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
@@ -48,15 +51,22 @@ class AuthController extends GetxController {
   void reset() {
     this.err.value = '';
     this.isLoggedIn.value = false;
-    this.stateUser.length=0;
+    this.stateUser.value = null;
     emailController.text = '';
     passWordController.text = '';
   }
 
   @override
-  void onInit() {
+  void onReady() {
     checkIsLoggedIn();
-    super.onInit();
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passWordController.dispose();
+    super.onClose();
   }
 
   Future<void> signUpWithEmail() async {
@@ -100,7 +110,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> checkIsLoggedIn() async {
+  checkIsLoggedIn() async {
     auth.authStateChanges().listen((User user) {
       if (user == null) {
         print('User is currently signed out!');
@@ -108,7 +118,7 @@ class AuthController extends GetxController {
       } else {
         print('User is signed in!');
         this.isLoggedIn.value = true;
-        this.stateUser.add(user);
+        this.stateUser.value = user;
       }
     });
   }

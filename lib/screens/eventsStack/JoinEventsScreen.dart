@@ -7,11 +7,10 @@ import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/eventInputField.dart';
 import 'package:sportify/controllers/joinEventController.dart';
 
-
 class JoinEventsScreen extends StatelessWidget {
-final JoinEventController con = Get.put(JoinEventController());
+  final JoinEventController con = Get.put(JoinEventController());
   //TODO: implement join event screen
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +93,7 @@ final JoinEventController con = Get.put(JoinEventController());
                           children: [
                             Container(
                               width: width - 40,
-                              height: 230,
+                              height: 500,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
@@ -102,15 +101,34 @@ final JoinEventController con = Get.put(JoinEventController());
                                 children: [
                                   EventInputField(
                                     controller: con.cJeventName,
-                                    fieldName: 'Enter Your Name',
+                                    fieldName: 'Your Name',
                                     isDescription: false,
+                                    isNum: false,
+                                  ),
+                                  EventInputField(
+                                    controller: con.cJteamName,
+                                    fieldName: 'Team Name',
+                                    isDescription: false,
+                                    isNum: false,
+                                  ),
+                                  EventInputField(
+                                    controller: con.cJeventDescription,
+                                    fieldName: 'Contact Number',
+                                    isDescription: false,
+                                    isNum: true,
+                                  ),
+                                  EventInputField(
+                                    controller: con.cJeventDescription,
+                                    fieldName: 'Short Message',
+                                    isDescription: true,
                                     isNum: false,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(15),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        if (con.jformKey.currentState.validate()) {
+                                        if (con.jformKey.currentState
+                                            .validate()) {
                                           // Process data.
                                         }
                                       },

@@ -25,14 +25,16 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   DateFormat timeFormat = DateFormat("HH:mm");
 
+  /* Global keys */
   // form
-  TabController tabController;
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
   // key for open drawer
   final GlobalKey<ScaffoldState> openDrawerkey = GlobalKey();
 
   /* ------------------------------- */
+  // CONTROLLERS
+  TabController tabController;
   final TextEditingController eventNameController = TextEditingController();
   final TextEditingController eventSizeController = TextEditingController();
   final TextEditingController searchController = TextEditingController();
@@ -40,6 +42,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       TextEditingController();
   final TextEditingController eventDescriptionController =
       TextEditingController();
+  
+  // Classes
   final DataToFirestore fs = DataToFirestore();
 
   @override
@@ -48,7 +52,16 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     _getEventsFromFirestore();
     super.onReady();
   }
-
+  @override
+  void onClose() {
+      eventNameController.dispose();
+      eventSizeController.dispose();
+      searchController.dispose();
+      eventPlaceNameController.dispose();
+      eventDescriptionController.dispose();
+      tabController.dispose();
+      super.onClose();
+    }
   void _reset() {
     eventNameController.clear();
     eventSizeController.clear();

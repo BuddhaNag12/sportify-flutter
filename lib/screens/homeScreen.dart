@@ -63,7 +63,7 @@ class HomeScreen extends GetView<AuthController> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Obx(
-                          () => con.stateUser.length > 0
+                          () => !con.stateUser.value.isBlank
                               ? OutlinedButton(
                                   onPressed: () => Get.toNamed('/create'),
                                   child: Text("Create Events"),
@@ -104,8 +104,8 @@ class HomeScreen extends GetView<AuthController> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Obx(
-                    () => con.stateUser.length > 0
-                        ? loggedInWidget(con.stateUser[0].email, con)
+                    () => con.stateUser.value != null
+                        ? loggedInWidget(con.stateUser.value.email, con)
                         : notLoggedInWidget(),
                   )
                 ],
