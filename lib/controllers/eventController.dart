@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
+import 'package:sportify/utils/utils.dart';
 import 'package:j_location_picker/j_location_picker.dart';
 import 'package:sportify/models/eventModel.dart';
 import 'package:sportify/services/firestoreService.dart';
@@ -20,11 +20,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   //-----------------------
   List<EventsList> eventLists = <EventsList>[].obs;
-
-  // utility
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-  DateFormat timeFormat = DateFormat("HH:mm");
-
   /* Global keys */
   // form
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
@@ -42,7 +37,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       TextEditingController();
   final TextEditingController eventDescriptionController =
       TextEditingController();
-  
+
   // Classes
   final DataToFirestore fs = DataToFirestore();
 
@@ -52,20 +47,23 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     _getEventsFromFirestore();
     super.onReady();
   }
+
   @override
   void onClose() {
-      eventNameController.dispose();
-      eventSizeController.dispose();
-      searchController.dispose();
-      eventPlaceNameController.dispose();
-      eventDescriptionController.dispose();
-      tabController.dispose();
-      super.onClose();
-    }
+    eventNameController.dispose();
+    eventSizeController.dispose();
+    searchController.dispose();
+    eventPlaceNameController.dispose();
+    eventDescriptionController.dispose();
+    tabController.dispose();
+    super.onClose();
+  }
+
   void _reset() {
     eventNameController.clear();
     eventSizeController.clear();
     eventDescriptionController.clear();
+    eventPlaceNameController.clear();
     pickedDate.value = '';
     pickedLatlng = null;
     prizeCat.value = '';
@@ -115,13 +113,14 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     } else {
       try {
         final res = await fs.addEvent(
-            eventName: eventNameController.text,
-            date: pickedDate.value,
-            cat: category.value,
-            location: pickedLatlng,
-            size: eventSizeController.text,
-            desc: eventDescriptionController.text,
-            place: eventPlaceNameController.text);
+          eventName: eventNameController.text,
+          date: pickedDate.value,
+          cat: category.value,
+          location: pickedLatlng,
+          size: eventSizeController.text,
+          desc: eventDescriptionController.text,
+          place: eventPlaceNameController.text,
+        );
         if (res.isNotEmpty) {
           Get.snackbar(
             'success',

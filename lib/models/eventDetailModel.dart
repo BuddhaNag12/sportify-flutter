@@ -9,6 +9,7 @@ class EventDetailModel {
   GeoPoint location;
   bool active;
   String id;
+  String userId;
 
   EventDetailModel({
     this.category,
@@ -19,6 +20,7 @@ class EventDetailModel {
     this.location,
     this.size,
     this.id,
+    this.userId,
   });
 
   EventDetailModel.fromDocumentSnapshot(
@@ -32,5 +34,6 @@ class EventDetailModel {
     location = documentSnapshot["location"];
     active = documentSnapshot["active"];
     date = documentSnapshot["date"];
+    userId = documentSnapshot["user_id"];
   }
 }

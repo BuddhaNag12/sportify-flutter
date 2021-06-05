@@ -11,7 +11,8 @@ class EventsList {
       this.location,
       this.active,
       this.id,
-      this.place});
+      this.place,
+      this.userId});
 
   String name;
   String date;
@@ -22,6 +23,7 @@ class EventsList {
   GeoPoint location;
   bool active;
   String id;
+  String userId;
   String place;
 
   Map<String, dynamic> toMap() {
@@ -36,11 +38,13 @@ class EventsList {
       'location': location,
       'prizes': prizes,
       'place': place,
+      'user_id': userId
     };
   }
 
   EventsList.fromFirestore(Map<String, dynamic> firestore)
       : id = firestore['id'],
+        userId = firestore['user_id'],
         name = firestore['name'],
         teamSize = firestore['size'],
         date = firestore['date'],

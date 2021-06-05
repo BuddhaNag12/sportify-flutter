@@ -1,9 +1,12 @@
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/models/eventDetailModel.dart';
 
 class DataToFirestore {
+  AuthController auth = Get.find();
   Future<String> addEvent(
       {eventName, date, LatLng location, cat, size, desc, place}) async {
     try {
@@ -17,6 +20,7 @@ class DataToFirestore {
         'description': desc,
         'active': true,
         'id': res.id,
+        'user_id': auth.stateUser.value.uid,
         'place': place
       });
       return res.id;

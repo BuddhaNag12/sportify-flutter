@@ -16,6 +16,7 @@ import 'package:sportify/bindings/event_binding.dart';
 part 'app_routes.dart';
 
 class AppPages {
+  
   static final routes = [
     GetPage(
       name: Routes.HOME,

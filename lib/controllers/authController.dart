@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sportify/services/authServices.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
+import 'package:sportify/utils/utils.dart';
 
 class AuthController extends GetxController {
   /* Auth State variables */
@@ -12,7 +13,7 @@ class AuthController extends GetxController {
   var err = ''.obs;
   var category = ''.obs;
   Rxn<User> stateUser = Rxn<User>();
-  /* ------------------------------- */
+  Stream<User> get user => auth.authStateChanges();
 
   /* Auth State Controllers */
   final TextEditingController emailController = TextEditingController();
@@ -25,29 +26,6 @@ class AuthController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
-  /* ------------------------------- */
-
-  // Utility Methods
-  void showDialog(msg) {
-    Get.snackbar(
-      'Info',
-      '$msg',
-      colorText: Colors.white,
-      barBlur: 1.5,
-      icon: Icon(
-        Icons.info_rounded,
-        color: Colors.white,
-      ),
-      isDismissible: true,
-      shouldIconPulse: true,
-      borderRadius: 8,
-      snackStyle: SnackStyle.FLOATING,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.teal,
-      duration: Duration(seconds: 3),
-    );
-  }
-
   void reset() {
     this.err.value = '';
     this.isLoggedIn.value = false;
@@ -57,19 +35,20 @@ class AuthController extends GetxController {
   }
 
   @override
-  void onReady() {
-    checkIsLoggedIn();
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     emailController.dispose();
     passWordController.dispose();
     super.onClose();
   }
 
-  Future<void> signUpWithEmail() async {
+  @override
+  void onReady() {
+    ever(stateUser, checkIsLoggedIn);
+    stateUser.bindStream(user);
+    super.onReady();
+  }
+
+  signUpWithEmail() async {
     this.isLoading.value = true;
     try {
       final userEmail = emailController.text;
@@ -77,50 +56,50 @@ class AuthController extends GetxController {
       final response =
           await _authService.signUpWithEmailPassword(userEmail, password);
       if (response != null) {
-        isLoading.value = false;
-        Get.toNamed('/signin');
+        authUsers.add({
+          'email': response.email,
+          'uid': response.uid,
+          'password': password,
+          'name': '',
+          'role': ''
+        });
+        this.isLoading.value = false;
       }
     } catch (e) {
       reset();
-      print('from con ${e.errMsg()}');
-      this.showDialog('${e.errMsg()}');
+      // print('from con ${e.errMsg()}');
+      showMessageDialog('${e.errMsg()}');
       this.err.value = e.errMsg();
       isLoading.value = false;
     }
   }
 
-  Future<void> signInWithEmail() async {
+  signInWithEmail() async {
     this.isLoading.value = true;
-
     try {
-      final userEmail = emailController.text;
-      final password = passWordController.text;
+      final userEmail = emailController?.text;
+      final password = passWordController?.text;
       final response =
           await _authService.signInWithEmailService(userEmail, password);
       if (response != null) {
         this.isLoggedIn.value = true;
         this.isLoading.value = false;
-        Get.offNamed('/view_events');
       }
     } catch (e) {
       reset();
-      this.showDialog('Password Invalid');
+      showMessageDialog('Password Invalid');
       this.err.value = e.errMsg();
       isLoading.value = false;
     }
   }
 
-  checkIsLoggedIn() async {
-    auth.authStateChanges().listen((User user) {
-      if (user == null) {
-        print('User is currently signed out!');
-        this.showDialog('User is currently signed out!');
-      } else {
-        print('User is signed in!');
-        this.isLoggedIn.value = true;
-        this.stateUser.value = user;
-      }
-    });
+  checkIsLoggedIn(_firebaseUser) async {
+    if (_firebaseUser?.uid == null) {
+      showMessageDialog('User is currently signed out!');
+    } else {
+      this.isLoggedIn.value = true;
+      await Get.offAllNamed('/home');
+    }
   }
 
   void logOut() {

@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
-
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 
 class LoginScreen extends GetView<AuthController> {
-  final AuthController eventStore = Get.find();
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
     return Scaffold(
       appBar: MyAppBar(
         isTransparent: false,
@@ -78,6 +79,19 @@ class LoginScreen extends GetView<AuthController> {
                         ),
                       ),
                     ),
+                    Positioned(
+                      bottom: 0,
+                      right: width/2-110,
+                      child: args != null
+                          ? Text(
+                              args.toString().toUpperCase(),
+                              style: headline2.copyWith(
+                                color: Colors.white,
+                                letterSpacing: 0.5,
+                              ),
+                            )
+                          : SizedBox(),
+                    )
                   ],
                 ),
                 Expanded(
@@ -88,7 +102,7 @@ class LoginScreen extends GetView<AuthController> {
                     color: Theme.of(context).primaryColor,
                     child: SingleChildScrollView(
                       child: Form(
-                        key: eventStore.loginFormKey,
+                        key: authController?.loginFormKey,
                         child: Column(
                           children: [
                             Container(
@@ -99,20 +113,21 @@ class LoginScreen extends GetView<AuthController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  new EmailInputField(),
-                                  new PasswordInputField(),
+                                  EmailInputField(),
+                                  PasswordInputField(),
                                   Obx(
                                     () => Padding(
                                       padding: const EdgeInsets.all(15),
-                                      child: eventStore.isLoading.value == true
+                                      child: authController.isLoading?.value ==
+                                              true
                                           ? CircularProgressIndicator()
                                           : ElevatedButton(
                                               onPressed: () {
-                                                if (eventStore
+                                                if (authController
                                                     .loginFormKey.currentState
                                                     .validate()) {
-                                                  eventStore.signInWithEmail();
-                                                  eventStore.reset();
+                                                  authController
+                                                      .signInWithEmail();
                                                 }
                                               },
                                               child: const Text('Log in'),

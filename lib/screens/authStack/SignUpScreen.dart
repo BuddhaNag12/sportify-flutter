@@ -8,7 +8,7 @@ import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 
 class SignUpScreen extends GetView<AuthController> {
-  final AuthController eventStore = Get.put(AuthController());
+  final AuthController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class SignUpScreen extends GetView<AuthController> {
                     color: Theme.of(context).primaryColor,
                     child: SingleChildScrollView(
                       child: Form(
-                        key: eventStore.signUpFormKey,
+                        key: authController.signUpFormKey,
                         child: Column(
                           children: [
                             Container(
@@ -98,34 +98,28 @@ class SignUpScreen extends GetView<AuthController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  new EmailInputField(),
-                                  new PasswordInputField(),
+                                  EmailInputField(),
+                                  PasswordInputField(),
                                   Obx(
                                     () => Padding(
                                       padding: const EdgeInsets.all(15),
-                                      child: eventStore.isLoading.value == true
-                                          ? CircularProgressIndicator(
-                                              backgroundColor: Colors.white,
-                                            )
-                                          : ElevatedButton(
-                                              onPressed: () {
-                                                if (eventStore
-                                                    .signUpFormKey.currentState
-                                                    .validate()) {
-                                                  eventStore
-                                                      .signUpWithEmail()
-                                                      .then(
-                                                        (value) =>
-                                                            eventStore.reset(),
-                                                      )
-                                                      .catchError(
-                                                        (onError) =>
-                                                            eventStore.reset(),
-                                                      );
-                                                }
-                                              },
-                                              child: const Text('Sign Up'),
-                                            ),
+                                      child:
+                                          authController.isLoading.value == true
+                                              ? CircularProgressIndicator(
+                                                  backgroundColor: Colors.white,
+                                                )
+                                              : ElevatedButton(
+                                                  onPressed: () {
+                                                    if (authController
+                                                        .signUpFormKey
+                                                        .currentState
+                                                        .validate()) {
+                                                      authController
+                                                          .signUpWithEmail();
+                                                    }
+                                                  },
+                                                  child: const Text('Sign Up'),
+                                                ),
                                     ),
                                   )
                                 ],

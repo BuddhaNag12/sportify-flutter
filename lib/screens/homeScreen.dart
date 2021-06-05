@@ -63,7 +63,7 @@ class HomeScreen extends GetView<AuthController> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Obx(
-                          () => !con.stateUser.value.isBlank
+                          () => con.stateUser.value != null
                               ? OutlinedButton(
                                   onPressed: () => Get.toNamed('/create'),
                                   child: Text("Create Events"),
@@ -75,7 +75,7 @@ class HomeScreen extends GetView<AuthController> {
                                   ),
                                 )
                               : OutlinedButton(
-                                  onPressed: () => Get.toNamed('/signin'),
+                                  onPressed: () => Get.toNamed('/signin',arguments: 'Sign in to create events'),
                                   child: Text("Create Events"),
                                   style: OutlinedButton.styleFrom(
                                     side: BorderSide(
@@ -104,7 +104,7 @@ class HomeScreen extends GetView<AuthController> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Obx(
-                    () => con.stateUser.value != null
+                    () => con.stateUser?.value != null
                         ? loggedInWidget(con.stateUser.value.email, con)
                         : notLoggedInWidget(),
                   )
@@ -138,7 +138,7 @@ Widget notLoggedInWidget() {
     children: [
       Text("Not Logged In?"),
       TextButton(
-        onPressed: () => Get.toNamed('/signin'),
+        onPressed: () => Get.toNamed('/signin/'),
         child: Text(
           "Log in",
           style: TextStyle(
