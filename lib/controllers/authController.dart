@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:sportify/models/userModel.dart';
 import 'package:sportify/services/authServices.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
@@ -12,9 +13,10 @@ class AuthController extends GetxController {
   var isLoading = false.obs;
   var err = ''.obs;
   var category = ''.obs;
+  // RxBool isRedirecting = false.obs;
   Rxn<User> stateUser = Rxn<User>();
   Stream<User> get user => auth.authStateChanges();
-
+  Rxn<UserModel> fireStoreUser = Rxn<UserModel>();
   /* Auth State Controllers */
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passWordController = TextEditingController();
@@ -32,6 +34,7 @@ class AuthController extends GetxController {
     this.stateUser.value = null;
     emailController.text = '';
     passWordController.text = '';
+    // this.isRedirecting.value = false;
   }
 
   @override
@@ -50,6 +53,7 @@ class AuthController extends GetxController {
 
   signUpWithEmail() async {
     this.isLoading.value = true;
+
     try {
       final userEmail = emailController.text;
       final password = passWordController.text;
@@ -63,6 +67,7 @@ class AuthController extends GetxController {
           'name': '',
           'role': ''
         });
+
         this.isLoading.value = false;
       }
     } catch (e) {
@@ -98,7 +103,14 @@ class AuthController extends GetxController {
       showMessageDialog('User is currently signed out!');
     } else {
       this.isLoggedIn.value = true;
-      await Get.offAllNamed('/home');
+      final res = await authUsers
+          .where('uid', isEqualTo: _firebaseUser.uid.toString())
+          .get();
+      res.docs.forEach((element) {
+        fireStoreUser.value = UserModel.fromDocumentSnapshot(element);
+      });
+      print(fireStoreUser.value.email);
+      Get.offNamed('/home');
     }
   }
 

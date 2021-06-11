@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:sportify/models/eventDetailModel.dart';
+import 'package:sportify/models/favModel.dart';
 import 'package:sportify/services/firestoreService.dart';
 
 class EventDetailsController extends GetxController {
@@ -12,7 +14,7 @@ class EventDetailsController extends GetxController {
     target: LatLng(20.5937, 78.9629),
     zoom: 11,
   );
-
+  Rxn<FavModel> favorites = Rxn<FavModel>();
   Marker marker;
   CameraPosition _updatedCamPos;
   var isLoading = false.obs;
@@ -21,8 +23,6 @@ class EventDetailsController extends GetxController {
   set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
   final DataToFirestore fs = DataToFirestore();
   GoogleMapController controller;
-
-
 
   void updateCameraPos(lat, lng) {
     _updatedCamPos = CameraPosition(
@@ -58,16 +58,30 @@ class EventDetailsController extends GetxController {
       this.isLoading.value = false;
     }
   }
-  // checkIsJoined()async{
-  //   // final res = await fs.checkJoined();
-  // }
 
-  // @override
-  // void onInit() {
-  //   // TODO: implement onInit
-  //   this.checkIsJoined();
-  //   super.onInit();
-  // }
+  addEventToFavorite(eventid, userId) async {
+    favEvts.doc(userId).get().then((value) {
+      if (value.data() != null) {
+        if (!value.data()['evt_favs'].contains(eventid)) {
+          favEvts.doc(userId).set({
+            'evt_favs': [...value.data()['evt_favs'], eventid],
+            'user_id': userId,
+          });
+        }
+      } else {
+        favEvts.doc(userId).set({
+          'evt_favs': [eventid],
+          'user_id': userId,
+        });
+      }
+    });
+  }
+
+  @override
+  void onInit() async {
+    super.onInit();
+  }
+
   @override
   void onClose() {
     marker = null;

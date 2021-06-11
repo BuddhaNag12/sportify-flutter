@@ -10,3 +10,4 @@ final FirebaseFirestore fireStore = FirebaseFirestore.instance;
 final CollectionReference events = fireStore.collection('events');
 final CollectionReference authUsers = fireStore.collection('users');
 final CollectionReference joinedEvt = fireStore.collection('joinees');
+final CollectionReference favEvts = fireStore.collection('favorites');

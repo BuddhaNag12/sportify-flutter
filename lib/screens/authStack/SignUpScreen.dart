@@ -91,7 +91,7 @@ class SignUpScreen extends GetView<AuthController> {
                         child: Column(
                           children: [
                             Container(
-                              width: width - 40,
+                              width: paddedWidth,
                               height: 230,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/routes/app_pages.dart';
 import 'package:get/get.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sportify/screens/routNotFound.dart';
 
 void main() async {
@@ -15,26 +15,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      supportedLocales: const <Locale>[
-        Locale('en', ''),
-        Locale('ar', ''),
-        Locale('pt', ''),
-        Locale('tr', ''),
-        Locale('es', ''),
-        Locale('it', ''),
-        Locale('ru', ''),
-      ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      // supportedLocales: const <Locale>[
+      //   Locale('en', ''),
+      //   Locale('ar', ''),
+      //   Locale('pt', ''),
+      //   Locale('tr', ''),
+      //   Locale('es', ''),
+      //   Locale('it', ''),
+      //   Locale('ru', ''),
+      // ],
+      // localizationsDelegates: const [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
       defaultTransition: Transition.native,
       debugShowCheckedModeBanner: false,
       title: "Sportify",
       unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
       initialRoute: Routes.HOME,
       getPages: AppPages.routes,
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
         textTheme: TextTheme(
             headline1: TextStyle(

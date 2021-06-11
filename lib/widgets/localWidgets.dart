@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
+import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
@@ -180,32 +181,53 @@ class MyDrawer extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         DrawerHeader(
-          decoration: BoxDecoration(color: Colors.teal, boxShadow: [
-            BoxShadow(
-              blurRadius: 1,
-              color: Colors.grey,
-              offset: Offset(0, 1),
-            ),
-          ]),
-          child: Container(
-            child: Stack(
-              children: [
-                Positioned(
-                  child: Image.asset(
-                    'assets/bg.png',
-                    alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.teal,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 1,
+                color: Colors.grey,
+                offset: Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Obx(
+            () => _auth.isLoggedIn.value == true
+                ? Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: ClipOval(
+                            child: Image.network(
+                              'https://ui-avatars.com/api/?${_auth.fireStoreUser.value.email}',
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        SizedBox(
+                          child: Text(
+                            _auth.fireStoreUser.value.email,
+                            style: headline6.copyWith(color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : Container(
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          child: Icon(
+                            FlutterIcons.user_ant,
+                            size: 50,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
-                    bottom: 50,
-                    left: 40,
-                    child: Icon(
-                      FlutterIcons.user_ant,
-                      size: 50,
-                      color: Colors.white,
-                    ))
-              ],
-            ),
           ),
         ),
         ListTile(
@@ -251,6 +273,7 @@ class MyDrawer extends StatelessWidget {
 
 Widget headerCard(double width, context) {
   final EventDetailsController _con = Get.find();
+  final AuthController _auth = Get.find();
   var boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(8)),
     color: Colors.white30,
@@ -271,17 +294,40 @@ Widget headerCard(double width, context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          _con.evtDetails.name,
-          maxLines: 2,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.bold,
-          ),
-          overflow: TextOverflow.ellipsis,
-          softWrap: true,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              _con.evtDetails.name,
+              maxLines: 2,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.star,
+                color: Colors.yellow,
+
+                // icon: Obx(
+                //   () => Icon(
+                //     _con.eventDetails.value.id == _con.favId.value
+                //         ? Icons.star
+                //         : Icons.star_border,
+                //     color: Colors.yellow,
+                //   ),
+              ),
+              onPressed: () => _con.addEventToFavorite(
+                _con.eventDetails.value.id,
+                _auth.fireStoreUser.value.uid,
+              ),
+            )
+          ],
         ),
         spacer(10.0),
         Container(

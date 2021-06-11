@@ -81,7 +81,7 @@ class LoginScreen extends GetView<AuthController> {
                     ),
                     Positioned(
                       bottom: 0,
-                      right: width/2-110,
+                      right: width / 2 - 110,
                       child: args != null
                           ? Text(
                               args.toString().toUpperCase(),
@@ -106,7 +106,7 @@ class LoginScreen extends GetView<AuthController> {
                         child: Column(
                           children: [
                             Container(
-                              width: width - 40,
+                              width: paddedWidth,
                               height: 230,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
