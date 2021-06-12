@@ -274,6 +274,11 @@ class MyDrawer extends StatelessWidget {
 Widget headerCard(double width, context) {
   final EventDetailsController _con = Get.find();
   final AuthController _auth = Get.find();
+  if (_con.favorites.value != null &&
+      !_con.isLoading.value &&
+      _con.favorites.value.eventIds.contains(_con.eventDetails.value.id)) {
+    _con.iconAnimation.forward();
+  }
   var boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(8)),
     color: Colors.white30,
@@ -297,31 +302,26 @@ Widget headerCard(double width, context) {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              _con.evtDetails.name,
-              maxLines: 2,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.bold,
+            Flexible(
+              child: Text(
+                _con.evtDetails.name,
+                maxLines: 2,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
               ),
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
             ),
             IconButton(
-              icon: Icon(
-                Icons.star,
-                color: Colors.yellow,
-
-                // icon: Obx(
-                //   () => Icon(
-                //     _con.eventDetails.value.id == _con.favId.value
-                //         ? Icons.star
-                //         : Icons.star_border,
-                //     color: Colors.yellow,
-                //   ),
-              ),
+              icon: AnimatedIcon(
+                  size: 25,
+                  icon: AnimatedIcons.add_event,
+                  progress: _con.iconAnimation,
+                  color: Colors.white),
               onPressed: () => _con.addEventToFavorite(
                 _con.eventDetails.value.id,
                 _auth.fireStoreUser.value.uid,

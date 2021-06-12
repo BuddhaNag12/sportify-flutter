@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FavModel {
   String userId;
-  String eventId;
+  List eventIds;
 
-  FavModel({this.userId, this.eventId});
+  FavModel({this.userId, this.eventIds});
 
   FavModel.fromDocumentSnapshot(
     DocumentSnapshot documentSnapshot,
   ) {
     userId = documentSnapshot["user_id"];
-    eventId = documentSnapshot['event_id'];
+    eventIds = documentSnapshot['evt_favs'];
   }
 }

@@ -102,6 +102,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void createEvent() async {
+    this.isLoading.value = true;
     if (category.value.isBlank) {
       _showDialog('Please select a Category');
     } else if (pickedDate.value.isBlank) {
@@ -128,8 +129,10 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
             colorText: Colors.white,
           );
           _reset();
+          this.isLoading.value = false;
         }
       } catch (e) {
+        this.isLoading.value = false;
         Get.snackbar('Failure', "Failed to add Event");
       }
     }

@@ -45,7 +45,7 @@ class CreateEventsScreen extends GetView<EventController> {
                   ),
                 ),
               ),
-              cirCularIcon(imgPath:'assets/add_event.svg'),
+              cirCularIcon(imgPath: 'assets/add_event.svg'),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(15),
@@ -346,20 +346,26 @@ class CreateEventsScreen extends GetView<EventController> {
                             ),
                           ),
                           spacer(30),
-                          Center(
-                            child: SizedBox(
-                              width: width - 100,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (con.createEventKey.currentState
-                                      .validate()) {
-                                    con.createEvent();
-                                  }
-                                },
-                                child: Text("Submit"),
-                              ),
-                            ),
-                          )
+                          Obx(() {
+                            return con.isLoading.value == true
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Center(
+                                    child: SizedBox(
+                                      width: width - 100,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          if (con.createEventKey.currentState
+                                              .validate()) {
+                                            con.createEvent();
+                                          }
+                                        },
+                                        child: Text("Submit"),
+                                      ),
+                                    ),
+                                  );
+                          }),
                         ],
                       ),
                     ),

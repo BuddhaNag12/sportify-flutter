@@ -1,13 +1,18 @@
 import 'dart:async';
+// import 'dart:html';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
+import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/models/eventDetailModel.dart';
 import 'package:sportify/models/favModel.dart';
 import 'package:sportify/services/firestoreService.dart';
+import 'package:sportify/utils/utils.dart';
 
-class EventDetailsController extends GetxController {
+class EventDetailsController extends GetxController
+    with SingleGetTickerProviderMixin {
   // map utils
   Completer<GoogleMapController> gmapController = Completer();
   final CameraPosition initialMapPositionGooglePlex = CameraPosition(
@@ -23,6 +28,9 @@ class EventDetailsController extends GetxController {
   set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
   final DataToFirestore fs = DataToFirestore();
   GoogleMapController controller;
+  final AuthController _auth = Get.find();
+
+  AnimationController iconAnimation;
 
   void updateCameraPos(lat, lng) {
     _updatedCamPos = CameraPosition(
@@ -66,28 +74,63 @@ class EventDetailsController extends GetxController {
           favEvts.doc(userId).set({
             'evt_favs': [...value.data()['evt_favs'], eventid],
             'user_id': userId,
+          }).then((_) {
+            showMessageDialog("Added to favorite");
+            iconAnimation.forward();
+          }).catchError((onError) {
+            showMessageDialog("Error adding to favorite");
+          });
+        } else if (value.data()['evt_favs'].contains(eventid)) {
+          final filteredEvents =
+              value.data()['evt_favs'].where((i) => i != eventid).toList();
+          favEvts.doc(userId).set({
+            'evt_favs': [...filteredEvents],
+            'user_id': userId,
+          }).then((_) {
+            showMessageDialog("Removed from favorite");
+            iconAnimation.reverse();
+          }).catchError((onError) {
+            showMessageDialog("Error adding to favorite");
           });
         }
+        getFavorites();
       } else {
         favEvts.doc(userId).set({
           'evt_favs': [eventid],
           'user_id': userId,
         });
+        getFavorites();
+      }
+    }).catchError((onError) => {showMessageDialog(onError)});
+  }
+
+  getFavorites() {
+    favEvts.doc(_auth.stateUser.value.uid).get().then((value) {
+      if (value.exists) {
+        favorites.value = FavModel.fromDocumentSnapshot(value);
       }
     });
   }
 
   @override
   void onInit() async {
+    iconAnimation = AnimationController(
+      vsync: this,
+      reverseDuration: Duration(milliseconds: 600),
+      duration: Duration(milliseconds: 1000),
+    );
+
+    getFavorites();
     super.onInit();
   }
 
   @override
   void onClose() {
     marker = null;
-    gmapController = Completer();
+    // gmapController = Completer();
     controller.dispose();
     eventDetails.value = null;
+    iconAnimation.dispose();
     super.onClose();
   }
 }
