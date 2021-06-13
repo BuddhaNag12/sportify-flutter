@@ -46,7 +46,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   height: 25,
                   color: Colors.white,
                 ),
-                onPressed: () => con.openDrawerkey.currentState.openEndDrawer())
+                onPressed: () {
+                  con.openDrawerkey.currentState.openEndDrawer();
+                })
             : SizedBox()
       ],
     );

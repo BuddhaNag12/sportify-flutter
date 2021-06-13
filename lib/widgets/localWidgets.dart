@@ -200,7 +200,7 @@ class MyDrawer extends StatelessWidget {
                         SizedBox(
                           child: ClipOval(
                             child: Image.network(
-                              'https://ui-avatars.com/api/?${_auth.fireStoreUser.value.email}',
+                              'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.name.characters.characterAt(0)}',
                               alignment: Alignment.center,
                             ),
                           ),
@@ -233,12 +233,14 @@ class MyDrawer extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.account_circle),
           title: Text('Profile'),
-          onTap: () => Get.toNamed('/profile'),
+          onTap: () => _auth.isLoggedIn.value == true
+              ? Get.toNamed('/profile')
+              : Get.toNamed('/signin'),
         ),
         ListTile(
           leading: Icon(Icons.today_outlined),
           title: Text('Manage Events'),
-          onTap: () => Get.toNamed('/profile'),
+          onTap: () => Get.toNamed('/'),
         ),
         ListTile(
           leading: Icon(Icons.notification_important),
@@ -273,7 +275,6 @@ class MyDrawer extends StatelessWidget {
 
 Widget headerCard(double width, context) {
   final EventDetailsController _con = Get.find();
-  final AuthController _auth = Get.find();
   if (_con.favorites.value != null &&
       !_con.isLoading.value &&
       _con.favorites.value.eventIds.contains(_con.eventDetails.value.id)) {
@@ -317,15 +318,15 @@ Widget headerCard(double width, context) {
               ),
             ),
             IconButton(
+              splashColor: Colors.white,
               icon: AnimatedIcon(
-                  size: 25,
-                  icon: AnimatedIcons.add_event,
-                  progress: _con.iconAnimation,
-                  color: Colors.white),
-              onPressed: () => _con.addEventToFavorite(
-                _con.eventDetails.value.id,
-                _auth.fireStoreUser.value.uid,
+                size: 25,
+                icon: AnimatedIcons.add_event,
+                progress: _con.iconAnimation,
+                color: Colors.white,
               ),
+              onPressed: () =>
+                  _con.addEventToFavorite(_con.eventDetails.value.id),
             )
           ],
         ),
@@ -369,12 +370,17 @@ Widget headerCard(double width, context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  width: 90,
+                  width: 80,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Icon(Icons.location_on_rounded),
-                      Text("Location")
+                      SizedBox(
+                        child: Text(
+                          _con.evtDetails.place.capitalize,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
                     ],
                   )),
               Container(
@@ -383,8 +389,9 @@ Widget headerCard(double width, context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(FlutterIcons.activity_fea),
-                    SizedBox(width: 20),
-                    Text(_con.evtDetails.active ? "Active" : "Not Active"),
+                    Text(
+                      _con.evtDetails.active ? "Active" : "Not Active",
+                    ),
                   ],
                 ),
               )

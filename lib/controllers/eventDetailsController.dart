@@ -67,49 +67,57 @@ class EventDetailsController extends GetxController
     }
   }
 
-  addEventToFavorite(eventid, userId) async {
-    favEvts.doc(userId).get().then((value) {
-      if (value.data() != null) {
-        if (!value.data()['evt_favs'].contains(eventid)) {
+  addEventToFavorite(eventid) async {
+    if (_auth.isLoggedIn.value) {
+      final userId = _auth.stateUser.value.uid;
+      favEvts.doc(userId).get().then((value) {
+        if (value.data() != null) {
+          if (!value.data()['evt_favs'].contains(eventid)) {
+            favEvts.doc(userId).set({
+              'evt_favs': [...value.data()['evt_favs'], eventid],
+              'user_id': userId,
+            }).then((_) {
+              showMessageDialog("Added to favorite");
+              iconAnimation.forward();
+            }).catchError((onError) {
+              showMessageDialog("Error adding to favorite");
+            });
+          } else if (value.data()['evt_favs'].contains(eventid)) {
+            final filteredEvents =
+                value.data()['evt_favs'].where((i) => i != eventid).toList();
+            favEvts.doc(userId).set({
+              'evt_favs': [...filteredEvents],
+              'user_id': userId,
+            }).then((_) {
+              showMessageDialog("Removed from favorite");
+              iconAnimation.reverse();
+            }).catchError((onError) {
+              showMessageDialog("Error adding to favorite");
+            });
+          }
+          getFavorites();
+        } else {
           favEvts.doc(userId).set({
-            'evt_favs': [...value.data()['evt_favs'], eventid],
+            'evt_favs': [eventid],
             'user_id': userId,
-          }).then((_) {
-            showMessageDialog("Added to favorite");
-            iconAnimation.forward();
-          }).catchError((onError) {
-            showMessageDialog("Error adding to favorite");
           });
-        } else if (value.data()['evt_favs'].contains(eventid)) {
-          final filteredEvents =
-              value.data()['evt_favs'].where((i) => i != eventid).toList();
-          favEvts.doc(userId).set({
-            'evt_favs': [...filteredEvents],
-            'user_id': userId,
-          }).then((_) {
-            showMessageDialog("Removed from favorite");
-            iconAnimation.reverse();
-          }).catchError((onError) {
-            showMessageDialog("Error adding to favorite");
-          });
+          showMessageDialog("Added to favorite");
+          getFavorites();
         }
-        getFavorites();
-      } else {
-        favEvts.doc(userId).set({
-          'evt_favs': [eventid],
-          'user_id': userId,
-        });
-        getFavorites();
-      }
-    }).catchError((onError) => {showMessageDialog(onError)});
+      }).catchError((onError) => {showMessageDialog(onError)});
+    } else {
+      showMessageDialog("Login first to add favorite");
+    }
   }
 
   getFavorites() {
-    favEvts.doc(_auth.stateUser.value.uid).get().then((value) {
-      if (value.exists) {
-        favorites.value = FavModel.fromDocumentSnapshot(value);
-      }
-    });
+    if (_auth.isLoggedIn.value) {
+      favEvts.doc(_auth.stateUser.value.uid).get().then((value) {
+        if (value.exists) {
+          favorites.value = FavModel.fromDocumentSnapshot(value);
+        }
+      });
+    }
   }
 
   @override

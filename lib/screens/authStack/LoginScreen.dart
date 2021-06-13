@@ -41,8 +41,10 @@ class LoginScreen extends GetView<AuthController> {
                   padding: const EdgeInsets.all(20),
                   child: SizedBox(
                     height: 100,
-                    child: Text("Sign In",
-                        style: Theme.of(context).textTheme.headline1),
+                    child: Text(
+                      "Sign In",
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
                   ),
                 ),
                 Stack(
@@ -62,15 +64,17 @@ class LoginScreen extends GetView<AuthController> {
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).primaryColor,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade800,
-                                  blurRadius: 4.0,
-                                  spreadRadius: 1.0,
-                                  offset: Offset(1.0, 5.0)),
-                            ]),
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade800,
+                              blurRadius: 4.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(1.0, 5.0),
+                            ),
+                          ],
+                        ),
                         alignment: Alignment.center,
                         child: SvgPicture.asset(
                           'assets/signIn.svg',
@@ -96,7 +100,6 @@ class LoginScreen extends GetView<AuthController> {
                 ),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(20),
                     width: width,
                     height: height,
                     color: Theme.of(context).primaryColor,
@@ -107,14 +110,21 @@ class LoginScreen extends GetView<AuthController> {
                           children: [
                             Container(
                               width: paddedWidth,
-                              height: 230,
+                              height: 270,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  EmailInputField(),
-                                  PasswordInputField(),
+                                  EmailInputField(
+                                    label: 'Email',
+                                    con: authController.emailController,
+                                  ),
+                                  EmailInputField(
+                                    label: 'Password',
+                                    con: authController.passWordController,
+                                    isPasswordField: true,
+                                  ),
                                   Obx(
                                     () => Padding(
                                       padding: const EdgeInsets.all(15),
@@ -137,7 +147,6 @@ class LoginScreen extends GetView<AuthController> {
                                 ],
                               ),
                             ),
-                            spacer(5.0),
                             actionWidget(),
                           ],
                         ),
@@ -169,7 +178,9 @@ Widget actionWidget() {
       child: Text(
         "Sign Up",
         style: TextStyle(
-            color: Colors.white, decoration: TextDecoration.underline),
+          color: Colors.white,
+          decoration: TextDecoration.underline,
+        ),
       ),
     ),
     Row(

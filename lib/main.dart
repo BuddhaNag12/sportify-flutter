@@ -2,11 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/routes/app_pages.dart';
 import 'package:get/get.dart';
-// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sportify/screens/routNotFound.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -14,6 +15,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final splash = GetStorage();
     return GetMaterialApp(
       // supportedLocales: const <Locale>[
       //   Locale('en', ''),
@@ -33,9 +35,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Sportify",
       unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
-      initialRoute: Routes.HOME,
+      initialRoute: splash.read('isSplash') ? Routes.HOME : Routes.SPLASH,
       getPages: AppPages.routes,
-      themeMode: ThemeMode.dark,
+      // themeMode: ThemeMode.dark,
       theme: ThemeData(
         textTheme: TextTheme(
             headline1: TextStyle(

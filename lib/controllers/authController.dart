@@ -60,12 +60,12 @@ class AuthController extends GetxController {
       final response =
           await _authService.signUpWithEmailPassword(userEmail, password);
       if (response != null) {
-        authUsers.add({
+        authUsers.doc(response.uid).set({
           'email': response.email,
           'uid': response.uid,
           'password': password,
           'name': '',
-          'role': ''
+          'role': 'Event Master'
         });
 
         this.isLoading.value = false;
@@ -109,7 +109,7 @@ class AuthController extends GetxController {
       res.docs.forEach((element) {
         fireStoreUser.value = UserModel.fromDocumentSnapshot(element);
       });
-      print(fireStoreUser.value.email);
+      // print(fireStoreUser.value.email);
       Get.offNamed('/home');
     }
   }

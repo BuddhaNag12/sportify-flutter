@@ -19,7 +19,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var isLoading = false.obs;
 
   //-----------------------
-  List<EventsList> eventLists = <EventsList>[].obs;
+  // List<EventsList> eventLists = <EventsList>[].obs;
+  RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
   // form
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
@@ -37,7 +38,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       TextEditingController();
   final TextEditingController eventDescriptionController =
       TextEditingController();
-
   // Classes
   final DataToFirestore fs = DataToFirestore();
 
@@ -120,7 +120,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           location: pickedLatlng,
           size: eventSizeController.text,
           desc: eventDescriptionController.text,
-          place: eventPlaceNameController.text,
+          place: eventPlaceNameController.text.trim(),
         );
         if (res.isNotEmpty) {
           Get.snackbar(
@@ -237,20 +237,16 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
                 : searchController.text.capitalize.trim(),
           )
           .get();
-
-      query.docs.forEach((element) {
+      query.docs.forEach((QueryDocumentSnapshot element) {
         eventLists.add(EventsList.fromFirestore(element.data()));
       });
-      query2.docs.forEach((element) {
+      query2.docs.forEach((QueryDocumentSnapshot element) {
         eventLists.add(EventsList.fromFirestore(element.data()));
       });
-      // print(futures);
       this.isLoading.value = false;
     } catch (e) {
       this.isLoading.value = false;
       return e;
-    } finally {
-      this.isLoading.value = false;
     }
   }
 

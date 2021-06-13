@@ -36,6 +36,7 @@ dependencies:
   intl: ^0.17.0
   shimmer: ^2.0.0
   j_location_picker: ^1.2.0
+  get_storage: ^2.0.2
   # geolocator:
 
 # dependency_overrides:

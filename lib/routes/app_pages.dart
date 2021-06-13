@@ -13,6 +13,7 @@ import 'package:sportify/screens/splashScreen.dart';
 // bindings
 import 'package:sportify/bindings/auth_binding.dart';
 import 'package:sportify/bindings/event_binding.dart';
+import 'package:sportify/bindings/profile_binding.dart';
 part 'app_routes.dart';
 
 class AppPages {
@@ -75,6 +76,7 @@ class AppPages {
       page: () => ProfileScreen(),
       bindings: [
         AuthBindings(),
+        ProfileBinding()
       ],
     ),
 

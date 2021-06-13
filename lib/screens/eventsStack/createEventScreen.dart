@@ -66,8 +66,6 @@ class CreateEventsScreen extends GetView<EventController> {
                               children: [
                                 EventInputField(
                                   fieldName: "Event Name",
-                                  isDescription: false,
-                                  isNum: false,
                                   controller: con.eventNameController,
                                 ),
                                 Container(
@@ -173,7 +171,6 @@ class CreateEventsScreen extends GetView<EventController> {
                                 }),
                                 EventInputField(
                                   fieldName: "Team Size",
-                                  isDescription: false,
                                   isNum: true,
                                   controller: con.eventSizeController,
                                 ),
@@ -332,14 +329,11 @@ class CreateEventsScreen extends GetView<EventController> {
                                 ),
                                 EventInputField(
                                   fieldName: "Location name",
-                                  isDescription: false,
-                                  isNum: false,
                                   controller: con.eventPlaceNameController,
                                 ),
                                 EventInputField(
                                   fieldName: "Event Description",
                                   isDescription: true,
-                                  isNum: false,
                                   controller: con.eventDescriptionController,
                                 ),
                               ],

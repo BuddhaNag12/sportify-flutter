@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 
@@ -9,8 +10,6 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     final PageController controller = PageController(initialPage: 0);
-
-    
 
     _nextPage(int index) {
       print("clicked");
@@ -96,7 +95,11 @@ class SplashScreen extends StatelessWidget {
                 ),
                 spacer(50.0),
                 ElevatedButton.icon(
-                  onPressed: () => Get.offNamed('/home'),
+                  onPressed: () {
+                    final splash = GetStorage();
+                    splash.write('isSplash', true);
+                    Get.offAndToNamed('/home');
+                  },
                   icon: Icon(Icons.arrow_upward_rounded),
                   label: Text("Get Started"),
                 )

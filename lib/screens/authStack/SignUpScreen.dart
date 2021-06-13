@@ -81,7 +81,6 @@ class SignUpScreen extends GetView<AuthController> {
                 ),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(20),
                     width: width,
                     height: height,
                     color: Theme.of(context).primaryColor,
@@ -92,14 +91,21 @@ class SignUpScreen extends GetView<AuthController> {
                           children: [
                             Container(
                               width: paddedWidth,
-                              height: 230,
+                              height: 270,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  EmailInputField(),
-                                  PasswordInputField(),
+                                  EmailInputField(
+                                    label: 'Email',
+                                    con: authController.emailController,
+                                  ),
+                                  EmailInputField(
+                                    label: 'Passowrd',
+                                    con: authController.passWordController,
+                                    isPasswordField: true,
+                                  ),
                                   Obx(
                                     () => Padding(
                                       padding: const EdgeInsets.all(15),
