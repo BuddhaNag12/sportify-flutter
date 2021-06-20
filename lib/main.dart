@@ -16,55 +16,46 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final splash = GetStorage();
+    bool isSplash = splash.read('isSplash') ?? false;
     return GetMaterialApp(
-      // supportedLocales: const <Locale>[
-      //   Locale('en', ''),
-      //   Locale('ar', ''),
-      //   Locale('pt', ''),
-      //   Locale('tr', ''),
-      //   Locale('es', ''),
-      //   Locale('it', ''),
-      //   Locale('ru', ''),
-      // ],
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
       defaultTransition: Transition.native,
       debugShowCheckedModeBanner: false,
       title: "Sportify",
       unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
-      initialRoute: splash.read('isSplash') ? Routes.HOME : Routes.SPLASH,
+      initialRoute: isSplash ? Routes.VIEW_EVENTS : Routes.SPLASH,
       getPages: AppPages.routes,
       // themeMode: ThemeMode.dark,
       theme: ThemeData(
         textTheme: TextTheme(
-            headline1: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 28,
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
-            ),
-            headline2: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 20,
-              color: Colors.black54,
-              fontWeight: FontWeight.normal,
-            ),
-            caption: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 15,
-              color: Colors.white,
-              fontWeight: FontWeight.normal,
-            ),
-            headline3: TextStyle(
-              fontFamily: 'russian',
-              fontSize: 28,
-              color: Colors.white,
-            ),
-            subtitle1: TextStyle(
-                fontFamily: 'Roboto', fontSize: 18, color: Colors.white)),
+          headline1: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 28,
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+          ),
+          headline2: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 20,
+            color: Colors.black54,
+            fontWeight: FontWeight.normal,
+          ),
+          caption: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 15,
+            color: Colors.white,
+            fontWeight: FontWeight.normal,
+          ),
+          headline3: TextStyle(
+            fontFamily: 'russian',
+            fontSize: 28,
+            color: Colors.white,
+          ),
+          subtitle1: TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
         primaryColor: Colors.tealAccent.shade700,
         primarySwatch: Colors.teal,
       ),

@@ -46,9 +46,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
               colors: [Colors.grey.shade200, Colors.teal.shade300],
             ),
           ),
-          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          height: 90,
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          height: 75,
           width: width,
           child: InkWell(
             onTap: () => Get.toNamed('/view_event/${eventLists[i].id}'),
@@ -57,7 +57,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                 CircleAvatar(
                   backgroundColor: Colors.white54,
                   child: Icon(
-                    FlutterIcons.event_mdi,
+                    FlutterIcons.sports_club_ent,
                     size: 40,
                     color: Colors.teal,
                   ),
@@ -71,13 +71,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                       child: Container(
                         margin: EdgeInsets.only(top: 5.0),
                         child: Text(
-                          eventLists[i].name.toUpperCase(),
+                          eventLists[i].name.toUpperCase() ?? '',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: Color(0xFF212121),
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: headline6,
                         ),
                       ),
                     ),
@@ -95,10 +91,13 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                   width: 90,
                                   child: Row(
                                     children: [
-                                      Icon(Icons.flag_outlined,
-                                          color: Colors.teal, size: 18),
+                                      Icon(
+                                        Icons.flag_outlined,
+                                        color: Colors.teal,
+                                        size: iconSize,
+                                      ),
                                       Text(
-                                        eventLists[i].category,
+                                        eventLists[i].category ?? '',
                                       ),
                                     ],
                                   ),
@@ -108,11 +107,16 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                   width: 70,
                                   child: Row(
                                     children: [
-                                      Icon(Icons.location_on_outlined,
-                                          color: Colors.teal, size: 18),
-                                      Text(eventLists[i].place.isBlank
-                                          ? 'Location'
-                                          : eventLists[i].place),
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        color: Colors.teal,
+                                        size: iconSize,
+                                      ),
+                                      Text(
+                                        eventLists[i].place.isBlank
+                                            ? 'Location'
+                                            : eventLists[i].place,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -127,8 +131,11 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                   width: 71,
                                   child: Row(
                                     children: [
-                                      Icon(FlutterIcons.activity_fea,
-                                          color: Colors.teal, size: 18),
+                                      Icon(
+                                        FlutterIcons.activity_fea,
+                                        color: Colors.teal,
+                                        size: iconSize,
+                                      ),
                                       Text(
                                         eventLists[i].active
                                             ? 'Active'
@@ -142,10 +149,13 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                   width: 80,
                                   child: Row(
                                     children: [
-                                      Icon(Icons.timelapse,
-                                          color: Colors.teal, size: 18),
+                                      Icon(
+                                        Icons.timelapse,
+                                        color: Colors.teal,
+                                        size: iconSize,
+                                      ),
                                       Text(
-                                        eventLists[i].date,
+                                        eventLists[i].date ?? 'Event date',
                                       ),
                                     ],
                                   ),
@@ -171,102 +181,102 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
   Drawer widget for sidebar placed in home screen
   To customized we separated the widget to localwidgets
 
-*/
-class MyDrawer extends StatelessWidget {
-  final AuthController _auth = Get.find();
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-        child: ListView(
-      padding: EdgeInsets.zero,
-      children: [
-        DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.teal,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 1,
-                color: Colors.grey,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: Obx(
-            () => _auth.isLoggedIn.value == true
-                ? Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          child: ClipOval(
-                            child: Image.network(
-                              'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.name.characters.characterAt(0)}',
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        SizedBox(
-                          child: Text(
-                            _auth.fireStoreUser.value.email,
-                            style: headline6.copyWith(color: Colors.white),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                : Container(
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          child: Icon(
-                            FlutterIcons.user_ant,
-                            size: 50,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('Profile'),
-          onTap: () => _auth.isLoggedIn.value == true
-              ? Get.toNamed('/profile')
-              : Get.toNamed('/signin'),
-        ),
-        ListTile(
-          leading: Icon(Icons.today_outlined),
-          title: Text('Manage Events'),
-          onTap: () => Get.toNamed('/'),
-        ),
-        ListTile(
-          leading: Icon(Icons.notification_important),
-          title: Text('Notifications'),
-        ),
-        ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('Settings'),
-        ),
-        ListTile(
-          leading: Icon(Icons.info),
-          title: Text('About'),
-        ),
-        Obx(
-          () => _auth.isLoggedIn.isTrue
-              ? ListTile(
-                  leading: Icon(Icons.logout),
-                  title: Text('Log Out'),
-                  onTap: () => _auth.logOut(),
-                )
-              : SizedBox(),
-        ),
-      ],
-    ));
-  }
-}
+// */
+// class MyDrawer extends StatelessWidget {
+//   final AuthController _auth = Get.find();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Drawer(
+//         child: ListView(
+//       padding: EdgeInsets.zero,
+//       children: [
+//         DrawerHeader(
+//           decoration: BoxDecoration(
+//             color: Colors.teal,
+//             boxShadow: [
+//               BoxShadow(
+//                 blurRadius: 1,
+//                 color: Colors.grey,
+//                 offset: Offset(0, 1),
+//               ),
+//             ],
+//           ),
+//           child: Obx(
+//             () => _auth.isLoggedIn.value == true
+//                 ? Container(
+//                     child: Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         SizedBox(
+//                           child: ClipOval(
+//                             child: Image.network(
+//                               'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.name.characters.characterAt(0)}',
+//                               alignment: Alignment.center,
+//                             ),
+//                           ),
+//                         ),
+//                         SizedBox(width: 20),
+//                         SizedBox(
+//                           child: Text(
+//                             _auth.fireStoreUser.value.email,
+//                             style: headline6.copyWith(color: Colors.white),
+//                           ),
+//                         )
+//                       ],
+//                     ),
+//                   )
+//                 : Container(
+//                     child: Stack(
+//                       children: [
+//                         Positioned(
+//                           child: Icon(
+//                             FlutterIcons.user_ant,
+//                             size: 50,
+//                             color: Colors.white,
+//                           ),
+//                         )
+//                       ],
+//                     ),
+//                   ),
+//           ),
+//         ),
+//         ListTile(
+//           leading: Icon(Icons.account_circle),
+//           title: Text('Profile'),
+//           onTap: () => _auth.isLoggedIn.value == true
+//               ? Get.toNamed('/profile')
+//               : Get.toNamed('/signin'),
+//         ),
+//         ListTile(
+//           leading: Icon(Icons.today_outlined),
+//           title: Text('Manage Events'),
+//           onTap: () => Get.toNamed('/'),
+//         ),
+//         ListTile(
+//           leading: Icon(Icons.notification_important),
+//           title: Text('Notifications'),
+//         ),
+//         ListTile(
+//           leading: Icon(Icons.settings),
+//           title: Text('Settings'),
+//         ),
+//         ListTile(
+//           leading: Icon(Icons.info),
+//           title: Text('About'),
+//         ),
+//         Obx(
+//           () => _auth.isLoggedIn.isTrue
+//               ? ListTile(
+//                   leading: Icon(Icons.logout),
+//                   title: Text('Log Out'),
+//                   onTap: () => _auth.logOut(),
+//                 )
+//               : SizedBox(),
+//         ),
+//       ],
+//     ));
+//   }
+// }
 
 /*
   headerCard for view event screen
@@ -448,10 +458,10 @@ Widget cirCularIcon({String imgPath}) {
 
 Widget listShimmerLoading() {
   return Container(
-    height: 400,
+    height: 200,
     width: width,
     child: Column(
-      children: List.filled(4, 1)
+      children: List.filled(2, 1)
           .map((e) => Shimmer.fromColors(
                 baseColor: Colors.teal,
                 highlightColor: Colors.tealAccent,

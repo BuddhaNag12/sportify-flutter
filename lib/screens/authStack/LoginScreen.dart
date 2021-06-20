@@ -3,15 +3,14 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sportify/constants/typographyConstants.dart';
-import 'package:sportify/controllers/authController.dart';
+import 'package:sportify/controllers/signinController.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 
-class LoginScreen extends GetView<AuthController> {
-  final AuthController authController = Get.find();
-
+class LoginScreen extends GetView<SignInController> {
+  final SignInController authController = Get.find();
   @override
   Widget build(BuildContext context) {
     final args = Get.arguments;

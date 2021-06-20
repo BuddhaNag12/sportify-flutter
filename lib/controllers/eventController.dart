@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/utils/utils.dart';
 import 'package:j_location_picker/j_location_picker.dart';
 import 'package:sportify/models/eventModel.dart';
@@ -17,19 +19,18 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var category = ''.obs;
   var prizeCat = ''.obs;
   var isLoading = false.obs;
+  var isEventMaster = false.obs;
 
   //-----------------------
   // List<EventsList> eventLists = <EventsList>[].obs;
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
-  // form
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
-  // key for open drawer
-  final GlobalKey<ScaffoldState> openDrawerkey = GlobalKey();
-
   /* ------------------------------- */
   // CONTROLLERS
+  AuthController auth = Get.find();
+  PersistentTabController tabViewController;
   TabController tabController;
   final TextEditingController eventNameController = TextEditingController();
   final TextEditingController eventSizeController = TextEditingController();
@@ -46,6 +47,15 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     _initializeTabController();
     _getEventsFromFirestore();
     super.onReady();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    auth.fireStoreUser.value?.role == 'Event Master'
+        ? this.isEventMaster.value = true
+        : this.isEventMaster.value = false;
+    tabViewController = PersistentTabController(initialIndex: 0);
   }
 
   @override

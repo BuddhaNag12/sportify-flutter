@@ -37,6 +37,7 @@ dependencies:
   shimmer: ^2.0.0
   j_location_picker: ^1.2.0
   get_storage: ^2.0.2
+  persistent_bottom_nav_bar: any
   # geolocator:
 
 # dependency_overrides:

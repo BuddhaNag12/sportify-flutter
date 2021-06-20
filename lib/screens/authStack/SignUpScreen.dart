@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sportify/controllers/authController.dart';
+import 'package:sportify/controllers/singUpController.dart';
 import 'package:sportify/global_widgets/InputField.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 
 class SignUpScreen extends GetView<AuthController> {
-  final AuthController authController = Get.find();
+  final SignUpController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -144,8 +145,9 @@ class SignUpScreen extends GetView<AuthController> {
                               child: Text(
                                 "Sign In",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline),
+                                  color: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
                           ],

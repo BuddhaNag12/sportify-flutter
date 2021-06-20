@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportify/constants/typographyConstants.dart';
+import 'package:sportify/utils/utils.dart';
 
 class EventInputField extends StatelessWidget {
   final String fieldName;
@@ -26,7 +27,7 @@ class EventInputField extends StatelessWidget {
             padding: const EdgeInsets.only(left: 2),
             margin: const EdgeInsets.only(bottom: 5),
             child: Text(
-              fieldName.toString(),
+              fieldName.toString() ?? '',
               style: subtitle1.copyWith(color: this.color),
             ),
           ),
@@ -42,29 +43,12 @@ class EventInputField extends StatelessWidget {
                 maxLines: isDescription ? 3 : null,
                 maxLength: isDescription ? 150 : null,
                 style: TextStyle(color: Colors.black87),
-                validator: (String value) {
-                  if (isNum) {
-                    var msg;
-                    if (!GetUtils.isNum(value)) {
-                      msg = 'Enter valid $fieldName';
-                    } else {
-                      msg = null;
-                    }
-                    return msg;
-                  } else if (isDescription) {
-                    var msg;
-                    if (!GetUtils.isLengthBetween(value, 1, 150)) {
-                      msg = 'Enter valid $fieldName';
-                    } else {
-                      msg = null;
-                    }
-                    return msg;
-                  } else if (value == null || value.isEmpty) {
-                    return 'Please enter valid characters';
-                  } else {
-                    return null;
-                  }
-                },
+                validator: (String value) => checkIsValid(
+                  fieldName: fieldName,
+                  value: value,
+                  isDescription: isDescription,
+                  isNum: isNum,
+                ),
                 decoration: InputDecoration(
                   isDense: true,
                   fillColor: Colors.white,
