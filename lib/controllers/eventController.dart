@@ -19,17 +19,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var category = ''.obs;
   var prizeCat = ''.obs;
   var isLoading = false.obs;
-  var isEventMaster = false.obs;
-
   //-----------------------
-  // List<EventsList> eventLists = <EventsList>[].obs;
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
   /* ------------------------------- */
   // CONTROLLERS
-  AuthController auth = Get.find();
   PersistentTabController tabViewController;
   TabController tabController;
   final TextEditingController eventNameController = TextEditingController();
@@ -52,9 +48,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     super.onInit();
-    auth.fireStoreUser.value?.role == 'Event Master'
-        ? this.isEventMaster.value = true
-        : this.isEventMaster.value = false;
     tabViewController = PersistentTabController(initialIndex: 0);
   }
 

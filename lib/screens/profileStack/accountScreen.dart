@@ -53,16 +53,18 @@ class MyAccount extends StatelessWidget {
                                   SizedBox(
                                     child: ClipOval(
                                       child: Obx(
-                                        () => _auth.fireStoreUser.value?.name !=
-                                                null
-                                            ? Image.network(
-                                                'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.name.characters.characterAt(0)}',
-                                                alignment: Alignment.center,
-                                              )
-                                            : Image.network(
-                                                'https://ui-avatars.com/api/?name=G',
-                                                alignment: Alignment.center,
-                                              ),
+                                        () =>
+                                            _auth.fireStoreUser.value != null &&
+                                                    _auth.fireStoreUser.value
+                                                        .email.isNotEmpty
+                                                ? Image.network(
+                                                    'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.email.characters.characterAt(0)}',
+                                                    alignment: Alignment.center,
+                                                  )
+                                                : Image.network(
+                                                    'https://ui-avatars.com/api/?name=G',
+                                                    alignment: Alignment.center,
+                                                  ),
                                       ),
                                     ),
                                   ),
@@ -76,7 +78,7 @@ class MyAccount extends StatelessWidget {
                                       children: [
                                         SizedBox(
                                           child: Text(
-                                            _auth.fireStoreUser.value?.email ??
+                                            _auth.fireStoreUser?.value?.email ??
                                                 'Guest User',
                                             style: headline6.copyWith(
                                               color: Colors.white,
@@ -84,8 +86,12 @@ class MyAccount extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(
+                                          height: 5,
+                                        ),
+                                        SizedBox(
                                           child: Text(
-                                            "ROLE:${_auth.fireStoreUser.value?.role ?? 'Not logged in'}",
+                                            'Role: todo',
+                                            // "ROLE: ${_eventCon.isEventMaster.isTrue ? 'Event Master' : 'Participant'}",
                                             textAlign: TextAlign.start,
                                             style: caption.copyWith(
                                               color: Colors.white,
@@ -96,7 +102,7 @@ class MyAccount extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 140,
+                                    width: 130,
                                   ),
                                   SizedBox(
                                     child: IconButton(
@@ -140,16 +146,24 @@ class MyAccount extends StatelessWidget {
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
-                                  child: Obx(
-                                    () => CupertinoSwitch(
-                                      activeColor: Colors.tealAccent.shade400,
-                                      trackColor: Colors.teal,
-                                      value: _eventCon.isEventMaster.value,
-                                      onChanged: (value) {
-                                        _eventCon.isEventMaster.value = value;
-                                      },
-                                    ),
+                                  child: CupertinoSwitch(
+                                    activeColor: Colors.tealAccent.shade400,
+                                    trackColor: Colors.teal,
+                                    value: false,
+                                    onChanged: (value) {
+                                      // _eventCon.isEventMaster.value = value;
+                                    },
                                   ),
+                                  // child: Obx(
+                                  //   () => CupertinoSwitch(
+                                  //     activeColor: Colors.tealAccent.shade400,
+                                  //     trackColor: Colors.teal,
+                                  //     value: false,
+                                  //     onChanged: (value) {
+                                  //       // _eventCon.isEventMaster.value = value;
+                                  //     },
+                                  //   ),
+                                  // ),
                                 ),
                               ],
                             ),
@@ -170,9 +184,10 @@ class MyAccount extends StatelessWidget {
                 'Profile',
                 style: subtitle1.copyWith(color: Colors.black45),
               ),
-              onTap: () => _auth.isLoggedIn.value == true
+              onTap: () => _auth.isLoggedIn.isTrue
                   ? Get.toNamed('/profile')
-                  : Get.toNamed('/signin',arguments: "Login first to view profile"),
+                  : Get.toNamed('/signin',
+                      arguments: "Login first to view profile"),
               trailing: Icon(Icons.arrow_right),
             ),
             ListTile(
@@ -185,9 +200,9 @@ class MyAccount extends StatelessWidget {
               trailing: Icon(Icons.arrow_right),
             ),
             ListTile(
-              leading: Icon(Icons.notification_important),
+              leading: Icon(Icons.favorite_outline),
               title: Text(
-                'Notifications',
+                'Favorites',
                 style: subtitle1.copyWith(color: Colors.black45),
               ),
               trailing: Icon(Icons.arrow_right),
@@ -201,7 +216,7 @@ class MyAccount extends StatelessWidget {
               trailing: Icon(Icons.arrow_right),
             ),
             ListTile(
-              leading: Icon(Icons.info),
+              leading: Icon(Icons.info_outline),
               title: Text(
                 'About',
                 style: subtitle1.copyWith(color: Colors.black45),

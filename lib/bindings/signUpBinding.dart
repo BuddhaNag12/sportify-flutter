@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:sportify/controllers/singUpController.dart';
+import 'package:sportify/controllers/signUpController.dart';
 
 class SignUpBinding extends Bindings {
   @override

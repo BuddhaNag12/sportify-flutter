@@ -15,6 +15,7 @@ class AuthController extends GetxController {
   // EventController evtCon = Get.find();
   void reset() {
     this.isLoggedIn.value = false;
+    this.fireStoreUser.value = null;
     this.stateUser.value = null;
   }
 
@@ -38,6 +39,9 @@ class AuthController extends GetxController {
       res.docs.forEach((element) {
         fireStoreUser.value = UserModel.fromDocumentSnapshot(element);
       });
+      if(Get.currentRoute == '/signin' || Get.currentRoute == '/signup' ){
+        Get.offAndToNamed('/view_events');
+      }
     }
   }
 
