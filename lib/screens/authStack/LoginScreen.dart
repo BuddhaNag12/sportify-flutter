@@ -173,7 +173,7 @@ Widget actionWidget() {
       ),
     ),
     TextButton(
-      onPressed: () => Get.toNamed('/signup'),
+      onPressed: () => Get.offNamed('/signup'),
       child: Text(
         "Sign Up",
         style: TextStyle(

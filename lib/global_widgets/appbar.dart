@@ -32,9 +32,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   CupertinoIcons.person_crop_circle_fill,
                 ),
                 onPressed: () {
-                  con.stateUser.value != null
-                      ? Get.toNamed('/profile')
-                      : Get.toNamed('/signin');
+                  Get.toNamed('/profile');
+                  // : Get.toNamed('/signin');
                 })
             : SizedBox()
       ],

@@ -6,7 +6,6 @@ import 'package:shimmer/shimmer.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
-import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
 

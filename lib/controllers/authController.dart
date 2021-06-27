@@ -12,7 +12,6 @@ class AuthController extends GetxController {
   Stream<User> get user => auth.authStateChanges();
   Rxn<UserModel> fireStoreUser = Rxn<UserModel>();
 
-  // EventController evtCon = Get.find();
   void reset() {
     this.isLoggedIn.value = false;
     this.fireStoreUser.value = null;
@@ -39,8 +38,10 @@ class AuthController extends GetxController {
       res.docs.forEach((element) {
         fireStoreUser.value = UserModel.fromDocumentSnapshot(element);
       });
-      if(Get.currentRoute == '/signin' || Get.currentRoute == '/signup' ){
-        Get.offAndToNamed('/view_events');
+      if (Get.currentRoute == '/signin' || Get.currentRoute == '/signup') {
+        Get.back(canPop: true, closeOverlays: true);
+        // Get.toNamed('/');
+        // Get.removeRoute(Get.currentRoute);
       }
     }
   }

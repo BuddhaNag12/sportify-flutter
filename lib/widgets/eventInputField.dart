@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/utils/utils.dart';
 

@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 import 'package:sportify/bindings/gMap_Binding.dart';
 import 'package:sportify/bindings/signUpBinding.dart';
 import 'package:sportify/bindings/signinBinding.dart';
+import 'package:sportify/middleware/routeMiddleware.dart';
 import 'package:sportify/screens/authStack/SignUpScreen.dart';
 import 'package:sportify/screens/eventsStack/JoinEventsScreen.dart';
+import 'package:sportify/screens/eventsStack/categoriesScreen.dart';
 import 'package:sportify/screens/eventsStack/createEventScreen.dart';
 import 'package:sportify/screens/eventsStack/viewEventScreen.dart';
 import 'package:sportify/screens/eventsStack/viewEventsScreen.dart';
@@ -11,6 +13,7 @@ import 'package:sportify/screens/homeScreen.dart';
 import 'package:sportify/screens/authStack/LoginScreen.dart';
 import 'package:sportify/screens/profileStack/accountScreen.dart';
 import 'package:sportify/screens/profileStack/profileScreen.dart';
+import 'package:sportify/screens/settingScreen.dart';
 import 'package:sportify/screens/splashScreen.dart';
 // bindings
 import 'package:sportify/bindings/auth_binding.dart';
@@ -26,6 +29,16 @@ class AppPages {
       binding: AuthBindings(),
     ),
     GetPage(
+      name: Routes.CATEGORIES,
+      page: () => CategoriesScreen(),
+      // binding: AuthBindings(),
+    ),
+    GetPage(
+      name: Routes.SETTINGS,
+      page: () => SettingScreen(),
+      // binding: AuthBindings(),
+    ),
+    GetPage(
       name: Routes.HOME,
       page: () => HomeScreen(),
       binding: AuthBindings(),
@@ -35,7 +48,6 @@ class AppPages {
       name: Routes.LOGIN,
       page: () => LoginScreen(),
       binding: SigninBinding(),
-      // middlewares: [RouteMiddleWare()],
     ),
     GetPage(
       name: Routes.SIGNUP,
@@ -43,7 +55,7 @@ class AppPages {
       binding: SignUpBinding(),
     ),
     GetPage(
-      name: Routes.VIEW_EVENTS,
+      name: Routes.ROOT,
       page: () => ViewEventsScreenTab(),
       bindings: [
         EventBinding(),
@@ -57,6 +69,7 @@ class AppPages {
         EventBinding(),
         AuthBindings(),
       ],
+      middlewares: [RouteMiddleWare()],
     ),
     GetPage(
       name: Routes.VIEW_EVENT,
@@ -83,6 +96,7 @@ class AppPages {
       name: Routes.PROFILE,
       page: () => ProfileScreen(),
       bindings: [AuthBindings(), ProfileBinding()],
+      middlewares: [RouteMiddleWare()],
     ),
   ];
 }

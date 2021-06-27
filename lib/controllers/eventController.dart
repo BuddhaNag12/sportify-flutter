@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/utils/utils.dart';
 import 'package:j_location_picker/j_location_picker.dart';
 import 'package:sportify/models/eventModel.dart';
@@ -19,6 +20,9 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var category = ''.obs;
   var prizeCat = ''.obs;
   var isLoading = false.obs;
+  Rx<NavBarStyle> navBarStyle = NavBarStyle.style1.obs;
+  var currentButtomStyle = ''.obs;
+  final navBarStyleStore = GetStorage();
   //-----------------------
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
@@ -47,6 +51,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   @override
   void onInit() {
+    // navBarStyleStore.write('navBarStyle', NavBarStyle.style1);
+    // print("style:${navBarStyleStore.read('navBarStyle')}");
     super.onInit();
     tabViewController = PersistentTabController(initialIndex: 0);
   }
@@ -250,6 +256,30 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     } catch (e) {
       this.isLoading.value = false;
       return e;
+    }
+  }
+
+  void changeBottomStyle(String val) {
+    currentButtomStyle.value = val;
+    switch (val) {
+      case 'style1':
+        this.navBarStyle.value = NavBarStyle.style1;
+        break;
+      case 'style2':
+        this.navBarStyle.value = NavBarStyle.style2;
+        break;
+      case 'style2':
+        this.navBarStyle.value = NavBarStyle.style3;
+        break;
+      case 'style3':
+        this.navBarStyle.value = NavBarStyle.style4;
+        break;
+      case 'style5':
+        this.navBarStyle.value = NavBarStyle.style5;
+
+        break;
+      default:
+        this.navBarStyle.value = NavBarStyle.style1;
     }
   }
 

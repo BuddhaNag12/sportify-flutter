@@ -1,20 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:sportify/constants/catConstat.dart';
 import 'package:sportify/constants/colorConst.dart';
-import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/controllers/eventController.dart';
-import 'package:sportify/controllers/signinController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 import 'package:get/get.dart';
-import 'package:sportify/screens/authStack/LoginScreen.dart';
-import 'package:sportify/screens/eventsStack/createEventScreen.dart';
-import 'package:sportify/screens/eventsStack/favoritesEvents.dart';
+import 'package:sportify/screens/eventsStack/categoriesScreen.dart';
 import 'package:sportify/screens/profileStack/accountScreen.dart';
-import 'package:sportify/screens/profileStack/profileScreen.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 
@@ -205,13 +199,10 @@ class ViewEventsScreen extends GetView<EventController> {
 
 class ViewEventsScreenTab extends StatelessWidget {
   final EventController _con = Get.find();
-  final AuthController _auth = Get.find();
-  SignInController con;
-
   List<Widget> _buildScreens() {
     return [
       ViewEventsScreen(),
-      Obx(() => _auth.isLoggedIn.isTrue ? CreateEventsScreen() : LoginScreen()),
+      CategoriesScreen(),
       MyAccount(),
     ];
   }
@@ -225,18 +216,11 @@ class ViewEventsScreenTab extends StatelessWidget {
         inactiveColorPrimary: primaryColorDark,
       ),
       PersistentBottomNavBarItem(
-        icon: Obx(
-          () => _auth.isLoggedIn.isTrue
-              ? Icon(
-                  CupertinoIcons.plus_app_fill,
-                  color: Colors.white,
-                )
-              : Icon(
-                  FlutterIcons.login_ant,
-                  color: Colors.white,
-                ),
+        icon: Icon(
+          CupertinoIcons.sportscourt,
+          color: Colors.white,
         ),
-        title: _auth.isLoggedIn.isTrue ? ("Add Event") : ("Login"),
+        title: ("Categories"),
         activeColorSecondary: primaryColorLight,
         activeColorPrimary: primaryColorLight,
         inactiveColorPrimary: primaryColorDark,
@@ -252,38 +236,39 @@ class ViewEventsScreenTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _auth.isLoggedIn.isFalse ? con = Get.put(SignInController()) : null;
-    return PersistentTabView(
-      context,
-      controller: _con.tabViewController,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      confineInSafeArea: true,
-      backgroundColor: accentColor,
-      handleAndroidBackButtonPress: true,
-      resizeToAvoidBottomInset: false,
-      stateManagement: true,
-      hideNavigationBarWhenKeyboardShows: true,
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8),
-          topRight: Radius.circular(8),
+    return Obx(
+      () => PersistentTabView(
+        context,
+        controller: _con.tabViewController,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+        backgroundColor: accentColor,
+        handleAndroidBackButtonPress: true,
+        resizeToAvoidBottomInset: false,
+        stateManagement: true,
+        hideNavigationBarWhenKeyboardShows: true,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          ),
+          adjustScreenBottomPaddingOnCurve: true,
+          colorBehindNavBar: Colors.white,
         ),
-        adjustScreenBottomPaddingOnCurve: true,
-        colorBehindNavBar: Colors.white,
+        popAllScreensOnTapOfSelectedTab: true,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: ScreenTransitionAnimation(
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 200),
+        ),
+        navBarStyle: _con.navBarStyle.value,
       ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle: NavBarStyle.style1,
     );
   }
 }

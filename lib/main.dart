@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Sportify",
       unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
-      initialRoute: isSplash ? Routes.VIEW_EVENTS : Routes.SPLASH,
+      initialRoute: isSplash ? Routes.ROOT : Routes.SPLASH,
       getPages: AppPages.routes,
       // themeMode: ThemeMode.dark,
       theme: ThemeData(

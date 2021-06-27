@@ -11,4 +11,6 @@ abstract class Routes{
   static const VIEW_EVENT = '/view_event/:id';
   static const PROFILE = '/profile';
   static const ACCOUNT = '/account';
+  static const CATEGORIES = '/categories';
+  static const SETTINGS  = "/setting";
 }

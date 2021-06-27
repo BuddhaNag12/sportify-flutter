@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/catConstat.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
@@ -60,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 child: ClipOval(
                                   child: Image.network(
-                                    'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.name.characters.characterAt(0)}',
+                                    'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.email.characters.characterAt(0)}',
                                     alignment: Alignment.center,
                                   ),
                                 ),
@@ -113,18 +114,6 @@ class ProfileScreen extends StatelessWidget {
                                   enabled: false,
                                   color: Colors.black,
                                 ),
-                                // EmailInputField(
-                                //   con: _profileCon.oldPassWordController,
-                                //   isPasswordField: true,
-                                //   color: Colors.black,
-                                //   label: "Old Password",
-                                // ),
-                                // EmailInputField(
-                                //   con: _profileCon.passwordController,
-                                //   isPasswordField: true,
-                                //   color: Colors.black,
-                                //   label: "New Password",
-                                // ),
                                 Obx(
                                   () => Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

@@ -9,36 +9,10 @@ class JoinEventController extends GetxController {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
 
-    final GlobalKey<FormState> jformKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> jformKey = GlobalKey<FormState>();
   /* ------------------------------- */
   final TextEditingController cJeventName = TextEditingController();
   final TextEditingController cJteamName = TextEditingController();
   final TextEditingController cJeventDescription = TextEditingController();
   final DataToFirestore fs = DataToFirestore();
-
-  // void _reset() {
-  //   pickedDate.value = '';
-  //   prizeCat.value = '';
-  //   category.value = '';
-  //   update();
-  // }
-
-  // void _showDialog(String text) {
-  //   Get.defaultDialog(
-  //     title: 'warning',
-  //     titleStyle: TextStyle(color: Colors.orange),
-  //     middleText: text,
-  //     backgroundColor: Colors.teal,
-  //     confirm: TextButton(
-  //       onPressed: () => Get.back(),
-  //       child: Text(
-  //         "Close",
-  //         style: TextStyle(color: Colors.white),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  
-
 }

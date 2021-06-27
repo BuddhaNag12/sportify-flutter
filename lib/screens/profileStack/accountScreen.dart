@@ -6,12 +6,11 @@ import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
-import 'package:sportify/controllers/eventController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 
 class MyAccount extends StatelessWidget {
   final AuthController _auth = Get.find();
-  final EventController _eventCon = Get.find();
+  // final EventController _eventCon = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +101,7 @@ class MyAccount extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 130,
+                                    width: 120,
                                   ),
                                   SizedBox(
                                     child: IconButton(
@@ -184,10 +183,16 @@ class MyAccount extends StatelessWidget {
                 'Profile',
                 style: subtitle1.copyWith(color: Colors.black45),
               ),
-              onTap: () => _auth.isLoggedIn.isTrue
-                  ? Get.toNamed('/profile')
-                  : Get.toNamed('/signin',
-                      arguments: "Login first to view profile"),
+              onTap: () => Get.toNamed('/profile'),
+              trailing: Icon(Icons.arrow_right),
+            ),
+            ListTile(
+              leading: Icon(CupertinoIcons.plus_circle),
+              title: Text(
+                'Create Events',
+                style: subtitle1.copyWith(color: Colors.black45),
+              ),
+              onTap: () => Get.toNamed('/create'),
               trailing: Icon(Icons.arrow_right),
             ),
             ListTile(
@@ -209,8 +214,9 @@ class MyAccount extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.settings),
+              onTap:()=> Get.toNamed('/setting'),
               title: Text(
-                'Settings',
+                'Setting',
                 style: subtitle1.copyWith(color: Colors.black45),
               ),
               trailing: Icon(Icons.arrow_right),

@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/catConstat.dart';
 import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/controllers/eventController.dart';
 import 'package:sportify/utils/utils.dart';
-
-enum UserRoll { participating, eventmaster }
 
 class ProfileController extends GetxController {
   final AuthController _auth = Get.find();

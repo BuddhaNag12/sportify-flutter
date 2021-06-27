@@ -11,6 +11,10 @@ import 'package:sportify/constants/typographyConstants.dart';
 
 class CreateEventsScreen extends GetView<EventController> {
   final EventController con = Get.find();
+  // GetPage redirect() {
+  //   final AuthController con = Get.find();
+  //   return con.isLoggedIn.isTrue ? null : RouteSettings(name: '/signin');
+  // }
 
   @override
   Widget build(BuildContext context) {
