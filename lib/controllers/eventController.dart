@@ -21,14 +21,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
   Rx<NavBarStyle> navBarStyle = NavBarStyle.style1.obs;
-  var currentButtomStyle = ''.obs;
   final navBarStyleStore = GetStorage();
-  //-----------------------
+
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
-  /* ------------------------------- */
+
   // CONTROLLERS
   PersistentTabController tabViewController;
   TabController tabController;
@@ -51,8 +50,10 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   @override
   void onInit() {
-    // navBarStyleStore.write('navBarStyle', NavBarStyle.style1);
-    // print("style:${navBarStyleStore.read('navBarStyle')}");
+    var item = NavBarStyle.values.singleWhere((e) =>
+        e.toString() == json.decode(navBarStyleStore.read('navBarStyle')));
+    navBarStyle.value = item;
+
     super.onInit();
     tabViewController = PersistentTabController(initialIndex: 0);
   }
@@ -171,15 +172,17 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   void pickEventLocation(context) async {
     LocationResult result = await showLocationPicker(
-        context, "AIzaSyCoaHfa26Cv3PH09msuFToTS3AkpWK-Ct8",
-        initialCenter: LatLng(31.1975844, 29.9598339),
-        myLocationButtonEnabled: true,
-        layersButtonEnabled: true,
-        appBarColor: Colors.tealAccent.shade700,
-        desiredAccuracy: LocationAccuracy.high,
-        requiredGPS: true,
-        hintText: "Pick an event point",
-        countries: ['india', 'usa']);
+      context,
+      "AIzaSyCoaHfa26Cv3PH09msuFToTS3AkpWK-Ct8",
+      initialCenter: LatLng(31.1975844, 29.9598339),
+      myLocationButtonEnabled: true,
+      layersButtonEnabled: true,
+      appBarColor: Colors.tealAccent.shade700,
+      desiredAccuracy: LocationAccuracy.high,
+      requiredGPS: true,
+      hintText: "Pick an event point",
+      countries: ['india', 'usa'],
+    );
     if (result != null) {
       Get.snackbar(
         "Info",
@@ -259,28 +262,14 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void changeBottomStyle(String val) {
-    currentButtomStyle.value = val;
-    switch (val) {
-      case 'style1':
-        this.navBarStyle.value = NavBarStyle.style1;
-        break;
-      case 'style2':
-        this.navBarStyle.value = NavBarStyle.style2;
-        break;
-      case 'style2':
-        this.navBarStyle.value = NavBarStyle.style3;
-        break;
-      case 'style3':
-        this.navBarStyle.value = NavBarStyle.style4;
-        break;
-      case 'style5':
-        this.navBarStyle.value = NavBarStyle.style5;
-
-        break;
-      default:
-        this.navBarStyle.value = NavBarStyle.style1;
-    }
+  void changeBottomStyle(NavBarStyle val) {
+    navBarStyle.value = val;
+    navBarStyleStore.write(
+      'navBarStyle',
+      json.encode(
+        navBarStyle.value.toString(),
+      ),
+    );
   }
 
   void setPrizeCat(String newVal) {
