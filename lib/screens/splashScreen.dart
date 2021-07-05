@@ -36,23 +36,23 @@ class SplashScreen extends StatelessWidget {
                     width: width,
                   ),
                 ),
-                spacer(20.0),
+                Spacing.verticalSpacing(20.0),
                 Text(
                   "Welcome to sportify",
                   style: Theme.of(context).textTheme.headline1,
                 ),
-                spacer(10.0),
+                Spacing.verticalSpacing(10.0),
                 Text(
                   "Here You can find latest Sports event around you",
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                spacer(10.0),
-                spacer(20.0),
+                Spacing.verticalSpacing(10.0),
+                Spacing.verticalSpacing(20.0),
                 Text(
                   "Swipe Right or click next to know more",
                   style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                 ),
-                spacer(50.0),
+                Spacing.verticalSpacing(50.0),
                 ElevatedButton.icon(
                   onPressed: () => _nextPage(1),
                   icon: Icon(Icons.arrow_right_rounded),
@@ -74,12 +74,12 @@ class SplashScreen extends StatelessWidget {
                     width: width,
                   ),
                 ),
-                spacer(20.0),
+                Spacing.verticalSpacing(20.0),
                 Text(
                   "You can join sports event ",
                   style: Theme.of(context).textTheme.headline1,
                 ),
-                spacer(20.0),
+                Spacing.verticalSpacing(20.0),
                 Text(
                   "Or even you can create your own events ",
                   style: Theme.of(context).textTheme.headline2,
@@ -88,12 +88,12 @@ class SplashScreen extends StatelessWidget {
                   "It's all upto you ",
                   style: Theme.of(context).textTheme.headline2,
                 ),
-                spacer(10.0),
+                Spacing.verticalSpacing(10.0),
                 Text(
                   "Get started 💕",
                   style: TextStyle(fontSize: 15, color: Colors.grey[700]),
                 ),
-                spacer(50.0),
+                Spacing.verticalSpacing(50.0),
                 ElevatedButton.icon(
                   onPressed: () {
                     final splash = GetStorage();

@@ -2,25 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:sportify/constants/catConstat.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
+import 'package:sportify/controllers/eventController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
 
 class MyAccount extends StatelessWidget {
   final AuthController _auth = Get.find();
-  // final EventController _eventCon = Get.find();
+  final EventController _eventCon = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
         isAvatar: false,
-        isTransparent: false,
+        isTransparent: true,
       ),
+      extendBodyBehindAppBar: true,
       body: Container(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        height:height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               child: Column(
@@ -32,7 +36,14 @@ class MyAccount extends StatelessWidget {
                       children: [
                         DrawerHeader(
                             decoration: BoxDecoration(
-                              color: primaryColor,
+                              // color: primaryColor,
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    primaryColorLight,
+                                    primaryColorDark,
+                                  ]),
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(20),
                                 bottomRight: Radius.circular(20),
@@ -58,10 +69,14 @@ class MyAccount extends StatelessWidget {
                                                         .email.isNotEmpty
                                                 ? Image.network(
                                                     'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.email.characters.characterAt(0)}',
+                                                    cacheWidth: 50,
+                                                    cacheHeight: 50,
                                                     alignment: Alignment.center,
                                                   )
                                                 : Image.network(
                                                     'https://ui-avatars.com/api/?name=G',
+                                                    cacheWidth: 50,
+                                                    cacheHeight: 50,
                                                     alignment: Alignment.center,
                                                   ),
                                       ),
@@ -76,33 +91,20 @@ class MyAccount extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
+                                          width: width / 2,
                                           child: Text(
                                             _auth.fireStoreUser?.value?.email ??
                                                 'Guest User',
+                                            overflow: TextOverflow.ellipsis,
                                             style: headline6.copyWith(
                                               color: Colors.white,
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        SizedBox(
-                                          child: Text(
-                                            'Role: todo',
-                                            // "ROLE: ${_eventCon.isEventMaster.isTrue ? 'Event Master' : 'Participant'}",
-                                            textAlign: TextAlign.start,
-                                            style: caption.copyWith(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        )
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 120,
-                                  ),
+                                  Spacer(),
                                   SizedBox(
                                     child: IconButton(
                                       onPressed: null,
@@ -116,7 +118,7 @@ class MyAccount extends StatelessWidget {
                               ),
                             )),
                         Positioned(
-                          bottom: -5,
+                          bottom: -10,
                           right: 0,
                           left: 0,
                           child: Container(
@@ -125,9 +127,15 @@ class MyAccount extends StatelessWidget {
                             padding: EdgeInsets.only(left: 5, right: 5),
                             margin: EdgeInsets.only(left: 15, right: 15),
                             decoration: BoxDecoration(
-                              color: primaryColorDark,
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    primaryColorLight,
+                                    primaryColorDark,
+                                  ]),
                               borderRadius: BorderRadius.all(
-                                Radius.circular(8),
+                                Radius.circular(30),
                               ),
                               boxShadow: [
                                 BoxShadow(
@@ -139,30 +147,25 @@ class MyAccount extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Event Planner Mode",
-                                  style: caption,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Event Planner Mode",
+                                    style: caption,
+                                  ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
-                                  child: CupertinoSwitch(
-                                    activeColor: Colors.tealAccent.shade400,
-                                    trackColor: Colors.teal,
-                                    value: false,
-                                    onChanged: (value) {
-                                      // _eventCon.isEventMaster.value = value;
-                                    },
+                                  child: Obx(
+                                    () => Switch(
+                                      activeColor: Colors.tealAccent.shade400,
+                                      // trackColor: Colors.teal,
+                                      value: _eventCon.isEventMaster.value,
+                                      onChanged: (value) {
+                                        _eventCon.setEventPlannerMode(value);
+                                      },
+                                    ),
                                   ),
-                                  // child: Obx(
-                                  //   () => CupertinoSwitch(
-                                  //     activeColor: Colors.tealAccent.shade400,
-                                  //     trackColor: Colors.teal,
-                                  //     value: false,
-                                  //     onChanged: (value) {
-                                  //       // _eventCon.isEventMaster.value = value;
-                                  //     },
-                                  //   ),
-                                  // ),
                                 ),
                               ],
                             ),
@@ -174,79 +177,221 @@ class MyAccount extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text(
-                'Profile',
-                style: subtitle1.copyWith(color: Colors.black45),
-              ),
-              onTap: () => Get.toNamed('/profile'),
-              trailing: Icon(Icons.arrow_right),
-            ),
-            ListTile(
-              leading: Icon(CupertinoIcons.plus_circle),
-              title: Text(
-                'Create Events',
-                style: subtitle1.copyWith(color: Colors.black45),
-              ),
-              onTap: () => Get.toNamed('/create'),
-              trailing: Icon(Icons.arrow_right),
-            ),
-            ListTile(
-              leading: Icon(Icons.today_outlined),
-              title: Text(
-                'Manage Events',
-                style: subtitle1.copyWith(color: Colors.black45),
-              ),
-              onTap: () => Get.toNamed('/'),
-              trailing: Icon(Icons.arrow_right),
-            ),
-            ListTile(
-              leading: Icon(Icons.favorite_outline),
-              title: Text(
-                'Favorites',
-                style: subtitle1.copyWith(color: Colors.black45),
-              ),
-              trailing: Icon(Icons.arrow_right),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              onTap:()=> Get.toNamed('/setting'),
-              title: Text(
-                'Setting',
-                style: subtitle1.copyWith(color: Colors.black45),
-              ),
-              trailing: Icon(Icons.arrow_right),
-            ),
-            ListTile(
-              leading: Icon(Icons.info_outline),
-              title: Text(
-                'About',
-                style: subtitle1.copyWith(color: Colors.black45),
-              ),
-              trailing: Icon(Icons.arrow_right),
-            ),
-            Obx(
-              () => _auth.isLoggedIn.isTrue
-                  ? ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text(
-                        'Log Out',
-                        style: subtitle1.copyWith(color: Colors.black45),
-                      ),
-                      onTap: () => _auth.logOut(),
-                    )
-                  : ListTile(
-                      leading: Icon(Icons.login_outlined),
-                      title: Text(
-                        'Log in',
-                        style: subtitle1.copyWith(color: Colors.black45),
-                      ),
-                      onTap: () => Get.toNamed('/signin'),
+            SizedBox(height: 10),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "My Sportify",
+                      style: headline4.copyWith(fontSize: 25),
                     ),
+                  ),
+
+                  ListTileTheme(
+                    dense: true,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            child: Container(
+                              width: 25,
+                              height: 25,
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                child: Icon(
+                                  Icons.account_circle_rounded,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            "My Profile",
+                            style: subtitle1.copyWith(color: Colors.black45),
+                          ),
+                          onTap: () => Get.toNamed('/'),
+                          trailing: Icon(Icons.arrow_right),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Obx(
+                    () => _eventCon.isEventMaster.isTrue
+                        ? ListTileTheme(
+                            dense: true,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      alignment: Alignment.center,
+                                      child: CircleAvatar(
+                                        child: Icon(
+                                          Icons.inbox_rounded,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    "Joinee Request",
+                                    style: subtitle1.copyWith(
+                                        color: Colors.black45),
+                                  ),
+                                  onTap: () => Get.toNamed('/'),
+                                  trailing: Icon(Icons.arrow_right),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListTileTheme(
+                            dense: true,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      alignment: Alignment.center,
+                                      child: CircleAvatar(
+                                        child: Icon(
+                                          FlutterIcons.send_circle_mco,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    "Sent Requests",
+                                    style: subtitle1.copyWith(
+                                        color: Colors.black45),
+                                  ),
+                                  onTap: () => Get.toNamed('/'),
+                                  trailing: Icon(Icons.arrow_right),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+
+                  Obx(
+                    () => _eventCon.isEventMaster.isTrue
+                        ? ListTileTheme(
+                            dense: true,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      alignment: Alignment.center,
+                                      child: CircleAvatar(
+                                        child: Icon(
+                                          Icons.event,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    "Manage Events",
+                                    style: subtitle1.copyWith(
+                                        color: Colors.black45),
+                                  ),
+                                  onTap: () => Get.toNamed('/'),
+                                  trailing: Icon(Icons.arrow_right),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListTileTheme(
+                            dense: true,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      alignment: Alignment.center,
+                                      child: CircleAvatar(
+                                        child: Icon(
+                                          Icons.favorite,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    "Favorites",
+                                    style: subtitle1.copyWith(
+                                        color: Colors.black45),
+                                  ),
+                                  onTap: () => Get.toNamed('/'),
+                                  trailing: Icon(Icons.arrow_right),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+
+                  // static list view
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "General",
+                      style: headline4.copyWith(fontSize: 25),
+                    ),
+                  ),
+                  ...generalSettings.map(
+                    (e) => SizedBox(
+                      width: width * 0.80,
+                      child: ListTileTheme(
+                        dense: true,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                child: Container(
+                                  width: 25,
+                                  height: 25,
+                                  alignment: Alignment.center,
+                                  child: CircleAvatar(
+                                    child: Icon(
+                                      e.icon,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              title: Text(
+                                e.name,
+                                style:
+                                    subtitle1.copyWith(color: Colors.black45),
+                              ),
+                              onTap: () => Get.toNamed(e.route),
+                              trailing: Icon(Icons.arrow_right),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

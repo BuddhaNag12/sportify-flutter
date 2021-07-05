@@ -20,6 +20,7 @@ class ProfileController extends GetxController {
     this.isLoading.value = true;
     authUsers.doc(_auth.stateUser.value.uid).update({
       'name': nameController.text,
+      'email': emailController.text,
       'role':
           role.value == UserRoll.participating ? "Participant" : "Event Master",
     }).then((value) {

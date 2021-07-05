@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 // Utility Methods
 
-void showMessageDialog(String msg) {
+void showMessageDialog(String message) {
   Get.snackbar(
     'Info',
-    '$msg' '',
+    '$message' '',
     colorText: Colors.white,
     barBlur: 1.5,
     icon: Icon(

@@ -1,24 +1,6 @@
-import 'package:get/get.dart';
-import 'package:sportify/bindings/gMap_Binding.dart';
-import 'package:sportify/bindings/signUpBinding.dart';
-import 'package:sportify/bindings/signinBinding.dart';
-import 'package:sportify/middleware/routeMiddleware.dart';
-import 'package:sportify/screens/authStack/SignUpScreen.dart';
-import 'package:sportify/screens/eventsStack/JoinEventsScreen.dart';
-import 'package:sportify/screens/eventsStack/categoriesScreen.dart';
-import 'package:sportify/screens/eventsStack/createEventScreen.dart';
-import 'package:sportify/screens/eventsStack/viewEventScreen.dart';
-import 'package:sportify/screens/eventsStack/viewEventsScreen.dart';
-import 'package:sportify/screens/homeScreen.dart';
-import 'package:sportify/screens/authStack/LoginScreen.dart';
-import 'package:sportify/screens/profileStack/accountScreen.dart';
-import 'package:sportify/screens/profileStack/profileScreen.dart';
-import 'package:sportify/screens/settingScreen.dart';
-import 'package:sportify/screens/splashScreen.dart';
-// bindings
-import 'package:sportify/bindings/auth_binding.dart';
-import 'package:sportify/bindings/event_binding.dart';
-import 'package:sportify/bindings/profile_binding.dart';
+import 'package:sportify/screens/categoryView.dart';
+
+import './route_paths.dart';
 part 'app_routes.dart';
 
 class AppPages {
@@ -27,6 +9,11 @@ class AppPages {
       name: Routes.ACCOUNT,
       page: () => MyAccount(),
       binding: AuthBindings(),
+    ),
+    GetPage(
+      name: Routes.CATVIEW,
+      page: () => CatViewScreen(),
+      // binding: AuthBindings(),
     ),
     GetPage(
       name: Routes.CATEGORIES,

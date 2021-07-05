@@ -1,12 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:sportify/constants/responsiveConst.dart';
-import 'package:sportify/controllers/eventDetailsController.dart';
-import 'package:sportify/global_widgets/appbar.dart';
-import 'package:sportify/widgets/localWidgets.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sportify/controllers/eventController.dart';
-
+import '../exports/viewEvtexport.dart';
 class ViewEventScreen extends GetView<EventController> {
   final EventDetailsController _controllerForEvent = Get.find();
   final EventController _controllerForTab = Get.find();
@@ -51,8 +43,8 @@ class ViewEventScreen extends GetView<EventController> {
                             color: Colors.grey.shade500,
                           )
                         ]),
-                        child: ClipOval(
-                            child: GetBuilder<EventDetailsController>(
+                        child:
+                            ClipOval(child: GetBuilder<EventDetailsController>(
                           builder: (eController) {
                             return GoogleMap(
                               mapType: MapType.hybrid,
@@ -75,7 +67,7 @@ class ViewEventScreen extends GetView<EventController> {
                         )),
                       ),
                     ),
-                    spacer(5),
+                    Spacing.verticalSpacing(5),
                     Obx(
                       () => headerCard(width, context),
                     ),

@@ -16,6 +16,8 @@
 - [x] provide search filteration
 - [x] work on store event and retrieve events
 # next
+- [ ] integrate messaging feature
+- [ ] customize tab bar
 - [ ] setup user profile
 - [ ] work on logo
 - [ ] optimize search filteration

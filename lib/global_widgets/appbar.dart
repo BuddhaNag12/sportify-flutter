@@ -8,9 +8,12 @@ import 'package:sportify/controllers/authController.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isTransparent;
   final bool isAvatar;
+  final String title;
   final AuthController con = Get.find();
+
   MyAppBar({
-    this.isTransparent,
+    @required this.isTransparent,
+    this.title,
     this.isAvatar = false,
   });
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0.0,
       iconTheme: IconThemeData(color: Colors.white),
       title: Text(
-        'Sportify',
-        style: headline3,
+        title ?? 'Sportify',
+        style: title != null ? headline2.copyWith(color:Colors.white) : headline3,
       ),
       // centerTitle: true,
       actions: [

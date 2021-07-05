@@ -1,16 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:sportify/constants/catConstat.dart';
-import 'package:sportify/constants/colorConst.dart';
-import 'package:sportify/controllers/eventController.dart';
-import 'package:sportify/global_widgets/appbar.dart';
-import 'package:get/get.dart';
-import 'package:sportify/screens/eventsStack/categoriesScreen.dart';
-import 'package:sportify/screens/profileStack/accountScreen.dart';
-import 'package:sportify/widgets/localWidgets.dart';
-import 'package:sportify/constants/responsiveConst.dart';
+import 'package:sportify/screens/eventsStack/my_events.dart';
+import 'package:sportify/screens/messaging.dart';
+import 'package:sportify/screens/routNotFound.dart';
+import 'package:sportify/screens/statistics_dashboard.dart';
+import '../exports/eventExport.dart';
 
 class ViewEventsScreen extends GetView<EventController> {
   final EventController viewCon = Get.find();
@@ -23,11 +16,13 @@ class ViewEventsScreen extends GetView<EventController> {
         isAvatar: true,
       ),
       backgroundColor: primaryColor,
-      // endDrawer: MyDrawer(),
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
+        // onVerticalDragDown: (e) => viewCon.handleDrag(e),
+        // onVerticalDragCancel: () => viewCon.hideNavBar.value = true,
         onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
         child: Container(
+          height: 600,
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.only(
@@ -38,7 +33,7 @@ class ViewEventsScreen extends GetView<EventController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              spacer(25.0),
+              Spacing.verticalSpacing(15.0),
               SizedBox(
                 width: width,
                 child: Row(
@@ -140,16 +135,16 @@ class ViewEventsScreen extends GetView<EventController> {
                   ],
                 ),
               ),
-              spacer(20.0),
+              Spacing.verticalSpacing(20.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   "All Events nearby you",
-                  style: Theme.of(context).textTheme.headline1,
+                  style: headline1,
                 ),
               ),
               SizedBox(
-                width: width / 2 + 30,
+                width: width * 0.50,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -160,7 +155,6 @@ class ViewEventsScreen extends GetView<EventController> {
                   ),
                 ),
               ),
-              spacer(10.0),
               Obx(
                 () => viewCon.isLoading.value == true
                     ? listShimmerLoading()
@@ -199,37 +193,57 @@ class ViewEventsScreen extends GetView<EventController> {
 
 class ViewEventsScreenTab extends StatelessWidget {
   final EventController _con = Get.find();
+
   List<Widget> _buildScreens() {
     return [
-      ViewEventsScreen(),
-      CategoriesScreen(),
+      Obx(() =>
+          _con.isEventMaster.isTrue ? StatisticScreen() : ViewEventsScreen()),
+      Obx(() =>
+          _con.isEventMaster.isFalse ? CategoriesScreen() : MyEventScreen()),
+      MessagingView(),
       MyAccount(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
+    final activeColor = Colors.grey.shade100;
+    final inActiveColor = Colors.grey.shade900;
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
+        icon: Icon(
+          CupertinoIcons.home,
+          color: Colors.white,
+        ),
+        activeColorPrimary: activeColor,
+        inactiveColorPrimary: inActiveColor,
         title: ("Home"),
-        activeColorPrimary: primaryColorLight,
-        inactiveColorPrimary: primaryColorDark,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
           CupertinoIcons.sportscourt,
           color: Colors.white,
         ),
+        activeColorPrimary: activeColor,
+        inactiveColorPrimary: inActiveColor,
         title: ("Categories"),
-        activeColorSecondary: primaryColorLight,
-        activeColorPrimary: primaryColorLight,
-        inactiveColorPrimary: primaryColorDark,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.profile_circled),
+        icon: Icon(
+          CupertinoIcons.chat_bubble_2_fill,
+          color: Colors.white,
+        ),
+        activeColorPrimary: activeColor,
+        inactiveColorPrimary: inActiveColor,
+        title: ("Messages"),
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(
+          CupertinoIcons.profile_circled,
+          color: Colors.white,
+        ),
+        activeColorPrimary: activeColor,
+        inactiveColorPrimary: inActiveColor,
         title: ("Profile"),
-        activeColorPrimary: primaryColorLight,
-        inactiveColorPrimary: primaryColorDark,
       ),
     ];
   }
@@ -247,14 +261,14 @@ class ViewEventsScreenTab extends StatelessWidget {
         handleAndroidBackButtonPress: true,
         resizeToAvoidBottomInset: false,
         stateManagement: true,
+        hideNavigationBar: _con.hideNavBar.value,
         hideNavigationBarWhenKeyboardShows: true,
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
           ),
           adjustScreenBottomPaddingOnCurve: true,
-          colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,

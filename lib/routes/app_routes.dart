@@ -13,4 +13,5 @@ abstract class Routes{
   static const ACCOUNT = '/account';
   static const CATEGORIES = '/categories';
   static const SETTINGS  = "/setting";
+  static const CATVIEW  = "/cat/:id";
 }

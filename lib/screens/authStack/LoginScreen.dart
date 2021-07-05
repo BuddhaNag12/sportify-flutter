@@ -164,7 +164,7 @@ class LoginScreen extends GetView<SignInController> {
 
 Widget actionWidget() {
   return Column(children: [
-    spacer(5.0),
+    Spacing.verticalSpacing(5.0),
     Text(
       "Don't Have an account?",
       style: TextStyle(

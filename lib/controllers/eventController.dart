@@ -1,16 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:sportify/utils/utils.dart';
-import 'package:j_location_picker/j_location_picker.dart';
-import 'package:sportify/models/eventModel.dart';
-import 'package:sportify/services/firestoreService.dart';
-import 'package:sportify/constants/firebaseConstants.dart';
+import './exports/event_exports.dart';
 
 class EventController extends GetxController with SingleGetTickerProviderMixin {
   // for add event form
@@ -20,15 +8,17 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var category = ''.obs;
   var prizeCat = ''.obs;
   var isLoading = false.obs;
+  var isEventMaster = false.obs;
+  var hideNavBar = false.obs;
   Rx<NavBarStyle> navBarStyle = NavBarStyle.style1.obs;
-  final navBarStyleStore = GetStorage();
-
   RxList<EventsList> eventLists = RxList<EventsList>();
+
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
 
   // CONTROLLERS
+  final AuthController _auth = Get.find();
   PersistentTabController tabViewController;
   TabController tabController;
   final TextEditingController eventNameController = TextEditingController();
@@ -50,10 +40,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   @override
   void onInit() {
-    var item = NavBarStyle.values.singleWhere((e) =>
-        e.toString() == json.decode(navBarStyleStore.read('navBarStyle')));
-    navBarStyle.value = item;
-
+    _checkIsEventPlanner();
+    _checkIsDefaultBottomBarStyle();
     super.onInit();
     tabViewController = PersistentTabController(initialIndex: 0);
   }
@@ -67,6 +55,27 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     eventDescriptionController.dispose();
     tabController.dispose();
     super.onClose();
+  }
+
+  void _checkIsEventPlanner() {
+    if (eventPlannerModeStore.hasData('isPlanner') && !_auth.stateUser.value.isBlank) {
+      this.isEventMaster.value = eventPlannerModeStore.read('isPlanner');
+    } else {
+      this.isEventMaster.value = false;
+    }
+  }
+
+  void _checkIsDefaultBottomBarStyle() {
+    if (navBarStyleStore.hasData('navBarStyle')) {
+      var item = bottomBarStyles.singleWhere(
+        (e) =>
+            e.toString() ==
+            json.decode(
+              navBarStyleStore.read('navBarStyle'),
+            ),
+      );
+      navBarStyle.value = item ?? NavBarStyle.style1;
+    }
   }
 
   void _reset() {
@@ -272,7 +281,26 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     );
   }
 
+  void setEventPlannerMode(val) {
+    if (_auth.isLoggedIn.isFalse) {
+      showMessageDialog('You are not Logged In');
+      return;
+    } else {
+      authUsers.doc(_auth.stateUser.value.uid).set(
+        {'isEventMaster': val, 'role': val ? "Event Master" : "Participant"},
+        SetOptions(merge: true),
+      );
+      isEventMaster.value = val;
+      eventPlannerModeStore.write('isPlanner', val);
+    }
+  }
+
   void setPrizeCat(String newVal) {
     this.prizeCat.value = newVal;
   }
+
+  // void handleDrag(e) {
+  //   print(e);
+  //   // hideNavBar.value=false
+  // }
 }

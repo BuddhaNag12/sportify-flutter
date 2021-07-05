@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            spacer(20.0),
+            Spacing.verticalSpacing(20.0),
             Container(
               child: Column(
                 children: [
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                     "Find what events happening around you",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  spacer(50.0),
+                  Spacing.verticalSpacing(50.0),
                   Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            spacer(50.0),
+            Spacing.verticalSpacing(50.0),
             // here put something later
           ],
         ),

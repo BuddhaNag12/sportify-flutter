@@ -9,13 +9,16 @@ import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
 
-/* 
+/// sizes for setting spacing
+/// by defining vertical [height] horizontal [width].
+class Spacing {
+  static Widget verticalSpacing(double height) {
+    return SizedBox(height: height);
+  }
 
-gives spacing acroding to given height
-
-*/
-Widget spacer(double height) {
-  return SizedBox(height: height);
+  static Widget horizontalSpacing(double width) {
+    return SizedBox(width: width);
+  }
 }
 
 /*
@@ -61,7 +64,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                     color: Colors.teal,
                   ),
                 ),
-                SizedBox(width: 30),
+                Spacing.horizontalSpacing(30),
                 Expanded(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +85,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          spacer(5),
+                          Spacing.verticalSpacing(5),
                           Container(
                             child: Row(
                               children: [
@@ -122,7 +125,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                               ],
                             ),
                           ),
-                          spacer(5),
+                          Spacing.verticalSpacing(5),
                           Container(
                             child: Row(
                               children: [
@@ -173,114 +176,6 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
         );
       });
 }
-
-/*
-
-
-  Drawer widget for sidebar placed in home screen
-  To customized we separated the widget to localwidgets
-
-// */
-// class MyDrawer extends StatelessWidget {
-//   final AuthController _auth = Get.find();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Drawer(
-//         child: ListView(
-//       padding: EdgeInsets.zero,
-//       children: [
-//         DrawerHeader(
-//           decoration: BoxDecoration(
-//             color: Colors.teal,
-//             boxShadow: [
-//               BoxShadow(
-//                 blurRadius: 1,
-//                 color: Colors.grey,
-//                 offset: Offset(0, 1),
-//               ),
-//             ],
-//           ),
-//           child: Obx(
-//             () => _auth.isLoggedIn.value == true
-//                 ? Container(
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       children: [
-//                         SizedBox(
-//                           child: ClipOval(
-//                             child: Image.network(
-//                               'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.name.characters.characterAt(0)}',
-//                               alignment: Alignment.center,
-//                             ),
-//                           ),
-//                         ),
-//                         SizedBox(width: 20),
-//                         SizedBox(
-//                           child: Text(
-//                             _auth.fireStoreUser.value.email,
-//                             style: headline6.copyWith(color: Colors.white),
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   )
-//                 : Container(
-//                     child: Stack(
-//                       children: [
-//                         Positioned(
-//                           child: Icon(
-//                             FlutterIcons.user_ant,
-//                             size: 50,
-//                             color: Colors.white,
-//                           ),
-//                         )
-//                       ],
-//                     ),
-//                   ),
-//           ),
-//         ),
-//         ListTile(
-//           leading: Icon(Icons.account_circle),
-//           title: Text('Profile'),
-//           onTap: () => _auth.isLoggedIn.value == true
-//               ? Get.toNamed('/profile')
-//               : Get.toNamed('/signin'),
-//         ),
-//         ListTile(
-//           leading: Icon(Icons.today_outlined),
-//           title: Text('Manage Events'),
-//           onTap: () => Get.toNamed('/'),
-//         ),
-//         ListTile(
-//           leading: Icon(Icons.notification_important),
-//           title: Text('Notifications'),
-//         ),
-//         ListTile(
-//           leading: Icon(Icons.settings),
-//           title: Text('Settings'),
-//         ),
-//         ListTile(
-//           leading: Icon(Icons.info),
-//           title: Text('About'),
-//         ),
-//         Obx(
-//           () => _auth.isLoggedIn.isTrue
-//               ? ListTile(
-//                   leading: Icon(Icons.logout),
-//                   title: Text('Log Out'),
-//                   onTap: () => _auth.logOut(),
-//                 )
-//               : SizedBox(),
-//         ),
-//       ],
-//     ));
-//   }
-// }
-
-/*
-  headerCard for view event screen
-
-*/
 
 Widget headerCard(double width, context) {
   final EventDetailsController _con = Get.find();
@@ -339,7 +234,7 @@ Widget headerCard(double width, context) {
             )
           ],
         ),
-        spacer(10.0),
+        Spacing.verticalSpacing(10.0),
         Container(
           width: width,
           padding: EdgeInsets.all(5.0),
@@ -370,7 +265,7 @@ Widget headerCard(double width, context) {
             ],
           ),
         ),
-        spacer(10.0),
+        Spacing.verticalSpacing(10.0),
         Container(
           padding: EdgeInsets.all(5.0),
           width: width,
@@ -535,7 +430,7 @@ Widget shimmeringloading() {
             ),
           ),
         ),
-        spacer(5),
+        Spacing.verticalSpacing(5),
         Shimmer.fromColors(
           baseColor: Colors.teal,
           highlightColor: Colors.tealAccent,
@@ -555,7 +450,7 @@ Widget shimmeringloading() {
             child: SizedBox(),
           ),
         ),
-        spacer(10),
+        Spacing.verticalSpacing(10),
         Shimmer.fromColors(
           baseColor: Colors.white60,
           highlightColor: Colors.grey,
@@ -568,7 +463,7 @@ Widget shimmeringloading() {
             child: SizedBox(),
           ),
         ),
-        spacer(20),
+        Spacing.verticalSpacing(20),
         Shimmer.fromColors(
           baseColor: Colors.teal,
           highlightColor: Colors.tealAccent,

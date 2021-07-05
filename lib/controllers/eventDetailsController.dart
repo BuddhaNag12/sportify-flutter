@@ -1,15 +1,4 @@
-import 'dart:async';
-// import 'dart:html';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/Material.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sportify/constants/firebaseConstants.dart';
-import 'package:sportify/controllers/authController.dart';
-import 'package:sportify/models/eventDetailModel.dart';
-import 'package:sportify/models/favModel.dart';
-import 'package:sportify/services/firestoreService.dart';
-import 'package:sportify/utils/utils.dart';
+import './exports/event_exports.dart';
 
 class EventDetailsController extends GetxController
     with SingleGetTickerProviderMixin {
@@ -25,7 +14,7 @@ class EventDetailsController extends GetxController
   var isLoading = false.obs;
   Rx<EventDetailModel> eventDetails = EventDetailModel().obs;
   EventDetailModel get evtDetails => eventDetails.value;
-  set evtDetails(EventDetailModel val) => this.eventDetails.value = val;
+
   final DataToFirestore fs = DataToFirestore();
   GoogleMapController controller;
   final AuthController _auth = Get.find();
@@ -124,8 +113,8 @@ class EventDetailsController extends GetxController
   void onInit() async {
     iconAnimation = AnimationController(
       vsync: this,
-      reverseDuration: Duration(milliseconds: 600),
-      duration: Duration(milliseconds: 1000),
+      reverseDuration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 400),
     );
 
     getFavorites();

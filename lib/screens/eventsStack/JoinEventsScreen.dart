@@ -1,16 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:sportify/constants/colorConst.dart';
-import 'package:sportify/constants/responsiveConst.dart';
-import 'package:sportify/global_widgets/appbar.dart';
-import 'package:sportify/widgets/eventInputField.dart';
-import 'package:sportify/controllers/joinEventController.dart';
+import '../exports/joinEvtExports.dart';
 
 class JoinEventsScreen extends StatelessWidget {
   final JoinEventController con = Get.put(JoinEventController());
-  //TODO: implement join event screen
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

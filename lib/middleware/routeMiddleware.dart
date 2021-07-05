@@ -4,7 +4,6 @@ import 'package:sportify/controllers/authController.dart';
 
 class RouteMiddleWare extends GetMiddleware {
   RouteSettings redirect(String route) {
-    print("rout called $route");
     final authService = Get.find<AuthController>();
     return authService.isLoggedIn.isTrue
         ? null

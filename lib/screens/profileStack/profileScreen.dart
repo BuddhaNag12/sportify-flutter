@@ -61,7 +61,9 @@ class ProfileScreen extends StatelessWidget {
                               SizedBox(
                                 child: ClipOval(
                                   child: Image.network(
-                                    'https://ui-avatars.com/api/?name=${_auth.fireStoreUser.value.email.characters.characterAt(0)}',
+                                    'https://ui-avatars.com/api/?name=${_auth.stateUser.value.email.characters.characterAt(0)}',
+                                    cacheHeight: 50,
+                                    cacheWidth: 50,
                                     alignment: Alignment.center,
                                   ),
                                 ),
@@ -145,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                                     () => _profileCon.isLoading.isTrue
                                         ? CircularProgressIndicator()
                                         : SizedBox(
-                                            width: width - 100,
+                                            width: 0.70 * width,
                                             child: ElevatedButton(
                                               onPressed: () {
                                                 if (_profileCon

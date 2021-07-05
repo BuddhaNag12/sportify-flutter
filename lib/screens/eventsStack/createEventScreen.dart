@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get/get.dart';
-import 'package:sportify/constants/catConstat.dart';
-import 'package:sportify/controllers/eventController.dart';
-import 'package:sportify/global_widgets/appbar.dart';
-import 'package:sportify/widgets/eventInputField.dart';
-import 'package:sportify/widgets/localWidgets.dart';
-import 'package:sportify/constants/responsiveConst.dart';
-import 'package:sportify/constants/typographyConstants.dart';
-
+import '../exports/createEventExport.dart';
 class CreateEventsScreen extends GetView<EventController> {
   final EventController con = Get.find();
   // GetPage redirect() {
@@ -343,7 +333,7 @@ class CreateEventsScreen extends GetView<EventController> {
                               ],
                             ),
                           ),
-                          spacer(30),
+                          Spacing.verticalSpacing(30),
                           Obx(() {
                             return con.isLoading.value == true
                                 ? Center(

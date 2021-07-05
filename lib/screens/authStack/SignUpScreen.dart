@@ -132,7 +132,7 @@ class SignUpScreen extends GetView<AuthController> {
                                 ],
                               ),
                             ),
-                            spacer(50),
+                            Spacing.verticalSpacing(50),
                             Text(
                               "Already have an account?",
                               style: TextStyle(
