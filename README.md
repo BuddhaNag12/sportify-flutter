@@ -23,7 +23,6 @@
 - [ ] optimize search filteration
 - [ ] make event manage table view
 - [ ] setup event manage page with proper request and response
-- [ ] add dashboard for sportsmaster
 
 
 > Documentations and privacy policy will be added later on
