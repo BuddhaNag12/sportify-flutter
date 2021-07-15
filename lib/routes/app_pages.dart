@@ -1,4 +1,5 @@
 import 'package:sportify/screens/categoryView.dart';
+import 'package:sportify/screens/eventsStack/my_events.dart';
 
 import './route_paths.dart';
 part 'app_routes.dart';
@@ -25,12 +26,11 @@ class AppPages {
       page: () => SettingScreen(),
       // binding: AuthBindings(),
     ),
-    GetPage(
-      name: Routes.HOME,
-      page: () => HomeScreen(),
-      binding: AuthBindings(),
-      // middlewares: [RouteMiddleWare()],
-    ),
+    // GetPage(
+    //   name: Routes.HOME,
+    //   page: () => HomeScreen(),
+    //   // middlewares: [RouteMiddleWare()],
+    // ),
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginScreen(),
@@ -42,8 +42,8 @@ class AppPages {
       binding: SignUpBinding(),
     ),
     GetPage(
-      name: Routes.ROOT,
-      page: () => ViewEventsScreenTab(),
+      name: Routes.HOME,
+      page: () => HomeScreenTab(),
       bindings: [
         EventBinding(),
         AuthBindings(),
@@ -83,6 +83,11 @@ class AppPages {
       name: Routes.PROFILE,
       page: () => ProfileScreen(),
       bindings: [AuthBindings(), ProfileBinding()],
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.MY_EVENTS,
+      page: () => MyEventScreen(),
       middlewares: [RouteMiddleWare()],
     ),
   ];

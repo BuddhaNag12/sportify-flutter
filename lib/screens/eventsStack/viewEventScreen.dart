@@ -1,4 +1,5 @@
 import '../exports/viewEvtexport.dart';
+
 class ViewEventScreen extends GetView<EventController> {
   final EventDetailsController _controllerForEvent = Get.find();
   final EventController _controllerForTab = Get.find();
@@ -114,12 +115,68 @@ class ViewEventScreen extends GetView<EventController> {
                               Visibility(
                                 child: Container(
                                   height: 120,
-                                  child: Text(
-                                    'about the Team it is open tournament for any participants to join it and play the tournament,lorem ipsm i slorem ipsm islorem ipsm islorem ipsm is lorem ipsm is',
-                                    style:
-                                        Theme.of(context).textTheme.headline6,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 6,
+                                  width: width,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Place:" +
+                                            _controllerForEvent
+                                                .eventDetails.value.place,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            .copyWith(color: Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                      ),
+                                      Text(
+                                        "Team Size: " +
+                                            _controllerForEvent
+                                                .eventDetails.value.size,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            .copyWith(color: Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                      ),
+                                      Text(
+                                        "Sports Category:" +
+                                            _controllerForEvent
+                                                .eventDetails.value.category,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            .copyWith(color: Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                      ),
+                                      Text(
+                                        "Event Starting at:" +
+                                            _controllerForEvent
+                                                .eventDetails.value.date,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            .copyWith(color: Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                      ),
+                                      Text(
+                                        "Active:" +
+                                            _controllerForEvent
+                                                .eventDetails.value.active
+                                                .toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1
+                                            .copyWith(color: Colors.black),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 maintainState: true,

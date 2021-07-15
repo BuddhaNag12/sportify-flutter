@@ -106,7 +106,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                 ),
                                 SizedBox(width: 20),
                                 SizedBox(
-                                  width: 70,
+                                  width: 150,
                                   child: Row(
                                     children: [
                                       Icon(
@@ -114,10 +114,13 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                         color: Colors.teal,
                                         size: iconSize,
                                       ),
-                                      Text(
-                                        eventLists[i].place.isBlank
-                                            ? 'Location'
-                                            : eventLists[i].place,
+                                      Flexible(
+                                        child: Text(
+                                          eventLists[i].place.isBlank
+                                              ? 'Location'
+                                              : eventLists[i].place,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -274,25 +277,27 @@ Widget headerCard(double width, context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  width: 80,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.location_on_rounded),
-                      SizedBox(
-                        child: Text(
-                          _con.evtDetails.place.capitalize,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
-                    ],
-                  )),
-              Container(
-                width: 80,
+                width: width / 2,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.location_on_rounded),
+                    SizedBox(
+                      width: width / 2 - 24,
+                      child: Text(
+                        _con.evtDetails.place.capitalize,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Icon(FlutterIcons.activity_fea),
+                    Spacing.horizontalSpacing(30),
                     Text(
                       _con.evtDetails.active ? "Active" : "Not Active",
                     ),

@@ -22,7 +22,7 @@ class MyAccount extends StatelessWidget {
       ),
       extendBodyBehindAppBar: true,
       body: Container(
-        height:height,
+        height: height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -72,12 +72,39 @@ class MyAccount extends StatelessWidget {
                                                     cacheWidth: 50,
                                                     cacheHeight: 50,
                                                     alignment: Alignment.center,
+                                                    loadingBuilder: (
+                                                      BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent
+                                                          loadingProgres,
+                                                    ) =>
+                                                        loadingProgres == null
+                                                            ? child
+                                                            : CircularProgressIndicator(
+                                                                value: loadingProgres
+                                                                            .expectedTotalBytes !=
+                                                                        null
+                                                                    ? loadingProgres
+                                                                            .cumulativeBytesLoaded /
+                                                                        loadingProgres
+                                                                            .expectedTotalBytes
+                                                                    : null,
+                                                              ),
                                                   )
                                                 : Image.network(
                                                     'https://ui-avatars.com/api/?name=G',
                                                     cacheWidth: 50,
                                                     cacheHeight: 50,
                                                     alignment: Alignment.center,
+                                                    loadingBuilder: (
+                                                      BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent
+                                                          loadingProgres,
+                                                    ) =>
+                                                        loadingProgres == null
+                                                            ? child
+                                                            : CircularProgressIndicator(),
                                                   ),
                                       ),
                                     ),

@@ -8,13 +8,12 @@ export 'package:sportify/screens/eventsStack/JoinEventsScreen.dart';
 export 'package:sportify/screens/eventsStack/categoriesScreen.dart';
 export 'package:sportify/screens/eventsStack/createEventScreen.dart';
 export 'package:sportify/screens/eventsStack/viewEventScreen.dart';
-export 'package:sportify/screens/eventsStack/viewEventsScreen.dart';
-export 'package:sportify/screens/homeScreen.dart';
+export 'package:sportify/screens/home_screen.dart';
 export 'package:sportify/screens/authStack/LoginScreen.dart';
 export 'package:sportify/screens/profileStack/accountScreen.dart';
 export 'package:sportify/screens/profileStack/profileScreen.dart';
 export 'package:sportify/screens/settingScreen.dart';
-export 'package:sportify/screens/splashScreen.dart';
+export 'package:sportify/screens/splash/splashScreen.dart';
 // bindings
 export 'package:sportify/bindings/auth_binding.dart';
 export 'package:sportify/bindings/event_binding.dart';

@@ -9,10 +9,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
   var isEventMaster = false.obs;
-  var hideNavBar = false.obs;
-  Rx<NavBarStyle> navBarStyle = NavBarStyle.style1.obs;
+  
   RxList<EventsList> eventLists = RxList<EventsList>();
-
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
@@ -41,7 +39,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     _checkIsEventPlanner();
-    _checkIsDefaultBottomBarStyle();
     super.onInit();
     tabViewController = PersistentTabController(initialIndex: 0);
   }
@@ -58,23 +55,11 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void _checkIsEventPlanner() {
-    if (eventPlannerModeStore.hasData('isPlanner') && !_auth.stateUser.value.isBlank) {
+    if (eventPlannerModeStore.hasData('isPlanner') &&
+        !_auth.stateUser.value.isBlank) {
       this.isEventMaster.value = eventPlannerModeStore.read('isPlanner');
     } else {
       this.isEventMaster.value = false;
-    }
-  }
-
-  void _checkIsDefaultBottomBarStyle() {
-    if (navBarStyleStore.hasData('navBarStyle')) {
-      var item = bottomBarStyles.singleWhere(
-        (e) =>
-            e.toString() ==
-            json.decode(
-              navBarStyleStore.read('navBarStyle'),
-            ),
-      );
-      navBarStyle.value = item ?? NavBarStyle.style1;
     }
   }
 
@@ -182,17 +167,22 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   void pickEventLocation(context) async {
     LocationResult result = await showLocationPicker(
       context,
-      "AIzaSyCoaHfa26Cv3PH09msuFToTS3AkpWK-Ct8",
+      "AIzaSyDBaBOd2W_uUHMgjKdTgxsio3EhrEKqPVg",
       initialCenter: LatLng(31.1975844, 29.9598339),
       myLocationButtonEnabled: true,
       layersButtonEnabled: true,
       appBarColor: Colors.tealAccent.shade700,
       desiredAccuracy: LocationAccuracy.high,
+      searchBarBoxDecoration: BoxDecoration(
+        color: Colors.transparent,
+        // backgroundBlendMode: BlendMode.difference
+      ),
       requiredGPS: true,
       hintText: "Pick an event point",
-      countries: ['india', 'usa'],
     );
+
     if (result != null) {
+      eventPlaceNameController.text = result.address;
       Get.snackbar(
         "Info",
         'Location picked successfully ${result.latLng}',
@@ -271,15 +261,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void changeBottomStyle(NavBarStyle val) {
-    navBarStyle.value = val;
-    navBarStyleStore.write(
-      'navBarStyle',
-      json.encode(
-        navBarStyle.value.toString(),
-      ),
-    );
-  }
 
   void setEventPlannerMode(val) {
     if (_auth.isLoggedIn.isFalse) {
@@ -299,8 +280,4 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     this.prizeCat.value = newVal;
   }
 
-  // void handleDrag(e) {
-  //   print(e);
-  //   // hideNavBar.value=false
-  // }
 }

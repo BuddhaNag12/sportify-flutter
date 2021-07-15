@@ -14,6 +14,7 @@ class CategoriesScreen extends StatelessWidget {
             pinned: true,
             expandedHeight: 250.0,
             flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
               background: Image.network(
                 'https://images.unsplash.com/photo-1505250469679-203ad9ced0cb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
                 fit: BoxFit.cover,
@@ -60,16 +61,16 @@ class CategoriesScreen extends StatelessWidget {
                               child: Container(
                                 decoration: BoxDecoration(boxShadow: [
                                   BoxShadow(
-                                    blurRadius: .5,
-                                    color: Colors.white.withOpacity(0.5),
-                                    offset: Offset(1, 1.5),
+                                    blurRadius: .8,
+                                    color: Colors.tealAccent.withOpacity(0.4),
+                                    offset: Offset(1.5, 1),
                                   )
                                 ]),
                                 child: Center(
                                   child: Text(
                                     e.title,
                                     style:
-                                        headline2.copyWith(color: Colors.black),
+                                        headline2.copyWith(color: Colors.white),
                                   ),
                                 ),
                               ),
