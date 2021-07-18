@@ -1,30 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventsList {
-  EventsList(
-      {this.name,
-      this.date,
-      this.category,
-      this.description,
-      this.prizes,
-      this.teamSize,
-      this.location,
-      this.active,
-      this.id,
-      this.place,
-      this.userId});
+  EventsList({
+    this.name,
+    this.date,
+    this.category,
+    this.description,
+    this.teamSize,
+    this.location,
+    this.active,
+    this.id,
+    this.place,
+    this.userId,
+    this.prize,
+  });
 
   String name;
   String date;
   String category;
   String description;
-  String prizes;
   String teamSize;
   GeoPoint location;
   bool active;
   String id;
   String userId;
   String place;
+  String prize;
 
   Map<String, dynamic> toMap() {
     return {
@@ -36,9 +37,9 @@ class EventsList {
       'description': description,
       'active': active,
       'location': location,
-      'prizes': prizes,
       'place': place,
-      'user_id': userId
+      'user_id': userId,
+      'prize': prize
     };
   }
 
@@ -52,6 +53,6 @@ class EventsList {
         description = firestore['description'],
         active = firestore['active'],
         location = firestore['location'],
-        prizes = firestore['prizes'],
-        place = firestore['place'];
+        place = firestore['place'],
+        prize = firestore['prize'];
 }

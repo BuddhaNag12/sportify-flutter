@@ -11,6 +11,7 @@ class EventDetailModel {
   String id;
   String userId;
   String place;
+  String prize;
 
   EventDetailModel({
     this.category,
@@ -22,7 +23,8 @@ class EventDetailModel {
     this.size,
     this.id,
     this.userId,
-    this.place
+    this.place,
+    this.prize
   });
 
   EventDetailModel.fromDocumentSnapshot(
@@ -38,5 +40,6 @@ class EventDetailModel {
     date = documentSnapshot["date"];
     userId = documentSnapshot["user_id"];
     place =  documentSnapshot["place"];
+    prize =  documentSnapshot["prize"];
   }
 }

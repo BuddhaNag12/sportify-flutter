@@ -9,6 +9,7 @@ import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/controllers/eventController.dart';
 import 'package:sportify/global_widgets/appbar.dart';
+import 'package:sportify/routes/app_pages.dart';
 
 class MyAccount extends StatelessWidget {
   final AuthController _auth = Get.find();
@@ -362,11 +363,13 @@ class MyAccount extends StatelessWidget {
                                     ),
                                   ),
                                   title: Text(
-                                    "Favorites",
+                                    "favorites",
                                     style: subtitle1.copyWith(
-                                        color: Colors.black45),
+                                      color: Colors.black45,
+                                    ),
                                   ),
-                                  onTap: () => Get.toNamed('/'),
+                                  onTap: () =>
+                                      Get.toNamed(Routes.favorite_ROUTE),
                                   trailing: Icon(Icons.arrow_right),
                                 ),
                               ],

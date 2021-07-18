@@ -1,4 +1,5 @@
 import 'package:sportify/screens/categoryView.dart';
+import 'package:sportify/screens/eventsStack/favoritesEvents.dart';
 import 'package:sportify/screens/eventsStack/my_events.dart';
 
 import './route_paths.dart';
@@ -14,23 +15,15 @@ class AppPages {
     GetPage(
       name: Routes.CATVIEW,
       page: () => CatViewScreen(),
-      // binding: AuthBindings(),
     ),
     GetPage(
       name: Routes.CATEGORIES,
       page: () => CategoriesScreen(),
-      // binding: AuthBindings(),
     ),
     GetPage(
       name: Routes.SETTINGS,
       page: () => SettingScreen(),
-      // binding: AuthBindings(),
     ),
-    // GetPage(
-    //   name: Routes.HOME,
-    //   page: () => HomeScreen(),
-    //   // middlewares: [RouteMiddleWare()],
-    // ),
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginScreen(),
@@ -88,6 +81,11 @@ class AppPages {
     GetPage(
       name: Routes.MY_EVENTS,
       page: () => MyEventScreen(),
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.favorite_ROUTE,
+      page: () => FavoriteEvents(),
       middlewares: [RouteMiddleWare()],
     ),
   ];

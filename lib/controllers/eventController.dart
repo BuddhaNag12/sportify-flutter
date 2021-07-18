@@ -9,7 +9,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
   var isEventMaster = false.obs;
-  
+
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
@@ -17,7 +17,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   // CONTROLLERS
   final AuthController _auth = Get.find();
-  PersistentTabController tabViewController;
+  // PersistentTabController tabViewController;
   TabController tabController;
   final TextEditingController eventNameController = TextEditingController();
   final TextEditingController eventSizeController = TextEditingController();
@@ -26,6 +26,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       TextEditingController();
   final TextEditingController eventDescriptionController =
       TextEditingController();
+  // ScrollController scrollController;
+
   // Classes
   final DataToFirestore fs = DataToFirestore();
 
@@ -39,9 +41,18 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     _checkIsEventPlanner();
+    // scrollController = ScrollController();
+    // scrollController.addListener(_scrollListener);
     super.onInit();
-    tabViewController = PersistentTabController(initialIndex: 0);
   }
+
+  // _scrollListener() {
+  //   if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+  //       !scrollController.position.outOfRange) {
+  //     print(scrollController.offset);
+  //     _getEventsFromFirestore(15);
+  //   }
+  // }
 
   @override
   void onClose() {
@@ -94,7 +105,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   Future<void> _getEventsFromFirestore() async {
     this.isLoading.value = true;
     try {
-      final res = await events.limit(20).get();
+      final res = await events.get();
       res.docs.forEach((QueryDocumentSnapshot element) {
         eventLists.add(EventsList.fromFirestore(element.data()));
       });
@@ -125,6 +136,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           size: eventSizeController.text,
           desc: eventDescriptionController.text,
           place: eventPlaceNameController.text.trim(),
+          prize:prizeCat.value,
         );
         if (res.isNotEmpty) {
           Get.snackbar(
@@ -261,7 +273,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-
   void setEventPlannerMode(val) {
     if (_auth.isLoggedIn.isFalse) {
       showMessageDialog('You are not Logged In');
@@ -279,5 +290,4 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   void setPrizeCat(String newVal) {
     this.prizeCat.value = newVal;
   }
-
 }

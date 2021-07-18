@@ -8,7 +8,7 @@ import 'package:sportify/models/eventDetailModel.dart';
 class DataToFirestore {
   AuthController auth = Get.find();
   Future<String> addEvent(
-      {eventName, date, LatLng location, cat, size, desc, place}) async {
+      {eventName, date, LatLng location, cat, size, desc, place, prize}) async {
     try {
       final res = await events.add({});
       res.set({
@@ -21,7 +21,8 @@ class DataToFirestore {
         'active': true,
         'id': res.id,
         'user_id': auth.stateUser.value.uid,
-        'place': place
+        'place': place,
+        'prize': prize,
       });
       return res.id;
     } catch (e) {

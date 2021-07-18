@@ -56,7 +56,7 @@ class EventDetailsController extends GetxController
     }
   }
 
-  addEventToFavorite(eventid) async {
+  addEventTofavorite(eventid) async {
     if (_auth.isLoggedIn.value) {
       final userId = _auth.stateUser.value.uid;
       favEvts.doc(userId).get().then((value) {
@@ -84,14 +84,14 @@ class EventDetailsController extends GetxController
               showMessageDialog("Error adding to favorite");
             });
           }
-          getFavorites();
+          getfavorites();
         } else {
           favEvts.doc(userId).set({
             'evt_favs': [eventid],
             'user_id': userId,
           });
           showMessageDialog("Added to favorite");
-          getFavorites();
+          getfavorites();
         }
       }).catchError((onError) => {showMessageDialog(onError)});
     } else {
@@ -99,7 +99,7 @@ class EventDetailsController extends GetxController
     }
   }
 
-  getFavorites() {
+  getfavorites() {
     if (_auth.isLoggedIn.value) {
       favEvts.doc(_auth.stateUser.value.uid).get().then((value) {
         if (value.exists) {
@@ -117,7 +117,7 @@ class EventDetailsController extends GetxController
       duration: Duration(milliseconds: 400),
     );
 
-    getFavorites();
+    getfavorites();
     super.onInit();
   }
 

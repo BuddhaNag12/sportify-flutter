@@ -1,11 +1,6 @@
 import '../exports/createEventExport.dart';
-class CreateEventsScreen extends GetView<EventController> {
+class CreateEventsScreen extends StatelessWidget {
   final EventController con = Get.find();
-  // GetPage redirect() {
-  //   final AuthController con = Get.find();
-  //   return con.isLoggedIn.isTrue ? null : RouteSettings(name: '/signin');
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

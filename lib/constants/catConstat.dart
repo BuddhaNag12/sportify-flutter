@@ -20,9 +20,6 @@ const List prizes = <String>[
   'Other'
 ];
 
-const String imgUri =
-    'https://images.unsplash.com/photo-1505250469679-203ad9ced0cb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80';
-
 List<NavBarStyle> bottomBarStyles = NavBarStyle.values.take(10).toList();
 final navBarStyleStore = GetStorage();
 final eventPlannerModeStore = GetStorage();
@@ -45,17 +42,35 @@ final List<SettingModel> settingsList = [
 ];
 final List<SliverListGridItems> sliverGridListItems = [
   SliverListGridItems(
-      title: 'Football', route: '/cat/football', backgroudImage: imgUri),
+    title: 'Football',
+    route: '/cat/football',
+    icon: Icons.sports_football,
+  ),
   SliverListGridItems(
-      title: 'Basketball', route: '/cat/basketball', backgroudImage: imgUri),
+    title: 'Basketball',
+    route: '/cat/basketball',
+    icon: Icons.sports_football,
+  ),
   SliverListGridItems(
-      title: 'Cricket', route: '/cat/cricket', backgroudImage: imgUri),
+    title: 'Cricket',
+    route: '/cat/cricket',
+    icon: Icons.sports_football,
+  ),
   SliverListGridItems(
-      title: 'Chess', route: '/cat/chess', backgroudImage: imgUri),
+    title: 'Chess',
+    route: '/cat/chess',
+    icon: Icons.sports_football,
+  ),
   SliverListGridItems(
-      title: 'Hockey', route: '/cat/hockey', backgroudImage: imgUri),
+    title: 'Hockey',
+    route: '/cat/hockey',
+    icon: Icons.sports_football,
+  ),
   SliverListGridItems(
-      title: 'Tennis', route: '/cat/tenis', backgroudImage: imgUri),
+    title: 'Tennis',
+    route: '/cat/tenis',
+    icon: Icons.sports_football,
+  )
 ];
 
 enum UserRoll { participating, eventmaster }

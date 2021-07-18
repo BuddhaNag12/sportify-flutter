@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sportify/controllers/exports/event_exports.dart';
+import 'package:sportify/routes/app_pages.dart';
 import 'package:sportify/screens/exports/createEventExport.dart';
 
 class MyEventScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class MyEventScreen extends StatelessWidget {
         child: Icon(
           FlutterIcons.add_mdi,
         ),
-        onPressed: () => Get.toNamed('/create'),
+        onPressed: () => Get.toNamed(Routes.CREATE_EVENTS),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: myEventsStream,
@@ -62,7 +63,6 @@ class MyEventScreen extends StatelessWidget {
                       children:
                           snapshot.data.docs.map((DocumentSnapshot document) {
                         Map<String, dynamic> data = document.data();
-                        print(data['name']);
                         return ListTile(
                           title: Text(
                             data['name'].toUpperCase() ?? '',

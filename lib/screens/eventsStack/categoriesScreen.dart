@@ -27,55 +27,39 @@ class CategoriesScreen extends StatelessWidget {
             ),
           ),
           SliverGrid(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 400.0,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10.0,
-              childAspectRatio: 5.0,
-              mainAxisExtent: 150,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              // crossAxisSpacing: 20
+              mainAxisSpacing: 5,
             ),
             delegate: SliverChildListDelegate.fixed(
               [
                 ...sliverGridListItems.map(
-                  (e) => Container(
-                    padding: EdgeInsets.all(10),
-                    child: InkWell(
-                      onTap: () => Get.toNamed(e.route),
-                      child: Material(
-                        elevation: 1,
-                        child: Stack(
-                          children: [
-                            Container(
-                              child: Positioned.fill(
-                                child: Image.network(
-                                  e.backgroudImage,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 50,
-                              bottom: 50,
-                              left: 50,
-                              right: 50,
-                              child: Container(
-                                decoration: BoxDecoration(boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: .8,
-                                    color: Colors.tealAccent.withOpacity(0.4),
-                                    offset: Offset(1.5, 1),
-                                  )
-                                ]),
-                                child: Center(
-                                  child: Text(
-                                    e.title,
-                                    style:
-                                        headline2.copyWith(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
+                  (e) => GestureDetector(
+                    onTap: () => Get.toNamed(e.route),
+                    child: Container(
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.only(bottom: 20,left: 20,right: 20,top: 20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [primaryColorLight, primaryColorDark],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(120),
+                        boxShadow: [
+                          BoxShadow(
+                            color: primaryColorDark,
+                            spreadRadius: 0.5,
+                            blurRadius: 1,
+                            offset: Offset(1, 2),
+                          )
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          e.title,
+                          style: subtitle2.copyWith(color: Colors.grey[200]),
                         ),
                       ),
                     ),

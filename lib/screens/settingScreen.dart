@@ -23,55 +23,6 @@ class SettingScreen extends StatelessWidget {
       body: Container(
           child: ListView(
         children: [
-          // ListTileTheme(
-          //   child: Container(
-          //     margin: EdgeInsets.only(right: 10, left: 5),
-          //     child: Obx(
-          //       () => DropdownButton<NavBarStyle>(
-          //         hint: Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: Text(
-          //             "Bottom bar style",
-          //           ),
-          //         ),
-          //         icon: Icon(Icons.arrow_right),
-          //         value: !con.navBarStyle.value.isBlank
-          //             ? con.navBarStyle.value
-          //             : null,
-          //         dropdownColor: primaryColor,
-          //         underline: SizedBox(),
-          //         onChanged: (newValue) {
-          //           con.changeBottomStyle(newValue);
-          //         },
-          //         style: subtitle1.copyWith(color: Colors.black45),
-          //         items: bottomBarStyles.map((val) {
-          //           String name = val
-          //               .toString()
-          //               .substring(val.toString().indexOf('.') + 1);
-          //           return DropdownMenuItem(
-          //             value: val,
-          //             child: Container(
-          //               child: Center(
-          //                 child: Container(
-          //                   padding: const EdgeInsets.symmetric(
-          //                     horizontal: 8,
-          //                     vertical: 8,
-          //                   ),
-          //                   width: paddedWidth,
-          //                   height: 40,
-          //                   child: Text(
-          //                     name,
-          //                     style: subtitle1.copyWith(color: Colors.black45),
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           );
-          //         }).toList(),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           ...settingsList.map(
             (e) => SizedBox(
               width: width * 0.80,

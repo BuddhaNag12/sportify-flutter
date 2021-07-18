@@ -8,6 +8,7 @@ import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
+import 'package:sportify/screens/exports/viewEvtexport.dart';
 
 /// sizes for setting spacing
 /// by defining vertical [height] horizontal [width].
@@ -28,9 +29,11 @@ class Spacing {
 
 */
 Widget buildListView(BuildContext context, List<EventsList> eventLists) {
+  // final EventController con = Get.find();
   return ListView.builder(
       shrinkWrap: true,
       itemCount: eventLists.length,
+      // controller:con.scrollController,
       itemBuilder: (_, i) {
         return Container(
           decoration: BoxDecoration(
@@ -233,7 +236,7 @@ Widget headerCard(double width, context) {
                 color: Colors.white,
               ),
               onPressed: () =>
-                  _con.addEventToFavorite(_con.eventDetails.value.id),
+                  _con.addEventTofavorite(_con.eventDetails.value.id),
             )
           ],
         ),

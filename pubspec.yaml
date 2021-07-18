@@ -38,6 +38,7 @@ dependencies:
   j_location_picker: ^1.2.0
   get_storage: ^2.0.2
   persistent_bottom_nav_bar: any
+  share: ^2.0.4
   # geolocator:
 
 # dependency_overrides:
