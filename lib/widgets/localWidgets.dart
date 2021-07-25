@@ -215,7 +215,7 @@ Widget headerCard(double width, context) {
           children: [
             Flexible(
               child: Text(
-                _con.evtDetails.name,
+                _con.eventDetails?.value?.name ?? '',
                 maxLines: 2,
                 style: TextStyle(
                   color: Colors.white,
@@ -254,7 +254,7 @@ Widget headerCard(double width, context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.flag_outlined),
-                    Text(_con.evtDetails.category)
+                    Text(_con.eventDetails?.value?.category ?? '')
                   ],
                 ),
               ),
@@ -264,7 +264,7 @@ Widget headerCard(double width, context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.timelapse),
-                    Text(_con.evtDetails.date),
+                    Text(_con.eventDetails?.value?.date??''),
                   ],
                 ),
               )
@@ -288,7 +288,7 @@ Widget headerCard(double width, context) {
                     SizedBox(
                       width: width / 2 - 24,
                       child: Text(
-                        _con.evtDetails.place.capitalize,
+                        _con.eventDetails.value?.place?.capitalize ?? '',
                         overflow: TextOverflow.ellipsis,
                       ),
                     )
@@ -302,7 +302,7 @@ Widget headerCard(double width, context) {
                     Icon(FlutterIcons.activity_fea),
                     Spacing.horizontalSpacing(30),
                     Text(
-                      _con.evtDetails.active ? "Active" : "Not Active",
+                      _con.eventDetails.value.active ? "Active" : "Not Active",
                     ),
                   ],
                 ),

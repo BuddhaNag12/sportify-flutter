@@ -84,7 +84,7 @@ class AppPages {
       middlewares: [RouteMiddleWare()],
     ),
     GetPage(
-      name: Routes.favorite_ROUTE,
+      name: Routes.FABORITE,
       page: () => FavoriteEvents(),
       middlewares: [RouteMiddleWare()],
     ),

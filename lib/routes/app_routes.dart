@@ -14,5 +14,5 @@ abstract class Routes{
   static const SETTINGS  = "/setting";
   static const CATVIEW  = "/cat/:id";
   static const MY_EVENTS  = "/my_events";
-  static const favorite_ROUTE  = "/favorite";
+  static const FABORITE  = "/favorite";
 }

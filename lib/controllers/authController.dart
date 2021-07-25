@@ -8,7 +8,6 @@ class AuthController extends GetxController {
   var isLoggedIn = false.obs;
   var isLoading = false.obs;
   Rxn<User> stateUser = Rxn<User>();
-  var notNul = 'user';
   Stream<User> get user => auth.authStateChanges();
   Rxn<UserModel> fireStoreUser = Rxn<UserModel>();
 
@@ -29,6 +28,7 @@ class AuthController extends GetxController {
     this.isLoading.value = true;
     if (_firebaseUser?.uid == null) {
       this.isLoading.value = false;
+      // this.logOut();
     } else {
       this.isLoading.value = false;
       this.isLoggedIn.value = true;
@@ -40,8 +40,6 @@ class AuthController extends GetxController {
       });
       if (Get.currentRoute == '/signin' || Get.currentRoute == '/signup') {
         Get.back(canPop: true, closeOverlays: true);
-        // Get.toNamed('/');
-        // Get.removeRoute(Get.currentRoute);
       }
     }
   }

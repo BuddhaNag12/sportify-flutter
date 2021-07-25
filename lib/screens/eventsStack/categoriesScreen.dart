@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:sportify/global_widgets/appbar.dart';
 import 'package:sportify/screens/exports/eventExport.dart';
 
 class CategoriesScreen extends StatelessWidget {

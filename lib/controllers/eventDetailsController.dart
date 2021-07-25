@@ -13,7 +13,6 @@ class EventDetailsController extends GetxController
   CameraPosition _updatedCamPos;
   var isLoading = false.obs;
   Rx<EventDetailModel> eventDetails = EventDetailModel().obs;
-  EventDetailModel get evtDetails => eventDetails.value;
 
   final DataToFirestore fs = DataToFirestore();
   GoogleMapController controller;

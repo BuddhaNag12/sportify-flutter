@@ -369,7 +369,7 @@ class MyAccount extends StatelessWidget {
                                     ),
                                   ),
                                   onTap: () =>
-                                      Get.toNamed(Routes.favorite_ROUTE),
+                                      Get.toNamed(Routes.FABORITE),
                                   trailing: Icon(Icons.arrow_right),
                                 ),
                               ],

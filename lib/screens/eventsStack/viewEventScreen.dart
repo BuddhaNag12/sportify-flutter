@@ -1,3 +1,5 @@
+import 'package:sportify/routes/app_pages.dart';
+
 import '../exports/viewEvtexport.dart';
 
 class ViewEventScreen extends GetView<EventController> {
@@ -58,9 +60,9 @@ class ViewEventScreen extends GetView<EventController> {
                                 eController.gmapController.complete(controller);
                                 eController.addMarker(
                                   _controllerForEvent
-                                      .evtDetails.location.latitude,
+                                      .eventDetails.value?.location?.latitude,
                                   _controllerForEvent
-                                      .evtDetails.location.longitude,
+                                      .eventDetails.value?.location?.longitude,
                                 );
                               },
                             );
@@ -100,7 +102,7 @@ class ViewEventScreen extends GetView<EventController> {
                                   height: 120,
                                   child: Obx(
                                     () => Text(
-                                      '${_controllerForEvent.evtDetails.description}',
+                                      _controllerForEvent.eventDetails.value?.description ?? '',
                                       style:
                                           Theme.of(context).textTheme.headline6,
                                       overflow: TextOverflow.ellipsis,
@@ -190,7 +192,7 @@ class ViewEventScreen extends GetView<EventController> {
                     SizedBox(
                       width: width - 100,
                       child: ElevatedButton(
-                        onPressed: () => Get.toNamed('/join'),
+                        onPressed: () => Get.toNamed(Routes.JOIN_EVENTS),
                         child: Text(
                           "Join Event",
                           style: TextStyle(

@@ -72,7 +72,6 @@ class HomeScreenTab extends StatelessWidget {
       // controller: _con.tabViewController,
       screens: _buildScreens(),
       items: _navBarsItems(),
-
       confineInSafeArea: true,
       backgroundColor: accentColor,
       handleAndroidBackButtonPress: true,

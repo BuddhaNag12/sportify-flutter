@@ -26,7 +26,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       TextEditingController();
   final TextEditingController eventDescriptionController =
       TextEditingController();
-  // ScrollController scrollController;
 
   // Classes
   final DataToFirestore fs = DataToFirestore();
@@ -41,18 +40,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     _checkIsEventPlanner();
-    // scrollController = ScrollController();
-    // scrollController.addListener(_scrollListener);
     super.onInit();
   }
-
-  // _scrollListener() {
-  //   if (scrollController.offset >= scrollController.position.maxScrollExtent &&
-  //       !scrollController.position.outOfRange) {
-  //     print(scrollController.offset);
-  //     _getEventsFromFirestore(15);
-  //   }
-  // }
 
   @override
   void onClose() {
@@ -136,7 +125,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           size: eventSizeController.text,
           desc: eventDescriptionController.text,
           place: eventPlaceNameController.text.trim(),
-          prize:prizeCat.value,
+          prize: prizeCat.value,
         );
         if (res.isNotEmpty) {
           Get.snackbar(
@@ -187,7 +176,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       desiredAccuracy: LocationAccuracy.high,
       searchBarBoxDecoration: BoxDecoration(
         color: Colors.transparent,
-        // backgroundBlendMode: BlendMode.difference
       ),
       requiredGPS: true,
       hintText: "Pick an event point",
@@ -205,14 +193,11 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           color: Colors.white,
         ),
         isDismissible: true,
-        leftBarIndicatorColor: Colors.red,
-        shouldIconPulse: true,
         borderRadius: 8,
         overlayBlur: 2.0,
         snackStyle: SnackStyle.FLOATING,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.teal,
-        duration: Duration(seconds: 4),
       );
       pickedLatlng = result.latLng;
       update();
@@ -225,17 +210,19 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     this.isLoading.value = true;
     if (this.category.value == "All") {
       _getEventsFromFirestore();
-    }
-    try {
-      final res =
-          await events.where('category', isEqualTo: this.category.value).get();
-      res.docs.forEach((QueryDocumentSnapshot element) {
-        eventLists.add(EventsList.fromFirestore(element.data()));
-      });
-      this.isLoading.value = false;
-    } catch (e) {
-      this.isLoading.value = false;
-      return e;
+    } else {
+      try {
+        final res = await events
+            .where('category', isEqualTo: this.category.value)
+            .get();
+        res.docs.forEach((QueryDocumentSnapshot element) {
+          eventLists.add(EventsList.fromFirestore(element.data()));
+        });
+        this.isLoading.value = false;
+      } catch (e) {
+        this.isLoading.value = false;
+        return e;
+      }
     }
   }
 

@@ -17,6 +17,7 @@
 - [x] work on store event and retrieve events
 # next
 - [ ] integrate messaging feature
+- [ ] add_2_calendar 2.1.0 package
 - [ ] customize tab bar
 - [ ] setup user profile
 - [ ] work on logo
