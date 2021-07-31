@@ -9,16 +9,16 @@ import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
 import 'package:sportify/screens/exports/viewEvtexport.dart';
-
 /// sizes for setting spacing
 /// by defining vertical [height] horizontal [width].
+/// [height] or [width] not provide then default spacing is [double 5]
 class Spacing {
-  static Widget verticalSpacing(double height) {
-    return SizedBox(height: height);
+  static Widget verticalSpacing([double height]) {
+    return SizedBox(height: height ?? 5);
   }
 
-  static Widget horizontalSpacing(double width) {
-    return SizedBox(width: width);
+  static Widget horizontalSpacing([double width]) {
+    return SizedBox(width: width ?? 5);
   }
 }
 
@@ -29,11 +29,9 @@ class Spacing {
 
 */
 Widget buildListView(BuildContext context, List<EventsList> eventLists) {
-  // final EventController con = Get.find();
   return ListView.builder(
       shrinkWrap: true,
       itemCount: eventLists.length,
-      // controller:con.scrollController,
       itemBuilder: (_, i) {
         return Container(
           decoration: BoxDecoration(
@@ -103,6 +101,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                       ),
                                       Text(
                                         eventLists[i].category ?? '',
+                                        style: subtitle3,
                                       ),
                                     ],
                                   ),
@@ -123,6 +122,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                               ? 'Location'
                                               : eventLists[i].place,
                                           overflow: TextOverflow.ellipsis,
+                                          style: subtitle3,
                                         ),
                                       ),
                                     ],
@@ -148,6 +148,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                         eventLists[i].active
                                             ? 'Active'
                                             : 'Not Active',
+                                        style: subtitle3,
                                       ),
                                     ],
                                   ),
@@ -164,6 +165,7 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                       ),
                                       Text(
                                         eventLists[i].date ?? 'Event date',
+                                        style: subtitle3,
                                       ),
                                     ],
                                   ),
@@ -264,7 +266,7 @@ Widget headerCard(double width, context) {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.timelapse),
-                    Text(_con.eventDetails?.value?.date??''),
+                    Text(_con.eventDetails?.value?.date ?? ''),
                   ],
                 ),
               )
@@ -495,3 +497,6 @@ Widget shimmeringloading() {
     ),
   );
 }
+
+/// Donut chart example. This is a simple pie chart with a hole in the middle.
+

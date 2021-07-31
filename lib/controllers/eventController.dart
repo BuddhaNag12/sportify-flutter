@@ -9,7 +9,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
   var isEventMaster = false.obs;
-
+  var myEvents = [].obs;
+  var totalEvents = 0.obs;
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
@@ -17,7 +18,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
   // CONTROLLERS
   final AuthController _auth = Get.find();
-  // PersistentTabController tabViewController;
   TabController tabController;
   final TextEditingController eventNameController = TextEditingController();
   final TextEditingController eventSizeController = TextEditingController();
@@ -40,6 +40,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     _checkIsEventPlanner();
+    _getMyEvents();
     super.onInit();
   }
 
@@ -52,6 +53,14 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     eventDescriptionController.dispose();
     tabController.dispose();
     super.onClose();
+  }
+
+  _getMyEvents() {
+    events.where('user_id',isEqualTo: _auth.stateUser.value?.uid).get().then((value){
+      print(value.size);
+      // myEvents.value = value;
+      totalEvents.value = value.size;
+    });
   }
 
   void _checkIsEventPlanner() {
@@ -128,11 +137,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           prize: prizeCat.value,
         );
         if (res.isNotEmpty) {
-          Get.snackbar(
-            'success',
-            "Event successfully  added ",
-            colorText: Colors.white,
-          );
+          Get.snackbar('success', "Event successfully added ",
+              colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
           _reset();
           this.isLoading.value = false;
         }
@@ -156,8 +162,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
-      initialEntryMode: DatePickerEntryMode.calendar,
+      lastDate: DateTime(DateTime.now().year + 2),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
     );
 
     if (dPicked != null) {

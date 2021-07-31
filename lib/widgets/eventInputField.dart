@@ -41,7 +41,7 @@ class EventInputField extends StatelessWidget {
                 controller: controller,
                 maxLines: isDescription ? 3 : null,
                 maxLength: isDescription ? 150 : null,
-                style: TextStyle(color: Colors.black87),
+                style: subtitle3,
                 validator: (String value) => checkIsValid(
                   fieldName: fieldName,
                   value: value,

@@ -1,4 +1,5 @@
 import '../exports/createEventExport.dart';
+
 class CreateEventsScreen extends StatelessWidget {
   final EventController con = Get.find();
   @override
@@ -47,7 +48,7 @@ class CreateEventsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: width - 40,
+                            width: paddedWidth,
                             height: 700,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,8 +77,9 @@ class CreateEventsScreen extends StatelessWidget {
                                         height: 45,
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                              primary: Colors.white,
-                                              alignment: Alignment.centerLeft),
+                                            primary: Colors.white,
+                                            alignment: Alignment.centerLeft,
+                                          ),
                                           onPressed: () =>
                                               con.selectDateTime(context),
                                           child: Obx(
@@ -86,13 +88,11 @@ class CreateEventsScreen extends StatelessWidget {
                                                 ? Text(
                                                     "Event Date : ${con.pickedDate}",
                                                     textAlign: TextAlign.start,
-                                                    style: TextStyle(
-                                                        color: Colors.black87),
+                                                    style: subtitle3,
                                                   )
                                                 : Text(
                                                     "YYYY:MM:DD ",
-                                                    style: TextStyle(
-                                                        color: Colors.black87),
+                                                    style: subtitle3,
                                                   ),
                                           ),
                                         ),
@@ -126,25 +126,21 @@ class CreateEventsScreen extends StatelessWidget {
                                                   width: width - 100,
                                                   alignment:
                                                       Alignment.centerLeft,
-                                                  child: eCon.pickedLatlng !=
-                                                          null
-                                                      ? Text(
-                                                          "Lat long : ${eCon.pickedLatlng.latitude} ${eCon.pickedLatlng.longitude}",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        )
-                                                      : Text(
-                                                          "Pick Event Location",
-                                                          style: TextStyle(
-                                                            color:
-                                                                Colors.black87,
-                                                          ),
-                                                        ),
+                                                  child:
+                                                      eCon.pickedLatlng != null
+                                                          ? Text(
+                                                              "Lat long : ${eCon.pickedLatlng.latitude} ${eCon.pickedLatlng.longitude}",
+                                                              style: subtitle3,
+                                                            )
+                                                          : Text(
+                                                              "Pick Event Location",
+                                                              style: subtitle3,
+                                                            ),
                                                 ),
                                                 Icon(
-                                                    FlutterIcons.map_search_mco,
-                                                    color: Colors.teal),
+                                                  FlutterIcons.map_search_mco,
+                                                  color: Colors.teal,
+                                                ),
                                               ],
                                             ),
                                             style: ElevatedButton.styleFrom(
@@ -198,11 +194,7 @@ class CreateEventsScreen extends StatelessWidget {
                                           ? con.category.value
                                           : null,
                                       elevation: 16,
-                                      style: TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 16,
-                                        fontFamily: "Roboto",
-                                      ),
+                                      style: subtitle3,
                                       dropdownColor: Colors.tealAccent.shade700,
                                       underline: SizedBox(),
                                       onChanged: (newValue) {
@@ -220,7 +212,7 @@ class CreateEventsScreen extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(2),
                                                 ),
                                                 child: Text(
                                                   val,
@@ -275,11 +267,7 @@ class CreateEventsScreen extends StatelessWidget {
                                                 ? con.prizeCat.value
                                                 : null,
                                             elevation: 16,
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: 16,
-                                              fontFamily: "Roboto",
-                                            ),
+                                            style: subtitle3,
                                             dropdownColor:
                                                 Colors.tealAccent.shade700,
                                             underline: SizedBox(),
@@ -300,7 +288,7 @@ class CreateEventsScreen extends StatelessWidget {
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(4),
+                                                                .circular(2),
                                                       ),
                                                       child: Text(
                                                         val,
