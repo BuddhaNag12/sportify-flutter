@@ -1,3 +1,5 @@
+import 'package:sportify/models/chartModel.dart';
+import 'package:sportify/screens/exports/eventExport.dart';
 import './exports/event_exports.dart';
 
 class EventController extends GetxController with SingleGetTickerProviderMixin {
@@ -9,8 +11,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
   var isEventMaster = false.obs;
-  var myEvents = [].obs;
-  var totalEvents = 0.obs;
   RxList<EventsList> eventLists = RxList<EventsList>();
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
@@ -33,14 +33,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onReady() {
     _initializeTabController();
-    _getEventsFromFirestore();
     super.onReady();
   }
 
   @override
   void onInit() {
     _checkIsEventPlanner();
-    _getMyEvents();
+    _getEventsFromFirestore();
     super.onInit();
   }
 
@@ -55,13 +54,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     super.onClose();
   }
 
-  _getMyEvents() {
-    events.where('user_id',isEqualTo: _auth.stateUser.value?.uid).get().then((value){
-      print(value.size);
-      // myEvents.value = value;
-      totalEvents.value = value.size;
-    });
-  }
+
 
   void _checkIsEventPlanner() {
     if (eventPlannerModeStore.hasData('isPlanner') &&
@@ -140,6 +133,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           Get.snackbar('success', "Event successfully added ",
               colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
           _reset();
+          _getEventsFromFirestore();
           this.isLoading.value = false;
         }
       } catch (e) {

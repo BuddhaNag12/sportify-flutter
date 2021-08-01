@@ -11,7 +11,7 @@ class SignInController extends GetxController {
   // Service class
   final FirebaseAuthentication _authService = new FirebaseAuthentication();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passWordController = TextEditingController();
+  final TextEditingController passWordController = TextEditingController(text: '123123');
 
   @override
   void onClose() {

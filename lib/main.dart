@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sportify/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:sportify/screens/routNotFound.dart';
@@ -17,6 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final splash = GetStorage();
     bool isSplash = splash.read('isSplash') ?? false;
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
+    );
     return GetMaterialApp(
       defaultTransition: Transition.native,
       debugShowCheckedModeBanner: false,

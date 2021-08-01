@@ -1,32 +1,47 @@
+import 'package:sportify/models/chartModel.dart';
+import 'package:sportify/screens/exports/createEventExport.dart';
 import './exports/event_exports.dart';
 
 class StatisticController extends GetxController {
   final AuthController auth = Get.find();
   var isLoading = false.obs;
-  RxList<EventsList> myEvents = RxList<EventsList>();
-
+  RxList<CategoriesModel> totalChartData = RxList<CategoriesModel>();
+  var totalEvents = 0.obs;
+  final EventController stat = Get.find();
+  final AuthController _auth = Get.find();
+  var myEvents;
+  var categories;
+  Map<String, int> totalCategories = {};
   @override
   void onInit() {
-    this.getAllEvents();
+    this.getMyEvents();
     super.onInit();
   }
 
-  void getAllEvents() {
-    print(auth.stateUser?.value?.uid);
-    if (auth.isLoggedIn.isTrue) {
-      this.isLoading.value = true;
-      events
-          .where('user_id', isEqualTo: auth.stateUser.value.uid)
-          .get()
-          .then((value) => {
-                value.docs.forEach((QueryDocumentSnapshot element) {
-                  myEvents.add(EventsList.fromFirestore(element.data()));
-                  this.isLoading.value = false;
-                  print(myEvents.first);
-                }),
-                this.isLoading.value = false
-              })
-          .catchError((_) => {this.isLoading.value = false});
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
+  getMyEvents() {
+    this.totalChartData.value = [];
+    this.totalEvents.value = 0;
+    this.totalCategories = {};
+    categories = [];
+    
+    if (_auth.user != null) {
+      myEvents =
+          stat.eventLists.where((e) => e.userId == _auth.stateUser.value.uid);
+      totalEvents.value = myEvents.length;
+      categories = myEvents.map((e) => e.category).toList();
+
+      categories.forEach((i) => totalCategories['$i'] =
+          totalCategories.containsKey('$i') ? totalCategories['$i'] + 1 : 1);
+      totalCategories.keys.forEach((element) {
+        totalChartData.add(CategoriesModel(element, totalCategories[element],
+            Colors.teal[totalCategories[element] * 100]));
+      });
+      // print(totalCategories);
     }
   }
 }

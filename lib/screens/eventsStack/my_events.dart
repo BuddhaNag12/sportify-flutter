@@ -31,7 +31,7 @@ class MyEventScreen extends StatelessWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return Center(child: CircularProgressIndicator());
           }
 
           return Container(
@@ -59,28 +59,56 @@ class MyEventScreen extends StatelessWidget {
                         ],
                       ),
                     )
-                  : ListView(
-                      children:
-                          snapshot.data.docs.map((DocumentSnapshot document) {
-                        Map<String, dynamic> data = document.data();
-                        return ListTile(
-                          title: Text(
-                            data['name'].toUpperCase() ?? '',
-                            style: headline1,
-                          ),
-                          subtitle: Text(
-                            data['place'] ?? '',
-                            style: subtitle1.copyWith(color: Colors.black),
-                          ),
-                          leading: Icon(FlutterIcons.event_mdi),
-                          trailing: Icon(FlutterIcons.edit_2_fea),
-                        );
-                      }).toList(),
-                    ),
+                  : snapshot.data.docs.length > 0
+                      ? ListView(
+                          children: snapshot.data.docs
+                              .map((DocumentSnapshot document) {
+                            Map<String, dynamic> data = document.data();
+                            return ListTile(
+                              title: Text(
+                                data['name'].toUpperCase() ?? '',
+                                style: headline1,
+                              ),
+                              subtitle: Text(
+                                data['place'] ?? '',
+                                style: subtitle1.copyWith(color: Colors.black),
+                              ),
+                              leading: Icon(FlutterIcons.event_mdi),
+                              trailing: Icon(FlutterIcons.edit_2_fea),
+                            );
+                          }).toList(),
+                        )
+                      : Column(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/notFound.svg',
+                                  width: 250,
+                                  height: 250,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "Oops ... No data found try adding some.",
+                            )
+                          ],
+                        ),
             ),
           );
         },
       ),
     );
+  }
+}
+
+class CircularProgressIndicator extends StatelessWidget {
+  const CircularProgressIndicator({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("Loading");
   }
 }
