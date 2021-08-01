@@ -10,7 +10,7 @@ class SignInController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   // Service class
   final FirebaseAuthentication _authService = new FirebaseAuthentication();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text: 'test@test.com');
   final TextEditingController passWordController = TextEditingController(text: '123123');
 
   @override

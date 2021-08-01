@@ -10,8 +10,7 @@ import 'package:sportify/screens/exports/joinEvtExports.dart';
 import 'package:sportify/widgets/Widget_charts.dart';
 
 class StatisticScreen extends StatelessWidget {
-  StatisticScreen({Key key}) : super(key: key);
-  final StatisticController stat = Get.put(StatisticController());
+  final StatisticController stat = Get.find();
   final AuthController auth = Get.find();
 
   @override
@@ -22,7 +21,7 @@ class StatisticScreen extends StatelessWidget {
         isTransparent: false,
       ),
       body: Container(
-        height: height,
+        height: height - 200,
         child: Obx(
           () => auth.stateUser.value?.uid == null
               ? Container(
@@ -42,7 +41,7 @@ class StatisticScreen extends StatelessWidget {
                       Text(
                         "Oops ... You Need To Login First",
                       ),
-                      Spacing.verticalSpacing(20)
+                      // Spacing.verticalSpacing(20)
                     ],
                   ),
                 )

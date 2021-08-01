@@ -2,17 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sportify/controllers/exports/event_exports.dart';
 import 'package:sportify/widgets/localWidgets.dart';
 import 'package:sportify/constants/responsiveConst.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatelessWidget {
+  void askPermission() async {
+    try {
+      final localionRes = await Permission.locationWhenInUse.request();
+      final storageRes = await Permission.storage.request();
+      if (localionRes.isGranted && storageRes.isGranted) {
+        showMessageDialog('Permission Granted');
+      } else {
+        openAppSettings();
+      }
+    } catch (e) {
+      final String err = e.toString();
+      showMessageDialog(err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    askPermission();
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
+    );
     final PageController controller = PageController(initialPage: 0);
 
     _nextPage(int index) {
-      print("clicked");
       controller.animateToPage(index,
           duration: const Duration(milliseconds: 500), curve: Curves.ease);
     }

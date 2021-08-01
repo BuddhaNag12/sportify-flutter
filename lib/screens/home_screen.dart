@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:sportify/screens/eventsStack/events_screen.dart';
 import 'package:sportify/screens/eventsStack/my_events.dart';
 import 'package:sportify/screens/exports/createEventExport.dart';
-// import 'package:sportify/screens/messaging.dart';
 import 'package:sportify/screens/statistics_dashboard.dart';
 import 'exports/eventExport.dart';
 
@@ -11,10 +10,10 @@ class HomeScreenTab extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      Obx(() => _con.isEventMaster.isTrue ? StatisticScreen() : EventsScreen()),
+      Obx(() =>
+          _con.isEventMaster.isFalse ? EventsScreen() : StatisticScreen()),
       Obx(() =>
           _con.isEventMaster.isFalse ? CategoriesScreen() : MyEventScreen()),
-      // MessagingView(),
       MyAccount(),
     ];
   }
@@ -69,7 +68,6 @@ class HomeScreenTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return PersistentTabView(
       context,
-      // controller: _con.tabViewController,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,

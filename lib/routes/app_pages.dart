@@ -38,6 +38,7 @@ class AppPages {
       name: Routes.HOME,
       page: () => HomeScreenTab(),
       bindings: [
+        StatisticsBindings(),
         EventBinding(),
         AuthBindings(),
       ],

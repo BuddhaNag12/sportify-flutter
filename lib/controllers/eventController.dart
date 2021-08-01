@@ -1,4 +1,3 @@
-import 'package:sportify/models/chartModel.dart';
 import 'package:sportify/screens/exports/eventExport.dart';
 import './exports/event_exports.dart';
 

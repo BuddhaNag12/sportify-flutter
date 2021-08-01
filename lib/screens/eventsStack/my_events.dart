@@ -9,12 +9,6 @@ class MyEventScreen extends StatelessWidget {
   final AuthController auth = Get.find();
   @override
   Widget build(BuildContext context) {
-    Stream myEventsStream;
-    if (auth.stateUser.value?.uid != null) {
-      myEventsStream = events
-          .where('user_id', isEqualTo: auth.stateUser.value.uid)
-          .snapshots();
-    }
     return Scaffold(
       appBar: MyAppBar(isTransparent: false),
       floatingActionButton: FloatingActionButton(
@@ -23,80 +17,65 @@ class MyEventScreen extends StatelessWidget {
         ),
         onPressed: () => Get.toNamed(Routes.CREATE_EVENTS),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: myEventsStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+      body: Obx(
+        () => auth.stateUser?.value?.uid != null
+            ? StreamBuilder<QuerySnapshot>(
+                stream: events
+                    .where('user_id', isEqualTo: auth.stateUser?.value?.uid)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
-          return Container(
-            width: width,
-            height: 550,
-            child: Obx(
-              () => auth.stateUser.value?.uid == null
-                  ? Container(
+                  return Container(
                       width: width,
-                      height: 250,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: SvgPicture.asset(
-                                'assets/notFound.svg',
-                                width: 250,
-                                height: 250,
-                              ),
+                      height: 550,
+                      child: ListView(
+                        children:
+                            snapshot.data.docs.map((DocumentSnapshot document) {
+                          Map<String, dynamic> data = document.data();
+                          return ListTile(
+                            title: Text(
+                              data['name'].toUpperCase() ?? '',
+                              style: headline1,
                             ),
-                          ),
-                          Text(
-                            "Oops ... You Need To Login First",
-                          )
-                        ],
-                      ),
-                    )
-                  : snapshot.data.docs.length > 0
-                      ? ListView(
-                          children: snapshot.data.docs
-                              .map((DocumentSnapshot document) {
-                            Map<String, dynamic> data = document.data();
-                            return ListTile(
-                              title: Text(
-                                data['name'].toUpperCase() ?? '',
-                                style: headline1,
-                              ),
-                              subtitle: Text(
-                                data['place'] ?? '',
-                                style: subtitle1.copyWith(color: Colors.black),
-                              ),
-                              leading: Icon(FlutterIcons.event_mdi),
-                              trailing: Icon(FlutterIcons.edit_2_fea),
-                            );
-                          }).toList(),
-                        )
-                      : Column(
-                          children: [
-                            Expanded(
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  'assets/notFound.svg',
-                                  width: 250,
-                                  height: 250,
-                                ),
-                              ),
+                            subtitle: Text(
+                              data['place'] ?? '',
+                              style: subtitle1.copyWith(color: Colors.black),
                             ),
-                            Text(
-                              "Oops ... No data found try adding some.",
-                            )
-                          ],
+                            leading: Icon(FlutterIcons.event_mdi),
+                            trailing: Icon(FlutterIcons.edit_2_fea),
+                          );
+                        }).toList(),
+                      ));
+                },
+              )
+            : Container(
+                width: width,
+                height: height - 200,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/notFound.svg',
+                          width: 250,
+                          height: 250,
                         ),
-            ),
-          );
-        },
+                      ),
+                    ),
+                    Text(
+                      "Oops ... You Need To Login First",
+                    )
+                  ],
+                ),
+              ),
       ),
     );
   }

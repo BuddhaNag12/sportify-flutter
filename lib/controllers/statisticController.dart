@@ -13,9 +13,9 @@ class StatisticController extends GetxController {
   var categories;
   Map<String, int> totalCategories = {};
   @override
-  void onInit() {
+  void onReady() {
     this.getMyEvents();
-    super.onInit();
+    super.onReady();
   }
 
   @override
@@ -31,7 +31,7 @@ class StatisticController extends GetxController {
     
     if (_auth.user != null) {
       myEvents =
-          stat.eventLists.where((e) => e.userId == _auth.stateUser.value.uid);
+          stat.eventLists.where((e) => e.userId == _auth.stateUser?.value?.uid);
       totalEvents.value = myEvents.length;
       categories = myEvents.map((e) => e.category).toList();
 
