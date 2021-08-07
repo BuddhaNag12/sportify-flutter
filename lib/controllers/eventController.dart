@@ -110,12 +110,16 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     this.isLoading.value = true;
     if (category.value.isBlank) {
       _showDialog('Please select a Category');
+        this.isLoading.value = false;
     } else if (pickedDate.value.isBlank) {
       _showDialog('Please select a Date');
+        this.isLoading.value = false;
     } else if (prizeCat.value.isBlank) {
       _showDialog('Please select a Prize category');
+      this.isLoading.value = false;
     } else if (pickedLatlng == null) {
       _showDialog('Please select a location');
+      this.isLoading.value = false;
     } else {
       try {
         final res = await fs.addEvent(

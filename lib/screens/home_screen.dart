@@ -74,7 +74,7 @@ class HomeScreenTab extends StatelessWidget {
       backgroundColor: accentColor,
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: false,
-      stateManagement: false,
+      stateManagement: true,
       hideNavigationBarWhenKeyboardShows: true,
       decoration: NavBarDecoration(
         borderRadius: BorderRadius.only(
@@ -94,7 +94,7 @@ class HomeScreenTab extends StatelessWidget {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style1,
+      navBarStyle: NavBarStyle.style6,
     );
   }
 }

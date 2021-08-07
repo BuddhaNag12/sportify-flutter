@@ -28,38 +28,42 @@ class CategoriesScreen extends StatelessWidget {
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              // crossAxisSpacing: 20
+              crossAxisSpacing: 20,
               mainAxisSpacing: 5,
             ),
             delegate: SliverChildListDelegate.fixed(
               [
                 ...sliverGridListItems.map(
-                  (e) => GestureDetector(
-                    onTap: () => Get.toNamed(e.route),
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      margin: EdgeInsets.only(bottom: 20,left: 20,right: 20,top: 20),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [primaryColorLight, primaryColorDark],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(120),
-                        boxShadow: [
-                          BoxShadow(
-                            color: primaryColorDark,
-                            spreadRadius: 0.5,
-                            blurRadius: 1,
-                            offset: Offset(1, 2),
-                          )
+                  (e) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () => Get.toNamed(e.route),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            child: ClipOval(
+                              child: Card(
+                                elevation: 5,
+                                margin: EdgeInsets.all(0),
+                                child: SvgPicture.asset(
+                                  'assets/Diagonal-Stripes.svg',
+                                  height: 300,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              e.title,
+                              style:
+                                  subtitle2.copyWith(color: Colors.grey[200]),
+                            ),
+                          ),
                         ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          e.title,
-                          style: subtitle2.copyWith(color: Colors.grey[200]),
-                        ),
                       ),
                     ),
                   ),

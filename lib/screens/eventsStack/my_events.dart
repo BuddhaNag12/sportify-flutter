@@ -34,31 +34,48 @@ class MyEventScreen extends StatelessWidget {
                   }
 
                   return Container(
-                      width: width,
-                      height: 550,
-                      child: ListView(
-                        children:
-                            snapshot.data.docs.map((DocumentSnapshot document) {
-                          Map<String, dynamic> data = document.data();
-                          return ListTile(
-                            title: Text(
-                              data['name'].toUpperCase() ?? '',
-                              style: headline1,
-                            ),
-                            subtitle: Text(
-                              data['place'] ?? '',
-                              style: subtitle1.copyWith(color: Colors.black),
-                            ),
-                            leading: Icon(FlutterIcons.event_mdi),
-                            trailing: Icon(FlutterIcons.edit_2_fea),
-                          );
-                        }).toList(),
-                      ));
+                    width: width,
+                    height: height * 0.8,
+                    child: snapshot.data.docs.length > 0
+                        ? ListView(
+                            children: snapshot.data.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data = document.data();
+                              return ListTile(
+                                title: Text(
+                                  data['name'].toUpperCase() ?? '',
+                                  style: headline1,
+                                ),
+                                subtitle: Text(
+                                  data['place'] ?? '',
+                                  style:
+                                      subtitle1.copyWith(color: Colors.black),
+                                ),
+                                leading: Icon(FlutterIcons.event_mdi),
+                                trailing: Icon(FlutterIcons.edit_2_fea),
+                              );
+                            }).toList(),
+                          )
+                        : Column(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    'assets/notFound.svg',
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "No events found try adding one",
+                              )
+                            ],
+                          ),
+                  );
                 },
               )
             : Container(
                 width: width,
-                height: height - 200,
+                height: height * 0.7,
                 child: Column(
                   children: [
                     Expanded(
@@ -78,16 +95,5 @@ class MyEventScreen extends StatelessWidget {
               ),
       ),
     );
-  }
-}
-
-class CircularProgressIndicator extends StatelessWidget {
-  const CircularProgressIndicator({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("Loading");
   }
 }
