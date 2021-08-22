@@ -19,11 +19,9 @@ class EventsScreen extends StatelessWidget {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
-        // onVerticalDragDown: (e) => viewCon.handleDrag(e),
-        // onVerticalDragCancel: () => viewCon.hideNavBar.value = true,
         onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
         child: Container(
-          height: 600,
+          height: double.infinity,
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.only(
@@ -32,117 +30,69 @@ class EventsScreen extends StatelessWidget {
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Spacing.verticalSpacing(15.0),
+              Spacing.verticalSpacing(10.0),
               SizedBox(
                 width: width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      width: width - 140,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 1,
-                              color: Colors.grey,
-                              offset: Offset(0, 1),
-                            ),
-                          ],
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.search,
-                          style: TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            labelText: "Search Any Event Eg: place or Cricket",
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                                width: 2,
-                                style: BorderStyle.solid,
-                              ),
-                            ),
-                            isDense: true,
-                            prefixIcon: Icon(Icons.search),
-                          ),
-                          controller: viewCon.searchController,
-                          // onChanged: (text) => fetchMovies(),
-                          onSubmitted: (text) => viewCon.searchEvents(),
+                child: Container(
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 1,
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                  ),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.search,
+                    style: TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                      labelText: "Search Any Event Eg: place or Cricket",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
                         ),
                       ),
+                      isDense: true,
+                      prefixIcon: Icon(Icons.search),
                     ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 5),
-                      child: FittedBox(
-                        child: Container(
-                          padding: EdgeInsets.all(5.0),
-                          width: 110,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                color: Colors.grey,
-                                offset: Offset(0, 1),
-                              ),
-                            ],
-                            color: Colors.teal,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
-                          child: Obx(() => DropdownButton(
-                                hint: Text(
-                                  "Category",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                value: viewCon.category.value.isNotEmpty
-                                    ? viewCon.category.value
-                                    : null,
-                                icon: const Icon(
-                                  CupertinoIcons.sort_down,
-                                  color: Colors.white,
-                                ),
-                                elevation: 16,
-                                dropdownColor: Colors.tealAccent.shade700,
-                                underline: SizedBox(),
-                                onChanged: (newValue) {
-                                  viewCon.changeCategoryValue(newValue);
-                                },
-                                items: categories.map((val) {
-                                  return DropdownMenuItem(
-                                    value: val,
-                                    child: Text(
-                                      val,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  );
-                                }).toList(),
-                              )),
-                        ),
-                      ),
-                    ),
-                  ],
+                    controller: viewCon.searchController,
+                    onSubmitted: (text) => viewCon.searchEvents(),
+                  ),
                 ),
               ),
-              Spacing.verticalSpacing(20.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  "All Events nearby you",
-                  style: headline1,
-                ),
+              Spacing.verticalSpacing(6.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      "All Events nearby you",
+                      style: headline1,
+                    ),
+                  ),
+                  Obx(
+                    () => IconButton(
+                      onPressed: () => {viewCon.sortEvents()},
+                      icon: Icon(viewCon.isDesc.value
+                          ? FlutterIcons.sort_amount_desc_faw
+                          : FlutterIcons.sort_amount_asc_faw),
+                      color: primaryColor,
+                      iconSize: 18,
+                    ),
+                  )
+                ],
               ),
               SizedBox(
                 width: width * 0.50,

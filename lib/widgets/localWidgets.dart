@@ -9,6 +9,7 @@ import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
 import 'package:sportify/models/eventModel.dart';
 import 'package:sportify/screens/exports/viewEvtexport.dart';
+
 /// sizes for setting spacing
 /// by defining vertical [height] horizontal [width].
 /// [height] or [width] not provide then default spacing is [double 5]
@@ -101,7 +102,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                       ),
                                       Text(
                                         eventLists[i].category ?? '',
-                                        style: subtitle3,
+                                        style: subtitle3.copyWith(
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -122,7 +125,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                               ? 'Location'
                                               : eventLists[i].place,
                                           overflow: TextOverflow.ellipsis,
-                                          style: subtitle3,
+                                          style: subtitle3.copyWith(
+                                            color: Colors.black54,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -148,7 +153,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                         eventLists[i].active
                                             ? 'Active'
                                             : 'Not Active',
-                                        style: subtitle3,
+                                        style: subtitle3.copyWith(
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -165,7 +172,9 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
                                       ),
                                       Text(
                                         eventLists[i].date ?? 'Event date',
-                                        style: subtitle3,
+                                        style: subtitle3.copyWith(
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ],
                                   ),

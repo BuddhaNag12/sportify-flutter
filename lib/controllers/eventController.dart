@@ -11,6 +11,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var isLoading = false.obs;
   var isEventMaster = false.obs;
   RxList<EventsList> eventLists = RxList<EventsList>();
+  RxBool isDesc = true.obs;
+  var updateId = '';
   /* Global keys */
   final GlobalKey<FormState> createEventKey = GlobalKey<FormState>();
   var selectedIndex = 0.obs;
@@ -53,7 +55,18 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     super.onClose();
   }
 
-
+  void viewEvent(id) async {
+    try {
+      this.isLoading.value = true;
+      final res = eventLists.where((element) => id == element.id).first;
+      updateId = res.id;
+      setEditedValues(res);
+      this.isLoading.value = false;
+    } catch (e) {
+      print(e);
+      this.isLoading.value = false;
+    }
+  }
 
   void _checkIsEventPlanner() {
     if (eventPlannerModeStore.hasData('isPlanner') &&
@@ -110,10 +123,10 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     this.isLoading.value = true;
     if (category.value.isBlank) {
       _showDialog('Please select a Category');
-        this.isLoading.value = false;
+      this.isLoading.value = false;
     } else if (pickedDate.value.isBlank) {
       _showDialog('Please select a Date');
-        this.isLoading.value = false;
+      this.isLoading.value = false;
     } else if (prizeCat.value.isBlank) {
       _showDialog('Please select a Prize category');
       this.isLoading.value = false;
@@ -207,26 +220,90 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void changeCategoryValue(String newVal) async {
-    this.category.value = newVal;
+  setEditedValues(EventsList editEventDetails) {
+    eventNameController.text = editEventDetails.name;
+    pickedDate.value = editEventDetails.date;
+    eventSizeController.text = editEventDetails.teamSize;
+    category.value = editEventDetails.category;
+    prizeCat.value = editEventDetails.prize;
+    eventPlaceNameController.text = editEventDetails.place;
+    eventDescriptionController.text = editEventDetails.description;
+    pickedLatlng = LatLng(editEventDetails.location.latitude,
+        editEventDetails.location.longitude);
+  }
+
+  void updateEvent() async {
+    this.isLoading.value = true;
+    try {
+      final res = await fs.updateEvent(
+        id: updateId,
+        eventName: eventNameController.text,
+        date: pickedDate.value,
+        cat: category.value,
+        location: pickedLatlng,
+        size: eventSizeController.text,
+        desc: eventDescriptionController.text,
+        place: eventPlaceNameController.text.trim(),
+        prize: prizeCat.value,
+      );
+      if (res.isNotEmpty) {
+        Get.snackbar('success', "Event successfully Updated",
+            colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+        this.isLoading.value = false;
+      }
+    } catch (e) {
+      this.isLoading.value = false;
+      Get.snackbar('Failure', "Failed to add Event");
+    }
+  }
+
+  void deleteEvent() async {
+    this.isLoading.value = true;
+    try {
+      await events.doc(updateId).delete();
+      Get.snackbar('success', "Event successfully Deleted",
+          colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+      Future.delayed(Duration(milliseconds: 1000), () => Get.back());
+      this.isLoading.value = false;
+    } catch (e) {
+      this.isLoading.value = false;
+      Get.snackbar('Failure', "Failed to add Event");
+    }
+  }
+
+  void sortEvents() async {
+    this.isDesc.toggle();
     eventLists.clear();
     this.isLoading.value = true;
-    if (this.category.value == "All") {
-      _getEventsFromFirestore();
-    } else {
-      try {
-        final res = await events
-            .where('category', isEqualTo: this.category.value)
-            .get();
-        res.docs.forEach((QueryDocumentSnapshot element) {
-          eventLists.add(EventsList.fromFirestore(element.data()));
-        });
-        this.isLoading.value = false;
-      } catch (e) {
-        this.isLoading.value = false;
-        return e;
-      }
+    var res;
+    try {
+      res = await events.orderBy('name', descending: isDesc.value).get();
+      res.docs.forEach((QueryDocumentSnapshot element) {
+        eventLists.add(EventsList.fromFirestore(element.data()));
+      });
+      this.isLoading.value = false;
+    } catch (e) {
+      this.isLoading.value = false;
+      _showDialog('Error: $e');
     }
+  }
+
+  changeCategoryValue(String newVal) {
+    this.category.value = newVal;
+  }
+
+  Future<List<QuerySnapshot>> getResolveResponse() async {
+    var response = await Future.wait([
+      events
+          .where(
+            'category',
+            isEqualTo: this.category.isNotEmpty
+                ? this.category.value
+                : searchController.text.capitalize.trim(),
+          )
+          .get(),
+    ]);
+    return response;
   }
 
   void searchEvents() async {
@@ -236,25 +313,11 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       if (searchController.text.isBlank) {
         _getEventsFromFirestore();
       }
-      final query = await events
-          .where(
-            'place',
-            isEqualTo: searchController.text.toLowerCase().trim(),
-          )
-          .get();
-      final query2 = await events
-          .where(
-            'category',
-            isEqualTo: this.category.isNotEmpty
-                ? this.category.value
-                : searchController.text.capitalize.trim(),
-          )
-          .get();
-      query.docs.forEach((QueryDocumentSnapshot element) {
-        eventLists.add(EventsList.fromFirestore(element.data()));
-      });
-      query2.docs.forEach((QueryDocumentSnapshot element) {
-        eventLists.add(EventsList.fromFirestore(element.data()));
+      var response = await getResolveResponse().then((value) => value);
+      response.forEach((res) {
+        res.docs.forEach((element) {
+          eventLists.add(EventsList.fromFirestore(element.data()));
+        });
       });
       this.isLoading.value = false;
     } catch (e) {

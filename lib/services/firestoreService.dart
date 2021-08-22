@@ -31,6 +31,38 @@ class DataToFirestore {
     }
   }
 
+  Future<String> updateEvent(
+      {id,
+      eventName,
+      date,
+      LatLng location,
+      cat,
+      size,
+      desc,
+      place,
+      prize}) async {
+    try {
+      final res = events.doc(id);
+      res.set({
+        'name': eventName,
+        'date': date,
+        'location': GeoPoint(location.latitude, location.longitude),
+        'category': cat,
+        'size': size,
+        'description': desc,
+        'active': true,
+        'id': res.id,
+        'user_id': auth.stateUser.value.uid,
+        'place': place,
+        'prize': prize,
+      }, SetOptions(merge: true));
+      return res.id;
+    } catch (e) {
+      print(e);
+      return e;
+    }
+  }
+
   Future<EventDetailModel> viewEvent(id) async {
     try {
       final res = await events.doc(id).get();

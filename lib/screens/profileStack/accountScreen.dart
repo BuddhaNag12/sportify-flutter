@@ -337,7 +337,7 @@ class MyAccount extends StatelessWidget {
                                     style: subtitle1.copyWith(
                                         color: Colors.black45),
                                   ),
-                                  onTap: () => Get.toNamed('/'),
+                                  onTap: () => Get.toNamed('/manage'),
                                   trailing: Icon(Icons.arrow_right),
                                 ),
                               ],

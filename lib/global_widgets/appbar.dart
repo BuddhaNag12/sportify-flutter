@@ -4,17 +4,19 @@ import 'package:get/get.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/authController.dart';
+import 'package:sportify/screens/exports/createEventExport.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isTransparent;
   final bool isAvatar;
+  final bool isMultiselect;
   final String title;
   final AuthController con = Get.find();
-
   MyAppBar({
     @required this.isTransparent,
     this.title,
     this.isAvatar = false,
+    this.isMultiselect = false,
   });
   Widget build(BuildContext context) {
     return AppBar(
@@ -25,7 +27,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: Colors.white),
       title: Text(
         title ?? 'Sportify',
-        style: title != null ? headline2.copyWith(color:Colors.white) : headline3,
+        style:
+            title != null ? headline2.copyWith(color: Colors.white) : headline3,
       ),
       // centerTitle: true,
       actions: [
@@ -38,7 +41,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Get.toNamed('/profile');
                   // : Get.toNamed('/signin');
                 })
-            : SizedBox()
+            : SizedBox(),
       ],
     );
   }

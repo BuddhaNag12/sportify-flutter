@@ -15,4 +15,6 @@ abstract class Routes{
   static const CATVIEW  = "/cat/:id";
   static const MY_EVENTS  = "/my_events";
   static const FABORITE  = "/favorite";
+  static const MANAGE  = "/manage";
+  static const EDIT  = "/edit/:id";
 }

@@ -1,5 +1,7 @@
 import 'package:sportify/screens/categoryView.dart';
+import 'package:sportify/screens/eventsStack/edit_event.dart';
 import 'package:sportify/screens/eventsStack/favoritesEvents.dart';
+import 'package:sportify/screens/eventsStack/manage_events.dart';
 import 'package:sportify/screens/eventsStack/my_events.dart';
 
 import './route_paths.dart';
@@ -86,6 +88,18 @@ class AppPages {
     GetPage(
       name: Routes.FABORITE,
       page: () => FavoriteEvents(),
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.MANAGE,
+      page: () => ManageEvents(),
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.EDIT,
+      page: () => EditEvent(),
+      fullscreenDialog: true,
+      opaque: true,
       middlewares: [RouteMiddleWare()],
     ),
   ];
