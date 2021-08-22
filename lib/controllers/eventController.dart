@@ -58,9 +58,9 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   void viewEvent(id) async {
     try {
       this.isLoading.value = true;
-      final res = eventLists.where((element) => id == element.id).first;
+      final res = await events.doc(id).get();
       updateId = res.id;
-      setEditedValues(res);
+      setEditedValues(EventsList.fromFirestore(res.data()));
       this.isLoading.value = false;
     } catch (e) {
       print(e);
@@ -77,7 +77,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  void _reset() {
+  void reset() {
     eventNameController.clear();
     eventSizeController.clear();
     eventDescriptionController.clear();
@@ -148,7 +148,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
         if (res.isNotEmpty) {
           Get.snackbar('success', "Event successfully added ",
               colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
-          _reset();
+          reset();
           _getEventsFromFirestore();
           this.isLoading.value = false;
         }
@@ -228,8 +228,10 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     prizeCat.value = editEventDetails.prize;
     eventPlaceNameController.text = editEventDetails.place;
     eventDescriptionController.text = editEventDetails.description;
-    pickedLatlng = LatLng(editEventDetails.location.latitude,
-        editEventDetails.location.longitude);
+    pickedLatlng = LatLng(
+      editEventDetails.location.latitude,
+      editEventDetails.location.longitude,
+    );
   }
 
   void updateEvent() async {
@@ -248,7 +250,10 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       );
       if (res.isNotEmpty) {
         Get.snackbar('success', "Event successfully Updated",
-            colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+            colorText: Colors.white,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: primaryColorDark);
+        _getEventsFromFirestore();
         this.isLoading.value = false;
       }
     } catch (e) {
@@ -261,9 +266,14 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     this.isLoading.value = true;
     try {
       await events.doc(updateId).delete();
-      Get.snackbar('success', "Event successfully Deleted",
-          colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
-      Future.delayed(Duration(milliseconds: 1000), () => Get.back());
+      Get.back();
+      Get.snackbar(
+        'success',
+        "Event successfully Deleted",
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: primaryColorDark,
+      );
       this.isLoading.value = false;
     } catch (e) {
       this.isLoading.value = false;

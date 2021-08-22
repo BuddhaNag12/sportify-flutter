@@ -43,21 +43,26 @@ class ManageEvents extends StatelessWidget {
                                 .map((DocumentSnapshot document) {
                               Map<String, dynamic> data = document.data();
                               return ListTile(
-                                  title: Text(
-                                    data['name'].toUpperCase() ?? '',
-                                    style: headline1,
+                                title: Text(
+                                  data['name'].toUpperCase() ?? '',
+                                  style: headline1,
+                                ),
+                                subtitle: Text(
+                                  data['place'] ?? '',
+                                  style:
+                                      subtitle1.copyWith(color: Colors.black),
+                                ),
+                                leading: Icon(FlutterIcons.event_mdi),
+                                onLongPress: () => null,
+                                trailing: IconButton(
+                                  onPressed: () =>
+                                      {Get.toNamed('/edit/${data['id']}')},
+                                  icon: Icon(
+                                    FlutterIcons.edit_faw5s,
+                                    size: 18,
                                   ),
-                                  subtitle: Text(
-                                    data['place'] ?? '',
-                                    style:
-                                        subtitle1.copyWith(color: Colors.black),
-                                  ),
-                                  leading: Icon(FlutterIcons.event_mdi),
-                                  onLongPress: () => null,
-                                  trailing: IconButton(
-                                      onPressed: () =>
-                                          {Get.toNamed('/edit/${data['id']}')},
-                                      icon: Icon(FlutterIcons.edit_2_fea)));
+                                ),
+                              );
                             }).toList(),
                           )
                         : Column(

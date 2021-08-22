@@ -52,7 +52,15 @@ class MyEventScreen extends StatelessWidget {
                                       subtitle1.copyWith(color: Colors.black),
                                 ),
                                 leading: Icon(FlutterIcons.event_mdi),
-                                trailing: Icon(FlutterIcons.edit_2_fea),
+                                trailing: IconButton(
+                                  onPressed: () => {
+                                    Get.toNamed('/edit/${data['id']}'),
+                                  },
+                                  icon: Icon(
+                                    FlutterIcons.edit_faw5s,
+                                    size: 18,
+                                  ),
+                                ),
                               );
                             }).toList(),
                           )

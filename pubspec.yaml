@@ -86,7 +86,15 @@ flutter:
       fonts:
         - asset: fonts/Roboto-Bold.ttf
         - asset: fonts/Roboto-Medium.ttf
-          # weight: 700
+    - family: Hammer
+      fonts:
+        - asset: fonts/HammersmithOne-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: fonts/MontserratAlternates-Bold.ttf
+        - asset: fonts/MontserratAlternates-Regular.ttf
+        - asset: fonts/MontserratAlternates-medium.ttf
+        - asset: fonts/MontserratAlternates-SemiBold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
