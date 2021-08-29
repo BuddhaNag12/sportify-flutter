@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sportify/constants/catConstat.dart';
+import 'package:sportify/constants/colorConst.dart';
 // Utility Methods
 
 void showMessageDialog(String message) {
@@ -20,6 +22,26 @@ void showMessageDialog(String message) {
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: Colors.teal,
     duration: Duration(seconds: 3),
+  );
+}
+
+void showDefaultDialog(String message, DialogType type) {
+  Get.defaultDialog(
+    title: "Info",
+    middleText: message,
+    backgroundColor:
+        type == DialogType.info ? primaryColorDark : Colors.redAccent,
+    titleStyle: TextStyle(color: Colors.white),
+    middleTextStyle: TextStyle(color: Colors.white),
+    barrierDismissible: true,
+    confirm: TextButton(
+      onPressed: () => Get.back(),
+      child: Text(
+        "Ok",
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+    radius: 8,
   );
 }
 

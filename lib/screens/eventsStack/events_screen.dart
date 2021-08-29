@@ -67,7 +67,7 @@ class EventsScreen extends StatelessWidget {
                       prefixIcon: Icon(Icons.search),
                     ),
                     controller: viewCon.searchController,
-                    onSubmitted: (text) => viewCon.searchEvents(),
+                    onSubmitted: (_) => viewCon.searchEvents(),
                   ),
                 ),
               ),
@@ -79,15 +79,17 @@ class EventsScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
                       "All Events nearby you",
-                      style: headline1,
+                      style: headline1.copyWith(color: Colors.black54),
                     ),
                   ),
                   Obx(
                     () => IconButton(
                       onPressed: () => {viewCon.sortEvents()},
-                      icon: Icon(viewCon.isDesc.value
-                          ? FlutterIcons.sort_amount_desc_faw
-                          : FlutterIcons.sort_amount_asc_faw),
+                      icon: Icon(
+                        viewCon.isDesc.value
+                            ? CupertinoIcons.sort_down
+                            : CupertinoIcons.sort_up,
+                      ),
                       color: primaryColor,
                       iconSize: 18,
                     ),

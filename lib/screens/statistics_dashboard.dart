@@ -59,7 +59,7 @@ class StatisticScreen extends StatelessWidget {
                         Center(
                           child: Text(
                             "Your Daily Statistics",
-                            style: headline1,
+                            style: headline1.copyWith(color: Colors.black54),
                           ),
                         ),
                         SizedBox(
@@ -69,16 +69,42 @@ class StatisticScreen extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("Total Events"),
+                                Text(
+                                  "Total Events",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                                 Center(
                                   child: Text(
                                     '$totalEvents',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
                               ],
                             ),
                             elevation: 5,
                             color: primaryColorLight,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              width: paddedWidth,
+                              child: Card(
+                                elevation: 4,
+                                child: totalEvents == 0
+                                    ? Center(
+                                        child: SvgPicture.asset(
+                                          'assets/notFound.svg',
+                                          width: 250,
+                                          height: 250,
+                                        ),
+                                      )
+                                    : DougnNutChart(
+                                        data: totalChartData,
+                                      ),
+                              ),
+                            ),
                           ),
                         ),
                         Expanded(

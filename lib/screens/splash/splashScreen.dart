@@ -10,13 +10,8 @@ import 'package:permission_handler/permission_handler.dart';
 class SplashScreen extends StatelessWidget {
   void askPermission() async {
     try {
-      final localionRes = await Permission.locationWhenInUse.request();
-      final storageRes = await Permission.storage.request();
-      if (localionRes.isGranted && storageRes.isGranted) {
-        showMessageDialog('Permission Granted');
-      } else {
-        openAppSettings();
-      }
+      await Permission.locationWhenInUse.request();
+      await Permission.storage.request();
     } catch (e) {
       final String err = e.toString();
       showMessageDialog(err);

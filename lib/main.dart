@@ -36,19 +36,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: TextTheme(
           headline1: TextStyle(
-            fontFamily: 'Montserrat',
+            fontFamily: 'Hammer',
             fontSize: 28,
             color: Colors.black,
             fontWeight: FontWeight.w700,
           ),
           headline2: TextStyle(
-            fontFamily: 'Montserrat',
+            fontFamily: 'Hammer',
             fontSize: 20,
             color: Colors.black54,
             fontWeight: FontWeight.normal,
           ),
           caption: TextStyle(
-            fontFamily: 'Montserrat',
+            fontFamily: 'Hammer',
             fontSize: 15,
             color: Colors.white,
             fontWeight: FontWeight.normal,
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
             color: Colors.white,
           ),
           subtitle1: TextStyle(
-            fontFamily: 'Montserrat',
+            fontFamily: 'Hammer',
             fontSize: 18,
             color: Colors.white,
           ),

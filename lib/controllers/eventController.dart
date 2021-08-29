@@ -106,6 +106,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   Future<void> _getEventsFromFirestore() async {
+    eventLists.clear();
     this.isLoading.value = true;
     try {
       final res = await events.get();
@@ -199,22 +200,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
 
     if (result != null) {
       eventPlaceNameController.text = result.address;
-      Get.snackbar(
-        "Info",
-        'Location picked successfully ${result.latLng}',
-        colorText: Colors.white,
-        barBlur: 1.5,
-        icon: Icon(
-          Icons.info_rounded,
-          color: Colors.white,
-        ),
-        isDismissible: true,
-        borderRadius: 8,
-        overlayBlur: 2.0,
-        snackStyle: SnackStyle.FLOATING,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.teal,
-      );
       pickedLatlng = result.latLng;
       update();
     }
@@ -249,16 +234,13 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
         prize: prizeCat.value,
       );
       if (res.isNotEmpty) {
-        Get.snackbar('success', "Event successfully Updated",
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: primaryColorDark);
+        showDefaultDialog("Event successfully Updated", DialogType.info);
         _getEventsFromFirestore();
         this.isLoading.value = false;
       }
     } catch (e) {
       this.isLoading.value = false;
-      Get.snackbar('Failure', "Failed to add Event");
+      showDefaultDialog("Failed to update Event", DialogType.warning);
     }
   }
 
@@ -267,17 +249,11 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     try {
       await events.doc(updateId).delete();
       Get.back();
-      Get.snackbar(
-        'success',
-        "Event successfully Deleted",
-        colorText: Colors.white,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: primaryColorDark,
-      );
+      showDefaultDialog("Event successfully Deleted", DialogType.info);
       this.isLoading.value = false;
     } catch (e) {
       this.isLoading.value = false;
-      Get.snackbar('Failure', "Failed to add Event");
+      showDefaultDialog("Failed to add Event", DialogType.warning);
     }
   }
 

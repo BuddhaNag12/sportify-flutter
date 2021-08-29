@@ -74,3 +74,4 @@ final List<SliverListGridItems> sliverGridListItems = [
 ];
 
 enum UserRoll { participating, eventmaster }
+enum DialogType { info, warning, success }
