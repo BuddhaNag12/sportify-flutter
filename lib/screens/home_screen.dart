@@ -91,10 +91,10 @@ class HomeScreenTab extends StatelessWidget {
       ),
       screenTransitionAnimation: ScreenTransitionAnimation(
         animateTabTransition: true,
-        curve: Curves.ease,
+        curve: Curves.easeIn,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style6,
+      navBarStyle: NavBarStyle.style1,
     );
   }
 }

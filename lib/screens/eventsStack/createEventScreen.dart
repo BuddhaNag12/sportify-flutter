@@ -57,6 +57,7 @@ class CreateEventsScreen extends StatelessWidget {
                                 EventInputField(
                                   fieldName: "Event Name",
                                   controller: con.eventNameController,
+                                  fieldStyle: subtitle3,
                                 ),
                                 Container(
                                   child: Column(
@@ -69,7 +70,7 @@ class CreateEventsScreen extends StatelessWidget {
                                             const EdgeInsets.only(bottom: 5),
                                         child: Text(
                                           "Event Date",
-                                          style: subtitle1,
+                                          style: subtitle3,
                                         ),
                                       ),
                                       SizedBox(
@@ -88,11 +89,11 @@ class CreateEventsScreen extends StatelessWidget {
                                                 ? Text(
                                                     "Event Date : ${con.pickedDate}",
                                                     textAlign: TextAlign.start,
-                                                    style: subtitle3,
+                                                    style: subtitle4,
                                                   )
                                                 : Text(
                                                     "YYYY:MM:DD ",
-                                                    style: subtitle3,
+                                                    style: subtitle4,
                                                   ),
                                           ),
                                         ),
@@ -113,7 +114,7 @@ class CreateEventsScreen extends StatelessWidget {
                                               const EdgeInsets.only(bottom: 5),
                                           child: Text(
                                             "Event Location",
-                                            style: subtitle1,
+                                            style: subtitle3,
                                           ),
                                         ),
                                         SizedBox(
@@ -121,22 +122,25 @@ class CreateEventsScreen extends StatelessWidget {
                                           height: 45,
                                           child: ElevatedButton(
                                             child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Container(
-                                                  width: width - 100,
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child:
-                                                      eCon.pickedLatlng != null
-                                                          ? Text(
-                                                              "Lat long : ${eCon.pickedLatlng.latitude} ${eCon.pickedLatlng.longitude}",
-                                                              style: subtitle3,
-                                                            )
-                                                          : Text(
-                                                              "Pick Event Location",
-                                                              style: subtitle3,
-                                                            ),
+                                                Flexible(
+                                                  child: eCon.pickedLatlng !=
+                                                          null
+                                                      ? Text(
+                                                          "Lat long : ${eCon.pickedLatlng.latitude} ${eCon.pickedLatlng.longitude}",
+                                                          style: subtitle4,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        )
+                                                      : Text(
+                                                          "Pick Event Location",
+                                                          style: subtitle4,
+                                                        ),
                                                 ),
+                                                Spacing.horizontalSpacing(2),
                                                 Icon(
                                                   FlutterIcons.map_search_mco,
                                                   color: Colors.teal,
@@ -158,34 +162,37 @@ class CreateEventsScreen extends StatelessWidget {
                                   fieldName: "Team Size",
                                   isNum: true,
                                   controller: con.eventSizeController,
+                                  fieldStyle: subtitle3,
                                 ),
                                 Container(
                                   padding: const EdgeInsets.only(left: 2),
-                                  margin: const EdgeInsets.only(bottom: 5),
                                   child: Text(
                                     "Event Category",
-                                    style: subtitle1,
+                                    style: subtitle3,
                                   ),
                                 ),
                                 Container(
-                                  width: width,
+                                  width: paddedWidth,
                                   height: 45,
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(4),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(4),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 1,
+                                        color: Colors.grey,
+                                        offset: Offset(0, 1),
                                       ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 1,
-                                          color: Colors.grey,
-                                          offset: Offset(0, 1),
-                                        ),
-                                      ]),
+                                    ],
+                                  ),
                                   child: Obx(
                                     () => DropdownButton(
                                       hint: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.only(
+                                          left: 10,
+                                        ),
                                         child: Text(
                                           "Category",
                                         ),
@@ -193,9 +200,9 @@ class CreateEventsScreen extends StatelessWidget {
                                       value: con.category.value.isNotEmpty
                                           ? con.category.value
                                           : null,
-                                      elevation: 16,
+                                      elevation: 5,
                                       style: subtitle3,
-                                      dropdownColor: Colors.tealAccent.shade700,
+                                      dropdownColor: Colors.white,
                                       underline: SizedBox(),
                                       onChanged: (newValue) {
                                         con.changeCategoryValue(newValue);
@@ -203,19 +210,16 @@ class CreateEventsScreen extends StatelessWidget {
                                       items: categories.map((val) {
                                         return DropdownMenuItem(
                                           value: val,
-                                          child: Container(
-                                            child: Center(
-                                              child: Container(
-                                                padding: EdgeInsets.all(4),
-                                                width: width - 70,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(2),
-                                                ),
+                                          child: Center(
+                                            child: Container(
+                                              padding: EdgeInsets.all(4),
+                                              width: paddedWidth - 24,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   val,
+                                                  style: subtitle4,
                                                 ),
                                               ),
                                             ),
@@ -226,92 +230,80 @@ class CreateEventsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.only(left: 2),
-                                        margin:
-                                            const EdgeInsets.only(bottom: 5),
-                                        child: Text(
-                                          "Prizes/certifications",
-                                          style: subtitle1,
-                                        ),
-                                      ),
-                                      Container(
-                                        width: width,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(4),
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 1,
-                                                color: Colors.grey,
-                                                offset: Offset(0, 1),
-                                              ),
-                                            ]),
-                                        child: Obx(
-                                          () => DropdownButton(
-                                            hint: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                "Prize",
-                                              ),
-                                            ),
-                                            value: con.prizeCat.value.isNotEmpty
-                                                ? con.prizeCat.value
-                                                : null,
-                                            elevation: 16,
-                                            style: subtitle3,
-                                            dropdownColor:
-                                                Colors.tealAccent.shade700,
-                                            underline: SizedBox(),
-                                            onChanged: (newValue) {
-                                              con.setPrizeCat(newValue);
-                                            },
-                                            items: prizes.map((val) {
-                                              return DropdownMenuItem(
-                                                value: val,
-                                                child: Container(
-                                                  child: Center(
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(4),
-                                                      width: width - 70,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(2),
-                                                      ),
-                                                      child: Text(
-                                                        val,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Text(
+                                    "Rewards",
+                                    style: subtitle3,
+                                  ),
+                                ),
+                                Container(
+                                  width: paddedWidth,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(4),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 1,
+                                        color: Colors.grey,
+                                        offset: Offset(0, 1),
                                       ),
                                     ],
                                   ),
+                                  child: Obx(
+                                    () => DropdownButton(
+                                      hint: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 10,
+                                        ),
+                                        child: Text(
+                                          "Select Rewards",
+                                        ),
+                                      ),
+                                      value: con.prizeCat.value.isNotEmpty
+                                          ? con.prizeCat.value
+                                          : null,
+                                      elevation: 5,
+                                      style: subtitle3,
+                                      dropdownColor: Colors.white,
+                                      underline: SizedBox(),
+                                      onChanged: (newValue) {
+                                        con.setPrizeCat(newValue);
+                                      },
+                                      items: prizes.map((val) {
+                                        return DropdownMenuItem(
+                                          value: val,
+                                          child: Center(
+                                            child: Container(
+                                              padding: EdgeInsets.all(4),
+                                              width: paddedWidth - 24,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  val,
+                                                  style: subtitle4,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
                                 ),
                                 EventInputField(
-                                  fieldName: "Location name",
+                                  fieldName: "Address",
                                   controller: con.eventPlaceNameController,
+                                  fieldStyle: subtitle3,
                                 ),
                                 EventInputField(
                                   fieldName: "Event Description",
                                   isDescription: true,
                                   controller: con.eventDescriptionController,
+                                  fieldStyle: subtitle3,
                                 ),
                               ],
                             ),

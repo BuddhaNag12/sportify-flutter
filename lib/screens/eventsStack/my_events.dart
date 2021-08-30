@@ -48,8 +48,7 @@ class MyEventScreen extends StatelessWidget {
                                 ),
                                 subtitle: Text(
                                   data['place'] ?? '',
-                                  style:
-                                      subtitle1.copyWith(color: Colors.black),
+                                  style: subtitle4,
                                 ),
                                 leading: Icon(FlutterIcons.event_mdi),
                                 trailing: IconButton(

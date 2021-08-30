@@ -10,6 +10,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   var prizeCat = ''.obs;
   var isLoading = false.obs;
   var isEventMaster = false.obs;
+  var isEventActive = false.obs;
   RxList<EventsList> eventLists = RxList<EventsList>();
   RxBool isDesc = true.obs;
   var updateId = '';
@@ -213,10 +214,12 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     prizeCat.value = editEventDetails.prize;
     eventPlaceNameController.text = editEventDetails.place;
     eventDescriptionController.text = editEventDetails.description;
+    isEventActive.value = editEventDetails.active;
     pickedLatlng = LatLng(
       editEventDetails.location.latitude,
       editEventDetails.location.longitude,
     );
+    update();
   }
 
   void updateEvent() async {
@@ -232,6 +235,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
         desc: eventDescriptionController.text,
         place: eventPlaceNameController.text.trim(),
         prize: prizeCat.value,
+        active: isEventActive.value,
       );
       if (res.isNotEmpty) {
         showDefaultDialog("Event successfully Updated", DialogType.info);

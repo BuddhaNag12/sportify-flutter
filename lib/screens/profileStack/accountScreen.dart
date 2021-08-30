@@ -230,16 +230,18 @@ class MyAccount extends StatelessWidget {
                               height: 25,
                               alignment: Alignment.center,
                               child: CircleAvatar(
+                                backgroundColor: primaryColorDark,
                                 child: Icon(
                                   Icons.account_circle_rounded,
                                   size: 20,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
                           title: Text(
                             "My Profile",
-                            style: subtitle1.copyWith(color: Colors.black45),
+                            style:subtitle4,
                           ),
                           onTap: () => Get.toNamed('/'),
                           trailing: Icon(Icons.arrow_right),
@@ -261,17 +263,18 @@ class MyAccount extends StatelessWidget {
                                       height: 25,
                                       alignment: Alignment.center,
                                       child: CircleAvatar(
+                                        backgroundColor: primaryColorDark,
                                         child: Icon(
                                           Icons.inbox_rounded,
                                           size: 20,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
                                   title: Text(
                                     "Joinee Request",
-                                    style: subtitle1.copyWith(
-                                        color: Colors.black45),
+                                    style: subtitle4,
                                   ),
                                   onTap: () => Get.toNamed('/'),
                                   trailing: Icon(Icons.arrow_right),
@@ -291,17 +294,18 @@ class MyAccount extends StatelessWidget {
                                       height: 25,
                                       alignment: Alignment.center,
                                       child: CircleAvatar(
+                                        backgroundColor: primaryColorDark,
                                         child: Icon(
                                           FlutterIcons.send_circle_mco,
                                           size: 20,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
                                   title: Text(
                                     "Sent Requests",
-                                    style: subtitle1.copyWith(
-                                        color: Colors.black45),
+                                    style: subtitle4,
                                   ),
                                   onTap: () => Get.toNamed('/'),
                                   trailing: Icon(Icons.arrow_right),
@@ -325,17 +329,18 @@ class MyAccount extends StatelessWidget {
                                       height: 25,
                                       alignment: Alignment.center,
                                       child: CircleAvatar(
+                                        backgroundColor: primaryColorDark,
                                         child: Icon(
                                           Icons.event,
                                           size: 20,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
                                   title: Text(
                                     "Manage Events",
-                                    style: subtitle1.copyWith(
-                                        color: Colors.black45),
+                                    style: subtitle4,
                                   ),
                                   onTap: () => Get.toNamed('/manage'),
                                   trailing: Icon(Icons.arrow_right),
@@ -355,21 +360,20 @@ class MyAccount extends StatelessWidget {
                                       height: 25,
                                       alignment: Alignment.center,
                                       child: CircleAvatar(
+                                        backgroundColor: primaryColorDark,
                                         child: Icon(
-                                          Icons.favorite,
+                                          Icons.favorite_outline_sharp,
                                           size: 20,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
                                   ),
                                   title: Text(
                                     "favorites",
-                                    style: subtitle1.copyWith(
-                                      color: Colors.black45,
-                                    ),
+                                    style: subtitle4,
                                   ),
-                                  onTap: () =>
-                                      Get.toNamed(Routes.FABORITE),
+                                  onTap: () => Get.toNamed(Routes.FABORITE),
                                   trailing: Icon(Icons.arrow_right),
                                 ),
                               ],
@@ -400,17 +404,18 @@ class MyAccount extends StatelessWidget {
                                   height: 25,
                                   alignment: Alignment.center,
                                   child: CircleAvatar(
+                                    backgroundColor: primaryColorDark,
                                     child: Icon(
                                       e.icon,
                                       size: 20,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
                               ),
                               title: Text(
                                 e.name,
-                                style:
-                                    subtitle1.copyWith(color: Colors.black45),
+                                style: subtitle4,
                               ),
                               onTap: () => Get.toNamed(e.route),
                               trailing: Icon(Icons.arrow_right),

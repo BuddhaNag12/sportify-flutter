@@ -70,7 +70,7 @@ class EditEvent extends StatelessWidget {
                                 EventInputField(
                                   fieldName: "Event Name",
                                   controller: editCon.eventNameController,
-                                  color: Colors.black87,
+                                  fieldStyle: subtitle4,
                                 ),
                                 Container(
                                   child: Column(
@@ -83,9 +83,7 @@ class EditEvent extends StatelessWidget {
                                             const EdgeInsets.only(bottom: 5),
                                         child: Text(
                                           "Event Date",
-                                          style: subtitle1.copyWith(
-                                            color: Colors.black87,
-                                          ),
+                                          style: subtitle4,
                                         ),
                                       ),
                                       SizedBox(
@@ -104,15 +102,10 @@ class EditEvent extends StatelessWidget {
                                                 ? Text(
                                                     "Event Date : ${editCon.pickedDate}",
                                                     textAlign: TextAlign.start,
-                                                    style: subtitle3.copyWith(
-                                                      color: Colors.black87,
-                                                    ),
-                                                  )
+                                                    style: subtitle4)
                                                 : Text(
                                                     "YYYY:MM:DD ",
-                                                    style: subtitle3.copyWith(
-                                                      color: Colors.black87,
-                                                    ),
+                                                    style: subtitle4,
                                                   ),
                                           ),
                                         ),
@@ -133,9 +126,7 @@ class EditEvent extends StatelessWidget {
                                               const EdgeInsets.only(bottom: 5),
                                           child: Text(
                                             "Event Location",
-                                            style: subtitle1.copyWith(
-                                              color: Colors.black87,
-                                            ),
+                                            style: subtitle4,
                                           ),
                                         ),
                                         SizedBox(
@@ -143,30 +134,25 @@ class EditEvent extends StatelessWidget {
                                           height: 45,
                                           child: ElevatedButton(
                                             child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Container(
-                                                  width: width - 100,
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                                                Flexible(
                                                   child: eCon.pickedLatlng !=
                                                           null
                                                       ? Text(
                                                           "Lat long : ${eCon.pickedLatlng.latitude} ${eCon.pickedLatlng.longitude}",
-                                                          style: subtitle3
-                                                              .copyWith(
-                                                            color:
-                                                                Colors.black87,
-                                                          ),
+                                                          style: subtitle4,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         )
                                                       : Text(
                                                           "Pick Event Location",
-                                                          style: subtitle3
-                                                              .copyWith(
-                                                            color:
-                                                                Colors.black87,
-                                                          ),
+                                                          style: subtitle4,
                                                         ),
                                                 ),
+                                                Spacing.horizontalSpacing(2),
                                                 Icon(
                                                   FlutterIcons.map_search_mco,
                                                   color: Colors.teal,
@@ -188,7 +174,7 @@ class EditEvent extends StatelessWidget {
                                   fieldName: "Team Size",
                                   isNum: true,
                                   controller: editCon.eventSizeController,
-                                  color: Colors.black87,
+                                  fieldStyle: subtitle4,
                                 ),
                                 Container(
                                   child: Column(
@@ -200,44 +186,43 @@ class EditEvent extends StatelessWidget {
                                         margin:
                                             const EdgeInsets.only(bottom: 5),
                                         child: Text(
-                                          "Prizes/certifications",
-                                          style: subtitle1.copyWith(
-                                            color: Colors.black87,
-                                          ),
+                                          "Event Rewards",
+                                          style: subtitle4,
                                         ),
                                       ),
                                       Container(
-                                        width: width,
+                                        width: paddedWidth,
                                         height: 45,
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(4),
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(4),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 1,
+                                              color: Colors.grey,
+                                              offset: Offset(0, 1),
                                             ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 1,
-                                                color: Colors.grey,
-                                                offset: Offset(0, 1),
-                                              ),
-                                            ]),
+                                          ],
+                                        ),
                                         child: Obx(
                                           () => DropdownButton(
                                             hint: Padding(
                                               padding: const EdgeInsets.only(
-                                                  left: 10),
+                                                left: 10,
+                                              ),
                                               child: Text(
-                                                "Prize",
+                                                "Rewards",
                                               ),
                                             ),
                                             value: editCon
                                                     .prizeCat.value.isNotEmpty
                                                 ? editCon.prizeCat.value
                                                 : null,
-                                            elevation: 10,
-                                            style: subtitle3,
-                                            dropdownColor:
-                                                Colors.tealAccent.shade700,
+                                            elevation: 5,
+                                            style: subtitle1,
+                                            dropdownColor: Colors.white,
                                             underline: SizedBox(),
                                             onChanged: (newValue) {
                                               editCon.setPrizeCat(newValue);
@@ -245,24 +230,17 @@ class EditEvent extends StatelessWidget {
                                             items: prizes.map((val) {
                                               return DropdownMenuItem(
                                                 value: val,
-                                                child: Container(
-                                                  child: Center(
-                                                    child: Container(
+                                                child: Center(
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(4),
+                                                    width: paddedWidth - 24,
+                                                    child: Padding(
                                                       padding:
-                                                          EdgeInsets.all(4),
-                                                      width: width * .80,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(2),
-                                                      ),
+                                                          const EdgeInsets.all(
+                                                              8.0),
                                                       child: Text(
                                                         val,
-                                                        style:
-                                                            subtitle1.copyWith(
-                                                          color: Colors.black87,
-                                                        ),
+                                                        style: subtitle4,
                                                       ),
                                                     ),
                                                   ),
@@ -286,26 +264,25 @@ class EditEvent extends StatelessWidget {
                                             const EdgeInsets.only(bottom: 5),
                                         child: Text(
                                           "Event Category",
-                                          style: subtitle1.copyWith(
-                                            color: Colors.black87,
-                                          ),
+                                          style: subtitle4,
                                         ),
                                       ),
                                       Container(
-                                        width: width,
+                                        width: paddedWidth,
                                         height: 45,
                                         decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(4),
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(4),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 1,
+                                              color: Colors.grey,
+                                              offset: Offset(0, 1),
                                             ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 1,
-                                                color: Colors.grey,
-                                                offset: Offset(0, 1),
-                                              ),
-                                            ]),
+                                          ],
+                                        ),
                                         child: Obx(
                                           () => DropdownButton(
                                             hint: Padding(
@@ -320,36 +297,29 @@ class EditEvent extends StatelessWidget {
                                                     .category.value.isNotEmpty
                                                 ? editCon.category.value
                                                 : null,
-                                            elevation: 10,
-                                            style: subtitle3,
-                                            dropdownColor:
-                                                Colors.tealAccent.shade700,
+                                            elevation: 5,
+                                            style: subtitle1,
+                                            dropdownColor: Colors.white,
                                             underline: SizedBox(),
                                             onChanged: (newValue) {
                                               editCon.changeCategoryValue(
-                                                  newValue);
+                                                newValue,
+                                              );
                                             },
                                             items: categories.map((val) {
                                               return DropdownMenuItem(
                                                 value: val,
-                                                child: Container(
-                                                  child: Center(
-                                                    child: Container(
+                                                child: Center(
+                                                  child: Container(
+                                                    padding: EdgeInsets.all(4),
+                                                    width: paddedWidth - 24,
+                                                    child: Padding(
                                                       padding:
-                                                          EdgeInsets.all(4),
-                                                      width: width * .80,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(2),
-                                                      ),
+                                                          const EdgeInsets.all(
+                                                              8.0),
                                                       child: Text(
                                                         val,
-                                                        style:
-                                                            subtitle1.copyWith(
-                                                          color: Colors.black87,
-                                                        ),
+                                                        style: subtitle4,
                                                       ),
                                                     ),
                                                   ),
@@ -365,14 +335,41 @@ class EditEvent extends StatelessWidget {
                                 EventInputField(
                                   fieldName: "Location name",
                                   controller: editCon.eventPlaceNameController,
-                                  color: Colors.black87,
+                                  fieldStyle: subtitle4,
+                                  // color: Colors.black87,
                                 ),
                                 EventInputField(
                                   fieldName: "Event Description",
                                   isDescription: true,
                                   controller:
                                       editCon.eventDescriptionController,
-                                  color: Colors.black87,
+                                  fieldStyle: subtitle4,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Active",
+                                        style: subtitle1,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Obx(
+                                        () => Switch(
+                                          activeColor:
+                                              Colors.tealAccent.shade400,
+                                          value: editCon.isEventActive.value,
+                                          onChanged: (value) {
+                                            editCon.isEventActive(value);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

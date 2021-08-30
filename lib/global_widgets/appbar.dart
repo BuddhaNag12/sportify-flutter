@@ -27,8 +27,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: Colors.white),
       title: Text(
         title ?? 'Sportify',
-        style:
-            title != null ? headline2.copyWith(color: Colors.white) : headline3,
+        style: title != null
+            ? headline2.copyWith(color: Colors.white)
+            : headline3.copyWith(
+                color: Colors.white,
+                fontSize: 25,
+                fontWeight: FontWeight.normal,
+              ),
       ),
       // centerTitle: true,
       actions: [

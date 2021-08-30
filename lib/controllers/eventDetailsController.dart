@@ -18,8 +18,6 @@ class EventDetailsController extends GetxController
   GoogleMapController controller;
   final AuthController _auth = Get.find();
 
-  AnimationController iconAnimation;
-
   void updateCameraPos(lat, lng) {
     _updatedCamPos = CameraPosition(
       target: LatLng(lat, lng),
@@ -66,7 +64,6 @@ class EventDetailsController extends GetxController
               'user_id': userId,
             }).then((_) {
               showMessageDialog("Added to favorite");
-              iconAnimation.forward();
             }).catchError((onError) {
               showMessageDialog("Error adding to favorite");
             });
@@ -78,7 +75,6 @@ class EventDetailsController extends GetxController
               'user_id': userId,
             }).then((_) {
               showMessageDialog("Removed from favorite");
-              iconAnimation.reverse();
             }).catchError((onError) {
               showMessageDialog("Error adding to favorite");
             });
@@ -110,12 +106,6 @@ class EventDetailsController extends GetxController
 
   @override
   void onInit() async {
-    iconAnimation = AnimationController(
-      vsync: this,
-      reverseDuration: Duration(milliseconds: 400),
-      duration: Duration(milliseconds: 400),
-    );
-
     getfavorites();
     super.onInit();
   }
@@ -126,7 +116,6 @@ class EventDetailsController extends GetxController
     // gmapController = Completer();
     controller.dispose();
     eventDetails.value = null;
-    iconAnimation.dispose();
     super.onClose();
   }
 }

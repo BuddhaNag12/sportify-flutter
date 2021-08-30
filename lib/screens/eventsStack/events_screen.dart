@@ -113,7 +113,7 @@ class EventsScreen extends StatelessWidget {
                     ? listShimmerLoading()
                     : viewCon.eventLists.isEmpty
                         ? Container(
-                            width: width,
+                            width: paddedWidth,
                             height: 300,
                             child: Column(
                               children: [

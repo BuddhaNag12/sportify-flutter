@@ -1,3 +1,5 @@
+import 'package:sportify/constants/colorConst.dart';
+import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/routes/app_pages.dart';
 
 import '../exports/viewEvtexport.dart';
@@ -100,11 +102,16 @@ class ViewEventScreen extends GetView<EventController> {
                               Visibility(
                                 child: Container(
                                   height: 120,
+                                  alignment: Alignment.topLeft,
+                                  color: whiteLight,
+                                  padding: EdgeInsets.all(5),
                                   child: Obx(
                                     () => Text(
-                                      _controllerForEvent.eventDetails.value?.description ?? '',
-                                      style:
-                                          Theme.of(context).textTheme.headline6,
+                                      _controllerForEvent.eventDetails.value
+                                              ?.description ??
+                                          '',
+                                      style: subtitle2,
+                                      textAlign: TextAlign.start,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 6,
                                     ),
@@ -118,63 +125,56 @@ class ViewEventScreen extends GetView<EventController> {
                                 child: Container(
                                   height: 120,
                                   width: width,
+                                  alignment: Alignment.topLeft,
+                                  color: whiteLight,
+                                  padding: EdgeInsets.all(5),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Place:" +
+                                        "Place: " +
                                             _controllerForEvent
                                                 .eventDetails.value.place,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            .copyWith(color: Colors.black),
+                                        style: subtitle2,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 6,
                                       ),
+                                      Spacing.verticalSpacing(5),
                                       Text(
                                         "Team Size: " +
                                             _controllerForEvent
                                                 .eventDetails.value.size,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            .copyWith(color: Colors.black),
+                                        style: subtitle2,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 6,
                                       ),
+                                      Spacing.verticalSpacing(5),
                                       Text(
-                                        "Sports Category:" +
+                                        "Sports Category: " +
                                             _controllerForEvent
                                                 .eventDetails.value.category,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            .copyWith(color: Colors.black),
+                                        style: subtitle2,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 6,
                                       ),
+                                      Spacing.verticalSpacing(5),
                                       Text(
-                                        "Event Starting at:" +
+                                        "Event Starting at: " +
                                             _controllerForEvent
                                                 .eventDetails.value.date,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            .copyWith(color: Colors.black),
+                                        style: subtitle2,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 6,
                                       ),
+                                      Spacing.verticalSpacing(5),
                                       Text(
-                                        "Active:" +
+                                        "Active: " +
                                             _controllerForEvent
                                                 .eventDetails.value.active
                                                 .toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1
-                                            .copyWith(color: Colors.black),
+                                        style: subtitle2,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 6,
                                       ),

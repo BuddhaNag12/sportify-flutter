@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,160 +36,163 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
       shrinkWrap: true,
       itemCount: eventLists.length,
       itemBuilder: (_, i) {
-        return Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 1,
-                color: Colors.grey,
-                offset: Offset(0, 1),
-              )
-            ],
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              tileMode: TileMode.clamp,
-              colors: [Colors.grey.shade200, Colors.teal.shade300],
-            ),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          height: 75,
-          width: width,
-          child: InkWell(
-            onTap: () => Get.toNamed('/view_event/${eventLists[i].id}'),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: Colors.white54,
-                  child: Icon(
-                    FlutterIcons.sports_club_ent,
-                    size: 40,
-                    color: Colors.teal,
+        return AnimationConfiguration.staggeredList(
+          position: i,
+          duration: const Duration(milliseconds: 375),
+          child: SlideAnimation(
+            horizontalOffset: 50.0,
+            child: FadeInAnimation(
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.grey,
+                      offset: Offset(0, 1),
+                    )
+                  ],
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    tileMode: TileMode.clamp,
+                    colors: [Colors.grey.shade200, Colors.teal.shade300],
                   ),
                 ),
-                Spacing.horizontalSpacing(30),
-                Expanded(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 5.0),
-                        child: Text(
-                          eventLists[i].name.toUpperCase() ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          style: headline6,
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                height: 75,
+                width: paddedWidth,
+                child: InkWell(
+                  onTap: () => Get.toNamed('/view_event/${eventLists[i].id}'),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.white54,
+                        child: Icon(
+                          MaterialIcons.event_available,
+                          size: 35,
+                          color: Colors.teal,
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 5),
-                      width: width,
-                      child: Column(
+                      Spacing.horizontalSpacing(30),
+                      Expanded(
+                          child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Spacing.verticalSpacing(5),
+                          Flexible(
+                            child: Container(
+                              margin: EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                eventLists[i].name.toUpperCase() ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                style: headline6,
+                              ),
+                            ),
+                          ),
                           Container(
-                            child: Row(
+                            padding: EdgeInsets.only(top: 5),
+                            width: width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  width: 90,
+                                Spacing.verticalSpacing(5),
+                                Container(
                                   child: Row(
                                     children: [
-                                      Icon(
-                                        Icons.flag_outlined,
-                                        color: Colors.teal,
-                                        size: iconSize,
+                                      SizedBox(
+                                        width: 90,
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.flag_outlined,
+                                              color: Colors.teal,
+                                              size: iconSize,
+                                            ),
+                                            Text(
+                                              eventLists[i].category ?? '',
+                                              style: subtitle3.copyWith(
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Text(
-                                        eventLists[i].category ?? '',
-                                        style: subtitle3.copyWith(
-                                          color: Colors.black54,
+                                      SizedBox(width: 20),
+                                      SizedBox(
+                                        width: 150,
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_outlined,
+                                              color: Colors.teal,
+                                              size: iconSize,
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                  eventLists[i].place.isBlank
+                                                      ? 'Location'
+                                                      : eventLists[i].place,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: subtitle4),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                SizedBox(width: 20),
-                                SizedBox(
-                                  width: 150,
+                                Spacing.verticalSpacing(5),
+                                Container(
                                   child: Row(
                                     children: [
-                                      Icon(
-                                        Icons.location_on_outlined,
-                                        color: Colors.teal,
-                                        size: iconSize,
+                                      SizedBox(
+                                        width: 71,
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              FlutterIcons.activity_fea,
+                                              color: Colors.teal,
+                                              size: iconSize,
+                                            ),
+                                            Text(
+                                                eventLists[i].active
+                                                    ? 'Active'
+                                                    : 'Not Active',
+                                                style: subtitle4),
+                                          ],
+                                        ),
                                       ),
-                                      Flexible(
-                                        child: Text(
-                                          eventLists[i].place.isBlank
-                                              ? 'Location'
-                                              : eventLists[i].place,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: subtitle3.copyWith(
-                                            color: Colors.black54,
-                                          ),
+                                      SizedBox(width: 40),
+                                      SizedBox(
+                                        width: 80,
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.timelapse,
+                                              color: Colors.teal,
+                                              size: iconSize,
+                                            ),
+                                            Text(
+                                              eventLists[i].date ??
+                                                  'Event date',
+                                              style: subtitle4,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
+                                )
                               ],
                             ),
                           ),
-                          Spacing.verticalSpacing(5),
-                          Container(
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 71,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        FlutterIcons.activity_fea,
-                                        color: Colors.teal,
-                                        size: iconSize,
-                                      ),
-                                      Text(
-                                        eventLists[i].active
-                                            ? 'Active'
-                                            : 'Not Active',
-                                        style: subtitle3.copyWith(
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 40),
-                                SizedBox(
-                                  width: 80,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.timelapse,
-                                        color: Colors.teal,
-                                        size: iconSize,
-                                      ),
-                                      Text(
-                                        eventLists[i].date ?? 'Event date',
-                                        style: subtitle3.copyWith(
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
-                      ),
-                    ),
-                  ],
-                )),
-              ],
+                      )),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         );
@@ -196,11 +201,6 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
 
 Widget headerCard(double width, context) {
   final EventDetailsController _con = Get.find();
-  if (_con.favorites.value != null &&
-      !_con.isLoading.value &&
-      _con.favorites.value.eventIds.contains(_con.eventDetails.value.id)) {
-    _con.iconAnimation.forward();
-  }
   var boxDecoration = BoxDecoration(
     borderRadius: BorderRadius.all(Radius.circular(8)),
     color: Colors.white30,
@@ -226,25 +226,23 @@ Widget headerCard(double width, context) {
           children: [
             Flexible(
               child: Text(
-                _con.eventDetails?.value?.name ?? '',
+                _con.eventDetails?.value?.name?.toUpperCase() ?? '',
                 maxLines: 2,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.bold,
-                ),
+                style: headline6.copyWith(color:Colors.white),
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
               ),
             ),
             IconButton(
               splashColor: Colors.white,
-              icon: AnimatedIcon(
-                size: 25,
-                icon: AnimatedIcons.add_event,
-                progress: _con.iconAnimation,
-                color: Colors.white,
+              icon: Obx(
+                () => Icon(
+                  _con.favorites.value != null &&
+                          _con.favorites.value.eventIds
+                              .contains(_con.eventDetails.value.id)
+                      ? CupertinoIcons.square_favorites_alt_fill
+                      : CupertinoIcons.square_favorites_alt,
+                ),
               ),
               onPressed: () =>
                   _con.addEventTofavorite(_con.eventDetails.value.id),
@@ -262,20 +260,26 @@ Widget headerCard(double width, context) {
               Container(
                 width: 80,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.flag_outlined),
-                    Text(_con.eventDetails?.value?.category ?? '')
+                    Spacing.horizontalSpacing(5),
+                    Text(
+                      _con.eventDetails?.value?.category ?? '',
+                      style: subtitle3,
+                    )
                   ],
                 ),
               ),
               Container(
                 width: 90,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(Icons.timelapse),
-                    Text(_con.eventDetails?.value?.date ?? ''),
+                    Spacing.horizontalSpacing(5),
+                    Text(
+                      _con.eventDetails?.value?.date ?? '',
+                      style: subtitle3,
+                    ),
                   ],
                 ),
               )
@@ -284,43 +288,46 @@ Widget headerCard(double width, context) {
         ),
         Spacing.verticalSpacing(10.0),
         Container(
-          padding: EdgeInsets.all(5.0),
           width: width,
+          padding: EdgeInsets.all(5.0),
           decoration: boxDecoration,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: width / 2,
+                width: 260,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(Icons.location_on_rounded),
-                    SizedBox(
-                      width: width / 2 - 24,
+                    Icon(Icons.location_city_rounded),
+                    Spacing.horizontalSpacing(5),
+                    Flexible(
                       child: Text(
                         _con.eventDetails.value?.place?.capitalize ?? '',
+                        style: subtitle3,
                         overflow: TextOverflow.ellipsis,
                       ),
                     )
                   ],
                 ),
               ),
-              Expanded(
+              Container(
+                width: 90,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(FlutterIcons.activity_fea),
-                    Spacing.horizontalSpacing(30),
+                    Icon(
+                      FlutterIcons.activity_fea,
+                    ),
+                    Spacing.horizontalSpacing(10),
                     Text(
                       _con.eventDetails.value.active ? "Active" : "Not Active",
+                      style: subtitle3,
                     ),
                   ],
                 ),
               )
             ],
           ),
-        )
+        ),
       ],
     ),
   );

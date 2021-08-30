@@ -31,16 +31,18 @@ class DataToFirestore {
     }
   }
 
-  Future<String> updateEvent(
-      {id,
-      eventName,
-      date,
-      LatLng location,
-      cat,
-      size,
-      desc,
-      place,
-      prize}) async {
+  Future<String> updateEvent({
+    id,
+    eventName,
+    date,
+    LatLng location,
+    cat,
+    size,
+    desc,
+    place,
+    prize,
+    active,
+  }) async {
     try {
       final res = events.doc(id);
       res.set({
@@ -50,7 +52,7 @@ class DataToFirestore {
         'category': cat,
         'size': size,
         'description': desc,
-        'active': true,
+        'active': active,
         'id': res.id,
         'user_id': auth.stateUser.value.uid,
         'place': place,

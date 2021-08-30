@@ -21,7 +21,7 @@ class CategoriesScreen extends StatelessWidget {
               collapseMode: CollapseMode.parallax,
               title: Text(
                 'Sportify',
-                style: headline3,
+                style: headline3.copyWith(color: Colors.white.withOpacity(0.5)),
               ),
             ),
           ),
@@ -46,21 +46,35 @@ class CategoriesScreen extends StatelessWidget {
                             top: 0,
                             bottom: 0,
                             child: ClipOval(
-                              child: Card(
-                                elevation: 5,
+                              child: Container(
                                 margin: EdgeInsets.all(0),
-                                child: SvgPicture.asset(
-                                  'assets/Diagonal-Stripes.svg',
-                                  height: 300,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      primaryColorLight,
+                                      primaryColorDark
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.shade800,
+                                      blurRadius: 4.0,
+                                      spreadRadius: 1.0,
+                                      offset: Offset(1.0, 5.0),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    e.title,
+                                    style: subtitle2.copyWith(
+                                      color: Colors.grey[200],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              e.title,
-                              style:
-                                  subtitle2.copyWith(color: Colors.grey[200]),
                             ),
                           ),
                         ],

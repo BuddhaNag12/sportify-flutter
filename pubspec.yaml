@@ -41,7 +41,7 @@ dependencies:
   share: ^2.0.4
   charts_flutter: ^0.11.0
   permission_handler: ^8.1.4+2
-  # geolocator:
+  flutter_staggered_animations: ^1.0.0
 
 # dependency_overrides:
 #   geolocator: ^5.3.1

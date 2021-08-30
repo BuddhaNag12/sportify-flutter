@@ -32,36 +32,37 @@ class MyApp extends StatelessWidget {
       unknownRoute: GetPage(name: '/notfound', page: () => PageNotFound()),
       initialRoute: isSplash ? Routes.HOME : Routes.SPLASH,
       getPages: AppPages.routes,
-      // themeMode: ThemeMode.dark,
       theme: ThemeData(
         textTheme: TextTheme(
           headline1: TextStyle(
             fontFamily: 'Hammer',
-            fontSize: 28,
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
           headline2: TextStyle(
             fontFamily: 'Hammer',
-            fontSize: 20,
-            color: Colors.black54,
-            fontWeight: FontWeight.normal,
+            fontSize: 16,
           ),
           caption: TextStyle(
             fontFamily: 'Hammer',
-            fontSize: 15,
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
+            fontSize: 13,
+            fontWeight: FontWeight.normal
           ),
           headline3: TextStyle(
             fontFamily: 'russian',
-            fontSize: 28,
-            color: Colors.white,
           ),
           subtitle1: TextStyle(
             fontFamily: 'Hammer',
+            fontSize: 17,
+          ),
+          bodyText1: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w500,
             fontSize: 18,
-            color: Colors.white,
+          ),
+          bodyText2: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
           ),
         ),
         primaryColor: Colors.tealAccent.shade700,

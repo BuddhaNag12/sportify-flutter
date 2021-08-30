@@ -64,10 +64,11 @@ class SignUpScreen extends GetView<AuthController> {
                             color: Theme.of(context).primaryColor,
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.grey.shade800,
-                                  blurRadius: 4.0,
-                                  spreadRadius: 1.0,
-                                  offset: Offset(1.0, 5.0)),
+                                color: Colors.grey.shade800,
+                                blurRadius: 4.0,
+                                spreadRadius: 1.0,
+                                offset: Offset(1.0, 5.0),
+                              ),
                             ]),
                         alignment: Alignment.center,
                         child: SvgPicture.asset(

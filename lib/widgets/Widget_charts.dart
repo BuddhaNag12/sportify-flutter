@@ -34,6 +34,9 @@ class BarChart extends StatelessWidget {
           cellPadding: EdgeInsets.only(right: 4.0, bottom: 4.0),
           entryTextStyle: charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(primaryColor),
+            fontFamily: 'Hammer',
+            fontSize: 15,
+            fontWeight: '5',
           ),
         )
       ],

@@ -8,12 +8,14 @@ class EventInputField extends StatelessWidget {
   final bool isNum;
   final controller;
   final color;
+  final fieldStyle;
   EventInputField({
     @required this.fieldName,
     @required this.controller,
     this.isNum = false,
     this.isDescription = false,
     this.color,
+    this.fieldStyle
   });
 
   @override
@@ -27,7 +29,7 @@ class EventInputField extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 5),
             child: Text(
               fieldName.toString() ?? '',
-              style: subtitle1.copyWith(color: this.color),
+              style: fieldStyle,
             ),
           ),
           Material(
@@ -41,7 +43,7 @@ class EventInputField extends StatelessWidget {
                 controller: controller,
                 maxLines: isDescription ? 3 : null,
                 maxLength: isDescription ? 150 : null,
-                style: subtitle3,
+                style: subtitle4,
                 validator: (String value) => checkIsValid(
                   fieldName: fieldName,
                   value: value,
