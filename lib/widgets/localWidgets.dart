@@ -228,7 +228,7 @@ Widget headerCard(double width, context) {
               child: Text(
                 _con.eventDetails?.value?.name?.toUpperCase() ?? '',
                 maxLines: 2,
-                style: headline6.copyWith(color:Colors.white),
+                style: headline6.copyWith(color: Colors.white),
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
               ),
@@ -240,8 +240,9 @@ Widget headerCard(double width, context) {
                   _con.favorites.value != null &&
                           _con.favorites.value.eventIds
                               .contains(_con.eventDetails.value.id)
-                      ? CupertinoIcons.square_favorites_alt_fill
-                      : CupertinoIcons.square_favorites_alt,
+                      ? FlutterIcons.favorite_mdi
+                      : FlutterIcons.favorite_border_mdi,
+                  color: Colors.red[400],
                 ),
               ),
               onPressed: () =>
@@ -258,11 +259,11 @@ Widget headerCard(double width, context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 80,
+                width: 90,
                 child: Row(
                   children: [
                     Icon(Icons.flag_outlined),
-                    Spacing.horizontalSpacing(5),
+                    Spacing.horizontalSpacing(3),
                     Text(
                       _con.eventDetails?.value?.category ?? '',
                       style: subtitle3,
@@ -295,7 +296,7 @@ Widget headerCard(double width, context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: 260,
+                width: 250,
                 child: Row(
                   children: [
                     Icon(Icons.location_city_rounded),

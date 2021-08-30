@@ -27,9 +27,9 @@ final eventPlannerModeStore = GetStorage();
 final List<AccountSettingModel> generalSettings = [
   AccountSettingModel(
       name: 'Settings', route: '/setting', icon: CupertinoIcons.settings),
-  AccountSettingModel(name: 'Invite Friend', route: '/', icon: Icons.share),
-  AccountSettingModel(name: 'Support', route: '/', icon: Icons.support),
-  AccountSettingModel(name: 'About', route: '/', icon: Icons.info),
+  AccountSettingModel(name: 'Invite Friend', route: '/', icon: Icons.share,),
+  AccountSettingModel(name: 'Support', route: '/support', icon: Icons.support),
+  AccountSettingModel(name: 'About', route: '/about', icon: Icons.info),
 ];
 final List<SettingModel> settingsList = [
   SettingModel(
@@ -37,8 +37,8 @@ final List<SettingModel> settingsList = [
     route: '/notification',
     action: null,
   ),
-  SettingModel(title: 'Terms And Services', route: '/'),
-  SettingModel(title: 'Privacy Policy', route: '/'),
+  SettingModel(title: 'Terms And Services', route: '/terms'),
+  SettingModel(title: 'Privacy Policy', route: '/privacy'),
 ];
 final List<SliverListGridItems> sliverGridListItems = [
   SliverListGridItems(

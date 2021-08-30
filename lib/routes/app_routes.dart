@@ -17,4 +17,9 @@ abstract class Routes{
   static const FABORITE  = "/favorite";
   static const MANAGE  = "/manage";
   static const EDIT  = "/edit/:id";
+  static const NOTIFICATION  = "/notification";
+  static const ABOUT  = "/about";
+  static const PRIVACY  = "/privacy";
+  static const TERMS  = "/terms";
+  static const SUPPORT  = "/support";
 }

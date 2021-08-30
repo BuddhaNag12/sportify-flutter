@@ -1,8 +1,13 @@
+import 'package:sportify/screens/aboutScreen.dart';
 import 'package:sportify/screens/categoryView.dart';
 import 'package:sportify/screens/eventsStack/edit_event.dart';
 import 'package:sportify/screens/eventsStack/favoritesEvents.dart';
 import 'package:sportify/screens/eventsStack/manage_events.dart';
 import 'package:sportify/screens/eventsStack/my_events.dart';
+import 'package:sportify/screens/notificationScreen.dart';
+import 'package:sportify/screens/privacyScreen.dart';
+import 'package:sportify/screens/supportScreen.dart';
+import 'package:sportify/screens/termsScreen.dart';
 
 import './route_paths.dart';
 part 'app_routes.dart';
@@ -99,6 +104,36 @@ class AppPages {
       name: Routes.EDIT,
       page: () => EditEvent(),
       fullscreenDialog: true,
+      opaque: true,
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.NOTIFICATION,
+      page: () => NotificationScreen(),
+      opaque: true,
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.ABOUT,
+      page: () => AboutScreen(),
+      opaque: true,
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.TERMS,
+      page: () => TermsScreen(),
+      opaque: true,
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.PRIVACY,
+      page: () => PrivacyScreen(),
+      opaque: true,
+      middlewares: [RouteMiddleWare()],
+    ),
+    GetPage(
+      name: Routes.SUPPORT,
+      page: () => SupportScreen(),
       opaque: true,
       middlewares: [RouteMiddleWare()],
     ),

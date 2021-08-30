@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 import 'package:sportify/constants/catConstat.dart';
 import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
@@ -135,7 +136,8 @@ class MyAccount extends StatelessWidget {
                                   Spacer(),
                                   SizedBox(
                                     child: IconButton(
-                                      onPressed: null,
+                                      onPressed: () =>
+                                          Get.toNamed('/notification'),
                                       icon: Icon(
                                         FlutterIcons.notifications_mdi,
                                         color: Colors.white,
@@ -241,7 +243,7 @@ class MyAccount extends StatelessWidget {
                           ),
                           title: Text(
                             "My Profile",
-                            style:subtitle4,
+                            style: subtitle4,
                           ),
                           onTap: () => Get.toNamed('/'),
                           trailing: Icon(Icons.arrow_right),
@@ -370,7 +372,7 @@ class MyAccount extends StatelessWidget {
                                     ),
                                   ),
                                   title: Text(
-                                    "favorites",
+                                    "Favorites",
                                     style: subtitle4,
                                   ),
                                   onTap: () => Get.toNamed(Routes.FABORITE),
@@ -417,7 +419,13 @@ class MyAccount extends StatelessWidget {
                                 e.name,
                                 style: subtitle4,
                               ),
-                              onTap: () => Get.toNamed(e.route),
+                              onTap: () => e.name == 'Invite Friend'
+                                  ? Share.share(
+                                      'Sportify Download Now!',
+                                      subject:
+                                          'https://github.com/BuddhaNag12/sportify-flutter',
+                                    )
+                                  : Get.toNamed(e.route),
                               trailing: Icon(Icons.arrow_right),
                             ),
                           ],
