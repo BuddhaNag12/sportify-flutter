@@ -60,7 +60,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.VIEW_EVENT,
-      page: () => ViewEventScreen(),
+      page: () => EventDetails(),
       bindings: [
         EventBinding(),
         ViewEventBinding(),

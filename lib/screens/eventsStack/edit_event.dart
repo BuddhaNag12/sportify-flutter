@@ -62,7 +62,7 @@ class EditEvent extends StatelessWidget {
                         children: [
                           Container(
                             width: paddedWidth,
-                            height: 650,
+                            height: 700,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,161 +176,157 @@ class EditEvent extends StatelessWidget {
                                   controller: editCon.eventSizeController,
                                   fieldStyle: subtitle4,
                                 ),
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.only(left: 2),
-                                        margin:
-                                            const EdgeInsets.only(bottom: 5),
-                                        child: Text(
-                                          "Event Rewards",
-                                          style: subtitle4,
-                                        ),
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      margin:
+                                          const EdgeInsets.only(bottom: 5),
+                                      child: Text(
+                                        "Event Rewards",
+                                        style: subtitle4,
                                       ),
-                                      Container(
-                                        width: paddedWidth,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(4),
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 1,
-                                              color: Colors.grey,
-                                              offset: Offset(0, 1),
-                                            ),
-                                          ],
+                                    ),
+                                    Container(
+                                      width: paddedWidth,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
                                         ),
-                                        child: Obx(
-                                          () => DropdownButton(
-                                            hint: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 10,
-                                              ),
-                                              child: Text(
-                                                "Rewards",
-                                              ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            color: Colors.grey,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Obx(
+                                        () => DropdownButton(
+                                          hint: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 10,
                                             ),
-                                            value: editCon
-                                                    .prizeCat.value.isNotEmpty
-                                                ? editCon.prizeCat.value
-                                                : null,
-                                            elevation: 5,
-                                            style: subtitle1,
-                                            dropdownColor: Colors.white,
-                                            underline: SizedBox(),
-                                            onChanged: (newValue) {
-                                              editCon.setPrizeCat(newValue);
-                                            },
-                                            items: prizes.map((val) {
-                                              return DropdownMenuItem(
-                                                value: val,
-                                                child: Center(
-                                                  child: Container(
-                                                    padding: EdgeInsets.all(4),
-                                                    width: paddedWidth - 24,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        val,
-                                                        style: subtitle4,
-                                                      ),
+                                            child: Text(
+                                              "Rewards",
+                                            ),
+                                          ),
+                                          value: editCon
+                                                  .prizeCat.value.isNotEmpty
+                                              ? editCon.prizeCat.value
+                                              : null,
+                                          elevation: 5,
+                                          style: subtitle1,
+                                          dropdownColor: Colors.white,
+                                          underline: SizedBox(),
+                                          onChanged: (newValue) {
+                                            editCon.setPrizeCat(newValue);
+                                          },
+                                          items: prizes.map((val) {
+                                            return DropdownMenuItem(
+                                              value: val,
+                                              child: Center(
+                                                child: Container(
+                                                  padding: EdgeInsets.all(4),
+                                                  width: paddedWidth - 24,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      val,
+                                                      style: subtitle4,
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            }).toList(),
-                                          ),
+                                              ),
+                                            );
+                                          }).toList(),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.only(left: 2),
-                                        margin:
-                                            const EdgeInsets.only(bottom: 5),
-                                        child: Text(
-                                          "Event Category",
-                                          style: subtitle4,
-                                        ),
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      margin:
+                                          const EdgeInsets.only(bottom: 5),
+                                      child: Text(
+                                        "Event Category",
+                                        style: subtitle4,
                                       ),
-                                      Container(
-                                        width: paddedWidth,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(4),
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 1,
-                                              color: Colors.grey,
-                                              offset: Offset(0, 1),
-                                            ),
-                                          ],
+                                    ),
+                                    Container(
+                                      width: paddedWidth,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
                                         ),
-                                        child: Obx(
-                                          () => DropdownButton(
-                                            hint: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 10,
-                                              ),
-                                              child: Text(
-                                                "Category",
-                                              ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            color: Colors.grey,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Obx(
+                                        () => DropdownButton(
+                                          hint: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 10,
                                             ),
-                                            value: editCon
-                                                    .category.value.isNotEmpty
-                                                ? editCon.category.value
-                                                : null,
-                                            elevation: 5,
-                                            style: subtitle1,
-                                            dropdownColor: Colors.white,
-                                            underline: SizedBox(),
-                                            onChanged: (newValue) {
-                                              editCon.changeCategoryValue(
-                                                newValue,
-                                              );
-                                            },
-                                            items: categories.map((val) {
-                                              return DropdownMenuItem(
-                                                value: val,
-                                                child: Center(
-                                                  child: Container(
-                                                    padding: EdgeInsets.all(4),
-                                                    width: paddedWidth - 24,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        val,
-                                                        style: subtitle4,
-                                                      ),
+                                            child: Text(
+                                              "Category",
+                                            ),
+                                          ),
+                                          value: editCon
+                                                  .category.value.isNotEmpty
+                                              ? editCon.category.value
+                                              : null,
+                                          elevation: 5,
+                                          style: subtitle1,
+                                          dropdownColor: Colors.white,
+                                          underline: SizedBox(),
+                                          onChanged: (newValue) {
+                                            editCon.changeCategoryValue(
+                                              newValue,
+                                            );
+                                          },
+                                          items: categories.map((val) {
+                                            return DropdownMenuItem(
+                                              value: val,
+                                              child: Center(
+                                                child: Container(
+                                                  padding: EdgeInsets.all(4),
+                                                  width: paddedWidth - 24,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      val,
+                                                      style: subtitle4,
                                                     ),
                                                   ),
                                                 ),
-                                              );
-                                            }).toList(),
-                                          ),
+                                              ),
+                                            );
+                                          }).toList(),
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                                 EventInputField(
                                   fieldName: "Location name",

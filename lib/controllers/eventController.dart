@@ -90,22 +90,6 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
     update();
   }
 
-  void _showDialog(String text) {
-    Get.defaultDialog(
-      title: 'warning',
-      titleStyle: TextStyle(color: Colors.orange),
-      middleText: text,
-      backgroundColor: Colors.teal,
-      confirm: TextButton(
-        onPressed: () => Get.back(),
-        child: Text(
-          "Close",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    );
-  }
-
   Future<void> _getEventsFromFirestore() async {
     eventLists.clear();
     this.isLoading.value = true;
@@ -124,16 +108,16 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
   void createEvent() async {
     this.isLoading.value = true;
     if (category.value.isBlank) {
-      _showDialog('Please select a Category');
+      showDefaultDialog('Please select a Category', DialogType.warning);
       this.isLoading.value = false;
     } else if (pickedDate.value.isBlank) {
-      _showDialog('Please select a Date');
+      showDefaultDialog('Please select a Date', DialogType.warning);
       this.isLoading.value = false;
     } else if (prizeCat.value.isBlank) {
-      _showDialog('Please select a Prize category');
+      showDefaultDialog('Please select a Prize category', DialogType.warning);
       this.isLoading.value = false;
     } else if (pickedLatlng == null) {
-      _showDialog('Please select a location');
+      showDefaultDialog('Please select a location', DialogType.warning);
       this.isLoading.value = false;
     } else {
       try {
@@ -148,8 +132,8 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
           prize: prizeCat.value,
         );
         if (res.isNotEmpty) {
-          Get.snackbar('success', "Event successfully added ",
-              colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+          showDefaultDialog(
+              "Event has been added successfully", DialogType.success);
           reset();
           _getEventsFromFirestore();
           this.isLoading.value = false;
@@ -274,7 +258,7 @@ class EventController extends GetxController with SingleGetTickerProviderMixin {
       this.isLoading.value = false;
     } catch (e) {
       this.isLoading.value = false;
-      _showDialog('Error: $e');
+      showDefaultDialog('Error: $e', DialogType.warning);
     }
   }
 

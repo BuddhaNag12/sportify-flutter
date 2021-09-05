@@ -16,21 +16,22 @@ void showMessageDialog(String message) {
       color: Colors.white,
     ),
     isDismissible: true,
-    shouldIconPulse: true,
     borderRadius: 8,
     snackStyle: SnackStyle.FLOATING,
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: Colors.teal,
-    duration: Duration(seconds: 3),
+    duration: Duration(seconds: 2),
   );
 }
 
+/// For showing default dialog
+/// Dialog Type [type] [DialogType type].
+/// [message] type [String]
 void showDefaultDialog(String message, DialogType type) {
   Get.defaultDialog(
     title: "Info",
     middleText: message,
-    backgroundColor:
-        type == DialogType.info ? primaryColorDark : Colors.redAccent,
+    backgroundColor: getBackgorundColor(type),
     titleStyle: TextStyle(color: Colors.white),
     middleTextStyle: TextStyle(color: Colors.white),
     barrierDismissible: true,
@@ -67,6 +68,19 @@ String checkIsValid(
     return 'Please enter valid characters';
   } else {
     return null;
+  }
+}
+
+Color getBackgorundColor(DialogType type) {
+  switch (type) {
+    case DialogType.success:
+      return Colors.greenAccent;
+      break;
+    case DialogType.warning:
+      return Colors.redAccent;
+      break;
+    default:
+      return primaryColorDark;
   }
 }
 

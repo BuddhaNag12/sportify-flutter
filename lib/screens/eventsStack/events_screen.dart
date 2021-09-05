@@ -112,26 +112,32 @@ class EventsScreen extends StatelessWidget {
                 () => viewCon.isLoading.value == true
                     ? listShimmerLoading()
                     : viewCon.eventLists.isEmpty
-                        ? Container(
-                            width: paddedWidth,
-                            height: 300,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      'assets/notFound.svg',
-                                      width: 250,
-                                      height: 250,
+                        ? Center(
+                          child: Container(
+                              width: paddedWidth,
+                              height: 300,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        'assets/notFound.svg',
+                                        width: 250,
+                                        height: 250,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  literalNotFound,
-                                )
-                              ],
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10, right: 10),
+                                    child: Text(
+                                      literalNotFound,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          )
+                        )
                         : Expanded(
                             child: buildListView(context, viewCon.eventLists),
                           ),

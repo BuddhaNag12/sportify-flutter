@@ -1,3 +1,5 @@
+import 'package:sportify/screens/exports/createEventExport.dart';
+
 import '../exports/joinEvtExports.dart';
 
 class JoinEventsScreen extends StatelessWidget {
@@ -44,31 +46,8 @@ class JoinEventsScreen extends StatelessWidget {
                         color: primaryColor,
                       ),
                     ),
-                    Positioned(
-                      top: -80,
-                      left: 135,
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: primaryColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade800,
-                              blurRadius: 4.0,
-                              spreadRadius: 1.0,
-                              offset: Offset(1.0, 5.0),
-                            ),
-                          ],
-                        ),
-                        alignment: Alignment.center,
-                        child: SvgPicture.asset(
-                          'assets/join-evt.svg',
-                          height: 85,
-                          width: 85,
-                        ),
-                      ),
+                    cirCularIcon(
+                      imgPath: 'assets/join-evt.svg',
                     ),
                   ],
                 ),
@@ -83,8 +62,8 @@ class JoinEventsScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                              width: width - 40,
-                              height: 500,
+                              width: paddedWidth,
+                              height: 450,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
@@ -95,24 +74,28 @@ class JoinEventsScreen extends StatelessWidget {
                                     fieldName: 'Your Name',
                                     isDescription: false,
                                     isNum: false,
+                                    fieldStyle: subtitle3,
                                   ),
                                   EventInputField(
                                     controller: con.cJteamName,
                                     fieldName: 'Team Name',
                                     isDescription: false,
                                     isNum: false,
+                                    fieldStyle: subtitle3,
                                   ),
                                   EventInputField(
-                                    controller: con.cJeventDescription,
+                                    controller: con.cjcontactForm,
                                     fieldName: 'Contact Number',
                                     isDescription: false,
                                     isNum: true,
+                                    fieldStyle: subtitle3,
                                   ),
                                   EventInputField(
                                     controller: con.cJeventDescription,
                                     fieldName: 'Short Message',
                                     isDescription: true,
                                     isNum: false,
+                                    fieldStyle: subtitle3,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(15),
@@ -121,6 +104,7 @@ class JoinEventsScreen extends StatelessWidget {
                                         if (con.jformKey.currentState
                                             .validate()) {
                                           // Process data.
+                                          con.applyEvent();
                                         }
                                       },
                                       child: const Text('Confirm'),

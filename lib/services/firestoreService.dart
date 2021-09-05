@@ -4,7 +4,6 @@ import 'package:sportify/constants/firebaseConstants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sportify/controllers/authController.dart';
 import 'package:sportify/models/eventDetailModel.dart';
-
 class DataToFirestore {
   AuthController auth = Get.find();
   Future<String> addEvent(
@@ -68,29 +67,12 @@ class DataToFirestore {
   Future<EventDetailModel> viewEvent(id) async {
     try {
       final res = await events.doc(id).get();
-      return EventDetailModel.fromDocumentSnapshot(res);
+      if (res.exists) {
+        return EventDetailModel.fromDocumentSnapshot(res);
+      }
+      return null;
     } catch (e) {
       return e;
     }
   }
-
-  // Future<String> joinEvent() async {
-  //   final res = await joinedEvt.add({
-  //     'evt_id': '',
-  //     'user_id': '',
-  //     'confirmed': false,
-  //     'userDetails': {
-  //       'name': '',
-  //       'phone': '',
-  //       'description': '',
-  //     }
-  //   });
-  //   return 's';
-  // }
-
-  // Future<bool> checkJoined(docId) async {
-  //   final res = await events.doc().get();
-
-  //   // return res;
-  // }
 }

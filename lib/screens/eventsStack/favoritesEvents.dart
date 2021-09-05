@@ -48,7 +48,7 @@ class FavoriteEvents extends StatelessWidget {
                               children: [
                                 ListTile(
                                   title: Text(
-                                    "favorite Events",
+                                    "Favorite Events",
                                     style: headline1,
                                   ),
                                 ),
@@ -126,8 +126,14 @@ class FavoriteEvents extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                       ),
+                                      subtitle: Text(
+                                        "${element.category}",
+                                        style: subtitle2,
+                                      ),
+                                      dense: true,
                                       onTap: () => Get.toNamed(
-                                          '/view_event/${element.id}'),
+                                        '/view_event/${element.id}',
+                                      ),
                                     ),
                                   ),
                                 )

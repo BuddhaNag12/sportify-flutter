@@ -11,7 +11,7 @@ const List categories = <String>[
   'Football',
   'Basketball',
   'Tennis',
-  "All"
+  "Other"
 ];
 const List prizes = <String>[
   'Trophies',

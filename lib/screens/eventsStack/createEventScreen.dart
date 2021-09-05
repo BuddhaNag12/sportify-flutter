@@ -1,3 +1,5 @@
+import 'package:sportify/constants/colorConst.dart';
+
 import '../exports/createEventExport.dart';
 
 class CreateEventsScreen extends StatelessWidget {
@@ -5,7 +7,7 @@ class CreateEventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.tealAccent.shade700,
+      backgroundColor: primaryColor,
       appBar: MyAppBar(
         isTransparent: false,
       ),
@@ -17,7 +19,7 @@ class CreateEventsScreen extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
@@ -164,135 +166,149 @@ class CreateEventsScreen extends StatelessWidget {
                                   controller: con.eventSizeController,
                                   fieldStyle: subtitle3,
                                 ),
-                                Container(
-                                  padding: const EdgeInsets.only(left: 2),
-                                  child: Text(
-                                    "Event Category",
-                                    style: subtitle3,
-                                  ),
-                                ),
-                                Container(
-                                  width: paddedWidth,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(4),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 2),
+                                      child: Text(
+                                        "Event Category",
+                                        style: subtitle3,
+                                      ),
                                     ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 1,
-                                        color: Colors.grey,
-                                        offset: Offset(0, 1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Obx(
-                                    () => DropdownButton(
-                                      hint: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 10,
+                                    Spacing.verticalSpacing(5),
+                                    Container(
+                                      width: paddedWidth,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
                                         ),
-                                        child: Text(
-                                          "Category",
-                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            color: Colors.grey,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
                                       ),
-                                      value: con.category.value.isNotEmpty
-                                          ? con.category.value
-                                          : null,
-                                      elevation: 5,
-                                      style: subtitle3,
-                                      dropdownColor: Colors.white,
-                                      underline: SizedBox(),
-                                      onChanged: (newValue) {
-                                        con.changeCategoryValue(newValue);
-                                      },
-                                      items: categories.map((val) {
-                                        return DropdownMenuItem(
-                                          value: val,
-                                          child: Center(
-                                            child: Container(
-                                              padding: EdgeInsets.all(4),
-                                              width: paddedWidth - 24,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  val,
-                                                  style: subtitle4,
-                                                ),
-                                              ),
+                                      child: Obx(
+                                        () => DropdownButton(
+                                          hint: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              "Category",
                                             ),
                                           ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(left: 2),
-                                  child: Text(
-                                    "Rewards",
-                                    style: subtitle3,
-                                  ),
-                                ),
-                                Container(
-                                  width: paddedWidth,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(4),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 1,
-                                        color: Colors.grey,
-                                        offset: Offset(0, 1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Obx(
-                                    () => DropdownButton(
-                                      hint: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 10,
-                                        ),
-                                        child: Text(
-                                          "Select Rewards",
-                                        ),
-                                      ),
-                                      value: con.prizeCat.value.isNotEmpty
-                                          ? con.prizeCat.value
-                                          : null,
-                                      elevation: 5,
-                                      style: subtitle3,
-                                      dropdownColor: Colors.white,
-                                      underline: SizedBox(),
-                                      onChanged: (newValue) {
-                                        con.setPrizeCat(newValue);
-                                      },
-                                      items: prizes.map((val) {
-                                        return DropdownMenuItem(
-                                          value: val,
-                                          child: Center(
-                                            child: Container(
-                                              padding: EdgeInsets.all(4),
-                                              width: paddedWidth - 24,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  val,
-                                                  style: subtitle4,
+                                          value: con.category.value.isNotEmpty
+                                              ? con.category.value
+                                              : null,
+                                          elevation: 5,
+                                          style: subtitle3,
+                                          dropdownColor: Colors.white,
+                                          underline: SizedBox(),
+                                          onChanged: (newValue) {
+                                            con.changeCategoryValue(newValue);
+                                          },
+                                          items: categories.map((val) {
+                                            return DropdownMenuItem(
+                                              value: val,
+                                              child: Center(
+                                                child: Container(
+                                                  padding: EdgeInsets.all(4),
+                                                  width: paddedWidth - 24,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      val,
+                                                      style: subtitle4,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 2),
+                                      child: Text(
+                                        "Rewards",
+                                        style: subtitle3,
+                                      ),
+                                    ),
+                                    Spacing.verticalSpacing(5),
+                                    Container(
+                                      width: paddedWidth,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(4),
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 1,
+                                            color: Colors.grey,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Obx(
+                                        () => DropdownButton(
+                                          hint: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 10,
+                                            ),
+                                            child: Text(
+                                              "Select Rewards",
                                             ),
                                           ),
-                                        );
-                                      }).toList(),
+                                          value: con.prizeCat.value.isNotEmpty
+                                              ? con.prizeCat.value
+                                              : null,
+                                          elevation: 5,
+                                          style: subtitle3,
+                                          dropdownColor: Colors.white,
+                                          underline: SizedBox(),
+                                          onChanged: (newValue) {
+                                            con.setPrizeCat(newValue);
+                                          },
+                                          items: prizes.map((val) {
+                                            return DropdownMenuItem(
+                                              value: val,
+                                              child: Center(
+                                                child: Container(
+                                                  padding: EdgeInsets.all(4),
+                                                  width: paddedWidth - 24,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      val,
+                                                      style: subtitle4,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                                 EventInputField(
                                   fieldName: "Address",

@@ -9,6 +9,7 @@ import 'package:sportify/constants/colorConst.dart';
 import 'package:sportify/constants/responsiveConst.dart';
 import 'package:sportify/constants/typographyConstants.dart';
 import 'package:sportify/controllers/eventDetailsController.dart';
+import 'package:sportify/controllers/exports/event_exports.dart';
 import 'package:sportify/models/eventModel.dart';
 import 'package:sportify/screens/exports/viewEvtexport.dart';
 
@@ -42,154 +43,163 @@ Widget buildListView(BuildContext context, List<EventsList> eventLists) {
           child: SlideAnimation(
             horizontalOffset: 50.0,
             child: FadeInAnimation(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 1,
-                      color: Colors.grey,
-                      offset: Offset(0, 1),
-                    )
-                  ],
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    tileMode: TileMode.clamp,
-                    colors: [Colors.grey.shade200, Colors.teal.shade300],
+              child: Opacity(
+                opacity: eventLists[i].active ? 1.0 : 0.5,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 1,
+                        color: Colors.grey,
+                        offset: Offset(0, 1),
+                      )
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      tileMode: TileMode.clamp,
+                      colors: [Colors.grey.shade200, Colors.teal.shade300],
+                    ),
                   ),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                height: 75,
-                width: paddedWidth,
-                child: InkWell(
-                  onTap: () => Get.toNamed('/view_event/${eventLists[i].id}'),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white54,
-                        child: Icon(
-                          MaterialIcons.event_available,
-                          size: 35,
-                          color: Colors.teal,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: 75,
+                  width: paddedWidth,
+                  child: InkWell(
+                    onTap: () => eventLists[i].active
+                        ? Get.toNamed('/view_event/${eventLists[i].id}')
+                        : showDefaultDialog(
+                            'Event is not available',
+                            DialogType.info
+                          ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white54,
+                          child: Icon(
+                            MaterialIcons.event_available,
+                            size: 35,
+                            color: Colors.teal,
+                          ),
                         ),
-                      ),
-                      Spacing.horizontalSpacing(30),
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: Container(
-                              margin: EdgeInsets.only(top: 5.0),
-                              child: Text(
-                                eventLists[i].name.toUpperCase() ?? '',
-                                overflow: TextOverflow.ellipsis,
-                                style: headline6,
+                        Spacing.horizontalSpacing(30),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Container(
+                                margin: EdgeInsets.only(top: 5.0),
+                                child: Text(
+                                  eventLists[i].name.toUpperCase() ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: headline6,
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 5),
-                            width: width,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Spacing.verticalSpacing(5),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 90,
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.flag_outlined,
-                                              color: Colors.teal,
-                                              size: iconSize,
-                                            ),
-                                            Text(
-                                              eventLists[i].category ?? '',
-                                              style: subtitle3.copyWith(
-                                                color: Colors.black54,
+                            Container(
+                              padding: EdgeInsets.only(top: 5),
+                              width: width,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Spacing.verticalSpacing(5),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 90,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.flag_outlined,
+                                                color: Colors.teal,
+                                                size: iconSize,
                                               ),
-                                            ),
-                                          ],
+                                              Text(
+                                                eventLists[i].category ?? '',
+                                                style: subtitle3.copyWith(
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(width: 20),
-                                      SizedBox(
-                                        width: 150,
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.location_on_outlined,
-                                              color: Colors.teal,
-                                              size: iconSize,
-                                            ),
-                                            Flexible(
-                                              child: Text(
-                                                  eventLists[i].place.isBlank
-                                                      ? 'Location'
-                                                      : eventLists[i].place,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                        SizedBox(width: 20),
+                                        SizedBox(
+                                          width: 150,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on_outlined,
+                                                color: Colors.teal,
+                                                size: iconSize,
+                                              ),
+                                              Flexible(
+                                                child: Text(
+                                                    eventLists[i].place.isBlank
+                                                        ? 'Location'
+                                                        : eventLists[i].place,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: subtitle4),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Spacing.verticalSpacing(5),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 71,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                FlutterIcons.activity_fea,
+                                                color: Colors.teal,
+                                                size: iconSize,
+                                              ),
+                                              Text(
+                                                  eventLists[i].active
+                                                      ? 'Active'
+                                                      : 'Not Active',
                                                   style: subtitle4),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Spacing.verticalSpacing(5),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 71,
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              FlutterIcons.activity_fea,
-                                              color: Colors.teal,
-                                              size: iconSize,
-                                            ),
-                                            Text(
-                                                eventLists[i].active
-                                                    ? 'Active'
-                                                    : 'Not Active',
-                                                style: subtitle4),
-                                          ],
+                                        SizedBox(width: 40),
+                                        SizedBox(
+                                          width: 80,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.timelapse,
+                                                color: Colors.teal,
+                                                size: iconSize,
+                                              ),
+                                              Text(
+                                                eventLists[i].date ??
+                                                    'Event date',
+                                                style: subtitle4,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(width: 40),
-                                      SizedBox(
-                                        width: 80,
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.timelapse,
-                                              color: Colors.teal,
-                                              size: iconSize,
-                                            ),
-                                            Text(
-                                              eventLists[i].date ??
-                                                  'Event date',
-                                              style: subtitle4,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )),
-                    ],
+                          ],
+                        )),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -242,7 +252,7 @@ Widget headerCard(double width, context) {
                               .contains(_con.eventDetails.value.id)
                       ? FlutterIcons.favorite_mdi
                       : FlutterIcons.favorite_border_mdi,
-                  color: Colors.red[400],
+                  color: Colors.white,
                 ),
               ),
               onPressed: () =>
@@ -357,16 +367,16 @@ Widget cirCularIcon({String imgPath}) {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.shade800,
-                blurRadius: 4.0,
+                blurRadius: 3.0,
                 spreadRadius: 1.0,
-                offset: Offset(1.0, 5.0),
+                offset: Offset(1.0, 3.0),
               ),
             ],
           ),
           alignment: Alignment.center,
           child: SvgPicture.asset(
             imgPath,
-            height: 110,
+            height: 90,
             width: 105,
           ),
         ),
@@ -515,5 +525,4 @@ Widget shimmeringloading() {
   );
 }
 
-/// Donut chart example. This is a simple pie chart with a hole in the middle.
 

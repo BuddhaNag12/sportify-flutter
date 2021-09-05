@@ -7,7 +7,7 @@ export 'package:sportify/screens/authStack/SignUpScreen.dart';
 export 'package:sportify/screens/eventsStack/JoinEventsScreen.dart';
 export 'package:sportify/screens/eventsStack/categoriesScreen.dart';
 export 'package:sportify/screens/eventsStack/createEventScreen.dart';
-export 'package:sportify/screens/eventsStack/viewEventScreen.dart';
+export 'package:sportify/screens/eventsStack/event_details.dart';
 export 'package:sportify/screens/home_screen.dart';
 export 'package:sportify/screens/authStack/LoginScreen.dart';
 export 'package:sportify/screens/profileStack/accountScreen.dart';

@@ -113,7 +113,6 @@ class EventDetailsController extends GetxController
   @override
   void onClose() {
     marker = null;
-    // gmapController = Completer();
     controller.dispose();
     eventDetails.value = null;
     super.onClose();

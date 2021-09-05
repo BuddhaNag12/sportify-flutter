@@ -89,7 +89,7 @@ class StatisticScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              width: paddedWidth,
+                              width: paddedWidth2,
                               child: Card(
                                 elevation: 4,
                                 child: totalEvents == 0
@@ -111,7 +111,7 @@ class StatisticScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              width: paddedWidth,
+                              width: paddedWidth2,
                               child: Card(
                                 elevation: 4,
                                 child: totalEvents == 0

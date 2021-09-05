@@ -23,9 +23,13 @@ class HomeScreenTab extends StatelessWidget {
     final inActiveColor = Colors.grey.shade900;
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(
-          CupertinoIcons.home,
-          color: Colors.white,
+        icon: Obx(
+          () => _con.isEventMaster.isFalse
+              ? Icon(
+                  FlutterIcons.event_mdi,
+                  color: Colors.white,
+                )
+              : Icon(CupertinoIcons.chart_bar, color: Colors.white),
         ),
         activeColorPrimary: activeColor,
         inactiveColorPrimary: inActiveColor,

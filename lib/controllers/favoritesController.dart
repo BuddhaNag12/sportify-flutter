@@ -33,6 +33,12 @@ class FavoriteController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    favoriteEvents.length = 0;
+    super.onClose();
+  }
+
   void removefavoriteEvent(id, context) {
     favEvts.doc(_auth.stateUser.value.uid).get().then((value) {
       if (value.data()['evt_favs'].contains(id)) {

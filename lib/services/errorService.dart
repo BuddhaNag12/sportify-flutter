@@ -7,6 +7,9 @@
 */
 
 
+class NotFoundError implements Exception{
+  String errMsg() => 'No Details Found'; 
+}
 class InvalidEmail implements Exception{
   String errMsg() => 'Email Should be a valid email'; 
 }
